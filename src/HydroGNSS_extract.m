@@ -2,7 +2,7 @@
 function ReflectionCoefficientAtSP=HydroGNSS_extract(init_SM_Day,final_SM_Day, configurationPath)
 
 close all
-clear all
+clearvars -except  init_SM_Day final_SM_Day configurationPath
 
 global namelogfile logfileID  ; 
 global ReflectionCoefficientAtSP Sigma0 ; 
@@ -80,14 +80,14 @@ DDM=Answer{12} ;
 WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM);
 
 
-switch mode
+% switch mode
     case "input" 
     disp('input mode')
 
 [ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, dummy1, dummy2, DDM] = ReadConfFile(configurationPath);
 
 %scrivere il configuration
-WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM);
+% WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM);
 
 
 end
@@ -163,7 +163,7 @@ DataTag=0; Track_ID=0; IND_sixhours=0 ;
 SM_Time_resolution=ceil(juliandate(endDate)-juliandate(startDate)) ;
 readDDM=DDM; DDMs_name='DDMs.nc'; L1b_ProcessorVersion=' ' ; L1a_ProcessorVersion=' ';
 metadata_name='metadata_L1_merged.nc' ; Day_to_process=Dayinit; 
-Path_HydroGNSS_Data=[DataInputRootPath '\' ProcessingSatellite '\DataRelease\L1A_L1B'] ; 
+Path_HydroGNSS_Data=[char(DataInputRootPath), '\', char(ProcessingSatellite), '\DataRelease\L1A_L1B'] ; 
 
 % for ii=1:numGoodSixhour
  
@@ -231,9 +231,9 @@ for kk=1:NumOfTracks
 end % end fir over the tracks
 
 %  
-Nameout=[Outfileprefix '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),'yy-MM-dd_HH-mm') '.mat']
+Nameout=[char(Outfileprefix) '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),'yy-MM-dd_HH-mm') '.mat']
 %
-save([DataOutputRootPath '\' Nameout], 'SPLAT', 'SPLON', 'THETA', 'DoY',  'SoD', 'time',...
+save([char(DataOutputRootPath) '\' Nameout], 'SPLAT', 'SPLON', 'THETA', 'DoY',  'SoD', 'time',...
     'SAT', 'REFLECTIVITY_LINEAR_L1_L', 'REFLECTIVITY_LINEAR_L1_R', 'REFLECTIVITY_LINEAR_E1_L',...
     'REFLECTIVITY_LINEAR_E1_R', 'REFLECTIVITY_LINEAR_5_L', 'REFLECTIVITY_LINEAR_5_R',...
     'SNR_L1_L', 'SNR_L1_R', 'SNR_5_L', 'SNR_5_R', 'SNR_E1_L', 'SNR_E1_R')

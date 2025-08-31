@@ -18,7 +18,7 @@ formatSpec='%02u' ;
 for j=1: SM_Time_resolution ; 
     SM_Day=Day_to_process+j-1  ; 
 Month=month(SM_Day)  ; Day=day(SM_Day)   ; Year=year(SM_Day)   ; 
-Path_L1B_day=[char(Path_HydroGNSS_Data),'\', num2str(Year),'-', num2str(Month, formatSpec),'\',num2str(Day,formatSpec)] ;
+Path_L1B_day=[char(Path_HydroGNSS_Data), '\', num2str(Year), '-', num2str(Month, formatSpec),'\', num2str(Day,formatSpec)] ;
 %
 if exist(Path_L1B_day)==0 ; %, disp(['Directory of day ' char(SM_Day) ' does not exist. Skipped']), 
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: Directory of day ' char(SM_Day) ' does not exist. Skipped']) ;
@@ -278,7 +278,9 @@ Polarization=infometa.Groups(kk).Groups(ii).Attributes(4).Value ; % polarization
 % Change by Mauro to fix bug on name of signal without undescore
 infometa.Groups(kk).Groups(ii).Attributes(3).Value=replace(infometa.Groups(kk).Groups(ii).Attributes(3).Value, ' ', '_') ; 
 % end change
+%
 Signal=split(infometa.Groups(kk).Groups(ii).Attributes(3).Value, '_') ; 
+ReflectionCoefficientAtSP(Track_ID).Satellite=Signal{1} ; 
 Signal_Pol=[Signal{2}, '_', Polarization] ; 
 switch Signal{1} 
     case 'GPS'
@@ -780,7 +782,7 @@ end
     fprintf(logfileID,'\n') ;
 
  end  % end switch between signals / pol 
-ReflectionCoefficientAtSP(Track_ID).Satellite=Signal{1} ; 
+% ReflectionCoefficientAtSP(Track_ID).Satellite=Signal{1} ; 
 end       % end loop on channels 
         
 
@@ -822,7 +824,7 @@ DDM=cat(3, DDM, read) ;
     end
 end % end loop on number of groups/tracks
 netcdf.close(ncid) ; 
-if DDM=netcdf.close(ncid2) ; 
+if DDM=="Yes" | DDM=="Y" , netcdf.close(ncid2) , end ; 
 end % end loop on number of six-hour blocks 
 end % end loop on number of days
 

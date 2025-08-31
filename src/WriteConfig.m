@@ -12,6 +12,6 @@ fprintf(conffileID,['LonWest=' char(string(LonWest))] ); fprintf(conffileID,'\n'
 fprintf(conffileID,['LonEast=' char(string(LonEast))] ); fprintf(conffileID,'\n') ; 
 fprintf(conffileID,'%s',['Dayinit=' Dayinit] ); fprintf(conffileID,'\n') ; 
 fprintf(conffileID,'%s',['Dayfinal=' Dayfinal] ); fprintf(conffileID,'\n') ; 
-fprintf(conffileID,['DDM=' DDM] ); fprintf(conffileID,'\n') ; 
+fprintf(conffileID,'%s',['DDM=' DDM] ); fprintf(conffileID,'\n') ; 
 fclose(conffileID) ;
 end

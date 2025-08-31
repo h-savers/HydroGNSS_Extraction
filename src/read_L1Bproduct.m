@@ -18,7 +18,7 @@ formatSpec='%02u' ;
 for j=1: SM_Time_resolution ; 
     SM_Day=Day_to_process+j-1  ; 
 Month=month(SM_Day)  ; Day=day(SM_Day)   ; Year=year(SM_Day)   ; 
-Path_L1B_day=[char(Path_HydroGNSS_Data),'\', num2str(Year),'-', num2str(Month, formatSpec),'\',num2str(Day,formatSpec)] ;
+Path_L1B_day=[char(Path_HydroGNSS_Data), '\', num2str(Year), '-', num2str(Month, formatSpec),'\', num2str(Day,formatSpec)] ;
 %
 if exist(Path_L1B_day)==0 ; %, disp(['Directory of day ' char(SM_Day) ' does not exist. Skipped']), 
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: Directory of day ' char(SM_Day) ' does not exist. Skipped']) ;
