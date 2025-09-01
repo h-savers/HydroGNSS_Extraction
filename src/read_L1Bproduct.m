@@ -121,8 +121,8 @@ if exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) ==0 ;
 disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: DDM file does not exist in group ' char(string(Year)) '-' char(string(Month)) '-' char(string(Day)) '/' char(Dir_Day(jj)) '. Set DDM to "No"']) ;
 fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: DDM file does not exist in group ' char(string(Year)) '-' char(string(Month)) '-' char(string(Day)) '/' char(Dir_Day(jj)) '. Set DDM to "No"']) ;
 fprintf(logfileID,'\n') ;
-DDM="No" ; 
-elseif exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) >0 & DDM=="Yes" |  exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) >0 & DDM=="Y" 
+readDDM="No" ; 
+elseif exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) >0 & readDDM=="Yes" |  exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) >0 & readDDM=="Y" 
 ncid2 = netcdf.open(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name), 'NC_NOWRITE');
 trackNcids2 = netcdf.inqGrps(ncid2);
 for track = 1:length(trackNcids2)
@@ -824,7 +824,7 @@ DDM=cat(3, DDM, read) ;
     end
 end % end loop on number of groups/tracks
 netcdf.close(ncid) ; 
-if DDM=="Yes" | DDM=="Y" , netcdf.close(ncid2) , end ; 
+if readDDM=="Yes" | readDDM=="Y" , netcdf.close(ncid2) , end ; 
 end % end loop on number of six-hour blocks 
 end % end loop on number of days
 

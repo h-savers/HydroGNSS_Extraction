@@ -171,7 +171,6 @@ Path_HydroGNSS_Data=[char(DataInputRootPath), '\', char(ProcessingSatellite), '\
     SM_Time_resolution,Path_HydroGNSS_Data, metadata_name, readDDM, ...
     DDMs_name, Track_ID, IND_sixhours, L1b_ProcessorVersion, L1a_ProcessorVersion) ;
 
-a=2 
 % end
 
 %% Crete output variables and save
@@ -231,12 +230,12 @@ for kk=1:NumOfTracks
 end % end fir over the tracks
 
 %  
-Nameout=[char(Outfileprefix) '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),'yy-MM-dd_HH-mm') '.mat']
+Nameout=[char(Outfileprefix) '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),'yy-MM-dd_HH-mm') '.mat'] ; 
 %
 save([char(DataOutputRootPath) '\' Nameout], 'SPLAT', 'SPLON', 'THETA', 'DoY',  'SoD', 'time',...
     'SAT', 'REFLECTIVITY_LINEAR_L1_L', 'REFLECTIVITY_LINEAR_L1_R', 'REFLECTIVITY_LINEAR_E1_L',...
     'REFLECTIVITY_LINEAR_E1_R', 'REFLECTIVITY_LINEAR_5_L', 'REFLECTIVITY_LINEAR_5_R',...
-    'SNR_L1_L', 'SNR_L1_R', 'SNR_5_L', 'SNR_5_R', 'SNR_E1_L', 'SNR_E1_R')
+    'SNR_L1_L', 'SNR_L1_R', 'SNR_5_L', 'SNR_5_R', 'SNR_E1_L', 'SNR_E1_R') ; 
 
 end
 
