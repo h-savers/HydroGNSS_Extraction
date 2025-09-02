@@ -190,8 +190,8 @@ REFLECTIVITY_LINEAR_5_L=NaN(numOfSP,1) ; REFLECTIVITY_LINEAR_5_R=NaN(numOfSP,1) 
 SNR_L1_L=NaN(numOfSP,1) ; SNR_L1_R=NaN(numOfSP,1) ; SNR_5_L=NaN(numOfSP,1) ; 
 SNR_5_R=NaN(numOfSP,1) ; SNR_E1_L=NaN(numOfSP,1) ; SNR_E1_R=NaN(numOfSP,1) ;
 
-GPSindex=find(SAT=='GPS') ;
-Galileoindex=find(SAT=='Galileo') ; 
+GPSindex=find(SAT=="GPS") ;
+Galileoindex=find(SAT=="Galileo") ; 
 
 fintrack=0 ; 
 for kk=1:NumOfTracks 
