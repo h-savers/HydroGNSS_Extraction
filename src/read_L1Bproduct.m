@@ -25,7 +25,8 @@ if exist(Path_L1B_day)==0 ; %, disp(['Directory of day ' char(SM_Day) ' does not
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: Directory of day ' char(SM_Day) ' does not exist. Skipped']) ; 
     fprintf(logfileID,'\n') ; 
 noday=1; 
-return 
+% return 
+continue
 end 
 
 
