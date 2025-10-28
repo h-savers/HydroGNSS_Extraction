@@ -256,6 +256,10 @@ read=netcdf.getVar(trackNcids(kk), varId);
 %     [infometa.Groups(kk).Name,'/SPIncidenceAngle']) ;
 ReflectionCoefficientAtSP(Track_ID).SPIncidenceAngle= read ; 
 
+varId = netcdf.inqVarID(trackNcids(kk), 'SPAzimuthORF');
+read=netcdf.getVar(trackNcids(kk), varId);
+ReflectionCoefficientAtSP(Track_ID).SPAzimuthORF= read ; 
+
 varId = netcdf.inqVarID(trackNcids(kk), 'SPAzimuthARF');
 read=netcdf.getVar(trackNcids(kk), varId);
 % read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', metadata_name],...
@@ -314,7 +318,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_L1_LHCP=FlagL1b  ; 
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_L1_LHCP=FlagL1b  ; 
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'ReflectionCoefficientAtSP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
@@ -330,7 +334,23 @@ ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ;
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-Sigma0(Track_ID).L1_LHCP=read ; 
+Sigma0(Track_ID).NBRCS_L1_LHCP=read ; 
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_L1_LHCP=read ; 
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L1_LHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_L1_LHCP=read ; 
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_L1_LHCP=read ; 
 
 if readDDM=="Yes" | readDDM=="Y"
     
@@ -372,7 +392,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_L1_RHCP=FlagL1b  ; 
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_L1_RHCP=FlagL1b  ; 
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'ReflectionCoefficientAtSP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
@@ -386,9 +406,26 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_RHCP=read  ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_L1_RHCP=read ;   
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L1_RHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_L1_RHCP=read ;   
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_L1_RHCP=read ; 
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-Sigma0(Track_ID).L1_RHCP=read ;   
+Sigma0(Track_ID).NBRCS_L1_RHCP=read ;   
+
 
 if readDDM=="Yes" | readDDM=="Y"
 
@@ -430,7 +467,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_L5_LHCP=FlagL1b  ; 
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_L5_LHCP=FlagL1b  ; 
 
 % April 2023 %end 
 % Read flags for each channel 
@@ -447,9 +484,26 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).SNR_L5_LHCP=read  ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_L5_LHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L5_LHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_L5_LHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_L5_LHCP=read ;
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-Sigma0(Track_ID).L5_LHCP= read ; 
+Sigma0(Track_ID).NBRCS_L5_LHCP= read ; 
 
 if readDDM=="Yes" | readDDM=="Y"
 
@@ -478,6 +532,7 @@ varId=netcdf.inqVarID(varIdch(1), 'LowAGSP') ;
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*2 ; 
 
+
 % varIdch = netcdf.inqGrps(channelNcids(kk,ii));
 varId=netcdf.inqVarID(varIdch(1), 'LowSNR') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
@@ -492,7 +547,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_L5_RHCP=FlagL1b  ;
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_L5_RHCP=FlagL1b  ;
 
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'ReflectionCoefficientAtSP');
@@ -507,13 +562,29 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).SNR_L5_RHCP=read  ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_L5_RHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L5_RHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_L5_RHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_L5_RHCP=read ;
+
 %
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 % read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', metadata_name],...
 %     [infometa.Groups(kk).Name,'/', infometa.Groups(kk).Groups(ii).Name,...
 %     '/Incoherent/Sigma0']) ;
-Sigma0(Track_ID).R5_LHCP=read ; 
+Sigma0(Track_ID).NBRCS_L5_RHCP=read ; 
 
 if readDDM=="Yes" | readDDM=="Y"
 
@@ -566,7 +637,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_E1_LHCP=FlagL1b  ; 
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_E1_LHCP=FlagL1b  ; 
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'ReflectionCoefficientAtSP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
@@ -580,9 +651,27 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).SNR_E1_LHCP=read  ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_E1_LHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E1_LHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_E1_LHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_E1_LHCP=read ;
+
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-Sigma0(Track_ID).E1_LHCP=read ; 
+Sigma0(Track_ID).NBRCS_E1_LHCP=read ; 
 
 if readDDM=="Yes" | readDDM=="Y"
 
@@ -624,7 +713,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_E1_RHCP=FlagL1b  ; 
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_E1_RHCP=FlagL1b  ; 
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'ReflectionCoefficientAtSP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');          
@@ -638,9 +727,25 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).SNR_E1_RHCP=read  ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_E1_RHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E1_RHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_E1_RHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_E1_RHCP=read ;
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-Sigma0(Track_ID).E1_RHCP=read ;       
+Sigma0(Track_ID).NBRCS_E1_RHCP=read ;       
 
 if readDDM=="Yes" | readDDM=="Y"
 
@@ -682,7 +787,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_E5_LHCP=FlagL1b  ; 
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_E5_LHCP=FlagL1b  ; 
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'ReflectionCoefficientAtSP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');               
@@ -696,9 +801,26 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).SNR_E5_LHCP=read  ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_E5_LHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E5_LHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_E5_LHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_E5_LHCP=read ;
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-Sigma0(Track_ID).E5_LHCP=read ; 
+Sigma0(Track_ID).NBRCS_E5_LHCP=read ; 
 
 if readDDM=="Yes" | readDDM=="Y"
 
@@ -739,7 +861,7 @@ FlagL1b=FlagL1b+read.*8 ;
 varId=netcdf.inqVarID(varIdch(1), 'HighNoiseKurtosis') ; 
 read=netcdf.getVar(varIdch(1), varId) ;
 FlagL1b=FlagL1b+read.*16 ;
-ReflectionCoefficientAtSP(Track_ID).FlagL1b_E5_RHCP=FlagL1b  ;
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DDM_E5_RHCP=FlagL1b  ;
               
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'ReflectionCoefficientAtSP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
@@ -753,9 +875,26 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).SNR_E5_RHCP=read  ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).EIRP_E5_RHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E5_RHCP = read;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeanNoise');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_E5_RHCP=read ;
+
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'NoiseKurtosis');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_E5_RHCP=read ;
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-Sigma0(Track_ID).R5_LHCP=read ; 
+Sigma0(Track_ID).NBRCS_E5_RHCP=read ; 
 
 if readDDM=="Yes" | readDDM=="Y"
     
