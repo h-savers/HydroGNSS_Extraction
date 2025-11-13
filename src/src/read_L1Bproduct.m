@@ -340,10 +340,6 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L1_LHCP=read ; 
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L1_LHCP=read ; 
-
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_L1_LHCP=read ; 
@@ -417,11 +413,6 @@ ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_RHCP=read  ;
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L1_RHCP=read ;   
-
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L1_RHCP=read ;   
-
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
@@ -506,10 +497,6 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L5_LHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L5_LHCP=read ;
-
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_L5_LHCP=read ; 
@@ -591,11 +578,6 @@ ReflectionCoefficientAtSP(Track_ID).SNR_L5_RHCP=read  ;
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L5_RHCP=read ;
-
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L5_RHCP=read ;
-
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
@@ -690,11 +672,6 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E1_LHCP=read ;
 
-
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E1_LHCP=read ;
-
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_E1_LHCP=read ;
@@ -775,10 +752,6 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E1_RHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E1_RHCP=read ;
-
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_E1_RHCP=read ;
@@ -857,10 +830,6 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E5_LHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E5_LHCP=read ;
-
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_E5_LHCP=read ;
@@ -938,10 +907,6 @@ ReflectionCoefficientAtSP(Track_ID).SNR_E5_RHCP=read  ;
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E5_RHCP=read ;
-
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
-read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E5_RHCP=read ;
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'QC_pass_flag');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
