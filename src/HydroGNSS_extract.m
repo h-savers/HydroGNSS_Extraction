@@ -183,7 +183,7 @@ for ii=1:NumOfTracks
     numOfSP=numOfSP+length(ReflectionCoefficientAtSP(ii).SpecularPointLat) ; 
 end
 
-timeUTC=[]; specularPointLat=[]; specularPointLon=[];  THETA=[] ;  constellation = strings(numOfSP,1); teWidth=[] ; spAzimuthAngleDegOrbit=[] ;dayOfYear=[] ; secondOfDay=[] ;  
+timeUTC=[]; specularPointLat=[]; specularPointLon=[];  THETA=[] ;  Constellation = strings(numOfSP,1); teWidth=[] ; spAzimuthAngleDegOrbit=[] ;dayOfYear=[] ; secondOfDay=[] ;  
 reflectivityLinear_L1_L=NaN(numOfSP,1) ; reflectivityLinear_L1_R=NaN(numOfSP,1) ;
 reflectivityLinear_E1_L=NaN(numOfSP,1) ; reflectivityLinear_E1_R=NaN(numOfSP,1) ;
 reflectivityLinear_5_L=NaN(numOfSP,1) ; reflectivityLinear_5_R=NaN(numOfSP,1) ; 
@@ -192,7 +192,7 @@ SNR_5_R=NaN(numOfSP,1) ; SNR_E1_L=NaN(numOfSP,1) ; SNR_E1_R=NaN(numOfSP,1);...
 EIRP_L1_R = NaN(numOfSP,1) ; EIRP_L1_L = NaN(numOfSP,1); EIRP_L5_R = NaN(numOfSP,1) ; EIRP_L5_L = NaN(numOfSP,1); EIRP_E1_R = NaN(numOfSP,1) ; EIRP_E1_L = NaN(numOfSP,1); EIRP_E5_R = NaN(numOfSP,1) ; EIRP_E5_L = NaN(numOfSP,1);...
 rxAntennaGain_L1_R = NaN(numOfSP,1) ; rxAntennaGain_L1_L = NaN(numOfSP,1); rxAntennaGain_L5_R = NaN(numOfSP,1) ; rxAntennaGain_L5_L = NaN(numOfSP,1); rxAntennaGain_E1_R = NaN(numOfSP,1) ; rxAntennaGain_E1_L = NaN(numOfSP,1); rxAntennaGain_E5_R = NaN(numOfSP,1) ; rxAntennaGain_E5_L = NaN(numOfSP,1);...
 qualityControlFlags_L1_R = NaN(numOfSP,1) ; qualityControlFlags_L1_L = NaN(numOfSP,1); qualityControlFlags_L5_R = NaN(numOfSP,1) ; qualityControlFlags_L5_L = NaN(numOfSP,1); qualityControlFlags_E1_R = NaN(numOfSP,1) ; qualityControlFlags_E1_L = NaN(numOfSP,1); qualityControlFlags_E5_R = NaN(numOfSP,1) ; qualityControlFlags_E5_L = NaN(numOfSP,1);
-NBRCS_L1_R = NaN(numOfSP,1) ; NBRCS_L1_L = NaN(numOfSP,1); NBRCS_L5_R = NaN(numOfSP,1) ; NBRCS_L5_L = NaN(numOfSP,1); NBRCS_E1_R = NaN(numOfSP,1) ; NBRCS_E1_L = NaN(numOfSP,1); NBRCS_E5_R = NaN(numOfSP,1) ; NBRCS_E5_L = NaN(numOfSP,1); powerRatio_L1_R = NaN(numOfSP,1) ; powerRatio_L1_L = NaN(numOfSP,1); powerRatio_L5_R = NaN(numOfSP,1) ; powerRatio_L5_L = NaN(numOfSP,1); powerRatio_E1_R = NaN(numOfSP,1) ; powerRatio_E1_L = NaN(numOfSP,1); powerRatio_E5_R = NaN(numOfSP,1) ; powerRatio_E5_L = NaN(numOfSP,1); NoiseKurtosis=NaN(numOfSP,1);PRN=NaN(numOfSP,1);QC_pass_flag=NaN(numOfSP,1); 
+NBRCS_L1_R = NaN(numOfSP,1) ; NBRCS_L1_L = NaN(numOfSP,1); NBRCS_L5_R = NaN(numOfSP,1) ; NBRCS_L5_L = NaN(numOfSP,1); NBRCS_E1_R = NaN(numOfSP,1) ; NBRCS_E1_L = NaN(numOfSP,1); NBRCS_E5_R = NaN(numOfSP,1) ; NBRCS_E5_L = NaN(numOfSP,1); powerRatio_L1_R = NaN(numOfSP,1) ; powerRatio_L1_L = NaN(numOfSP,1); powerRatio_L5_R = NaN(numOfSP,1) ; powerRatio_L5_L = NaN(numOfSP,1); powerRatio_E1_R = NaN(numOfSP,1) ; powerRatio_E1_L = NaN(numOfSP,1); powerRatio_E5_R = NaN(numOfSP,1) ; powerRatio_E5_L = NaN(numOfSP,1); NoiseKurtosis=NaN(numOfSP,1);PRN=NaN(numOfSP,1);GNSSConstellation = NaN(numOfSP,1);QC_pass_flag=NaN(numOfSP,1); 
 kurtosisDDM_L1_R = NaN(numOfSP,1) ; kurtosisDDM_L1_L = NaN(numOfSP,1); kurtosisDDM_L5_R = NaN(numOfSP,1) ; kurtosisDDM_L5_L = NaN(numOfSP,1); kurtosisDDM_E1_R = NaN(numOfSP,1) ; kurtosisDDM_E1_L = NaN(numOfSP,1); kurtosisDDM_E5_R = NaN(numOfSP,1) ; kurtosisDDM_E5_L = NaN(numOfSP,1);
 kurtosisDopp0_L1_R = NaN(numOfSP,1) ; kurtosisDopp0_L1_L = NaN(numOfSP,1); kurtosisDopp0_L5_R = NaN(numOfSP,1) ; kurtosisDopp0_L5_L = NaN(numOfSP,1); kurtosisDopp0_E1_R = NaN(numOfSP,1) ; kurtosisDopp0_E1_L = NaN(numOfSP,1); kurtosisDopp0_E5_R = NaN(numOfSP,1) ; kurtosisDopp0_E5_L = NaN(numOfSP,1);
 noiseFloorCounts_L1_R = NaN(numOfSP,1) ; noiseFloorCounts_L1_L = NaN(numOfSP,1); noiseFloorCounts_L5_R = NaN(numOfSP,1) ; noiseFloorCounts_L5_L = NaN(numOfSP,1); noiseFloorCounts_E1_R = NaN(numOfSP,1) ; noiseFloorCounts_E1_L = NaN(numOfSP,1); noiseFloorCounts_E5_R = NaN(numOfSP,1) ; noiseFloorCounts_E5_L = NaN(numOfSP,1);
@@ -252,8 +252,10 @@ Year = [Year; year(dt)];
 %        ~ismissing(ReflectionCoefficientAtSP(kk).EIRP_CM1)
 %         EIRP_CM1(intrack:fintrack) = ReflectionCoefficientAtSP(kk).EIRP_CM1;
 %         end
-%         if isfield(ReflectionCoefficientAtSP(kk),'EIRP_CM2')&&~ismissing(ReflectionCoefficientAtSP(kk).EIRP_CM2),EIRP_CM2(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_CM2;end;if isfield(ReflectionCoefficientAtSP(kk),'EIRP_CM3')&&~ismissing(ReflectionCoefficientAtSP(kk).EIRP_CM3),EIRP_CM3(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_CM3;end;if isfield(ReflectionCoefficientAtSP(kk),'NoiseKurtosis')&&~ismissing(ReflectionCoefficientAtSP(kk).NoiseKurtosis),NoiseKurtosis(intrack:fintrack)=ReflectionCoefficientAtSP(kk).NoiseKurtosis;end;if isfield(ReflectionCoefficientAtSP(kk),'HighNoiseKurtosis')&&~ismissing(ReflectionCoefficientAtSP(kk).HighNoiseKurtosis),HighNoiseKurtosis(intrack:fintrack)=ReflectionCoefficientAtSP(kk).HighNoiseKurtosis;end;if isfield(ReflectionCoefficientAtSP(kk),'PRN')&&~ismissing(ReflectionCoefficientAtSP(kk).PRN),PRN(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PRN;end;
+%         if isfield(ReflectionCoefficientAtSP(kk),'EIRP_CM2')&&~ismissing(ReflectionCoefficientAtSP(kk).EIRP_CM2),EIRP_CM2(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_CM2;end;if isfield(ReflectionCoefficientAtSP(kk),'EIRP_CM3')&&~ismissing(ReflectionCoefficientAtSP(kk).EIRP_CM3),EIRP_CM3(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_CM3;end;if isfield(ReflectionCoefficientAtSP(kk),'NoiseKurtosis')&&~ismissing(ReflectionCoefficientAtSP(kk).NoiseKurtosis),NoiseKurtosis(intrack:fintrack)=ReflectionCoefficientAtSP(kk).NoiseKurtosis;end;if isfield(ReflectionCoefficientAtSP(kk),'HighNoiseKurtosis')&&~ismissing(ReflectionCoefficientAtSP(kk).HighNoiseKurtosis),HighNoiseKurtosis(intrack:fintrack)=ReflectionCoefficientAtSP(kk).HighNoiseKurtosis;end;
+if isfield(ReflectionCoefficientAtSP(kk),'PRN')&&~ismissing(ReflectionCoefficientAtSP(kk).PRN),PRN(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PRN;end;
 if isfield(ReflectionCoefficientAtSP(kk),'QC_pass_flag')&&~ismissing(ReflectionCoefficientAtSP(kk).QC_pass_flag),QC_pass_flag(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QC_pass_flag;end;
+if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(ReflectionCoefficientAtSP(kk).GNSSConstellation_units),GNSSConstellation(intrack:fintrack)=ReflectionCoefficientAtSP(kk).GNSSConstellation_units;end;
 
 
   switch SAT(kk) ; 
@@ -287,11 +289,11 @@ if isfield(ReflectionCoefficientAtSP(kk),'QC_pass_flag')&&~ismissing(ReflectionC
   
 
     %QualityControlFlag lines
-     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP)==0 , qualityControlFlags_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP)==0 , qualityControlFlags_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP)==0 , qualityControlFlags_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP)==0 , qualityControlFlags_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP)==0 , qualityControlFlags_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP)==0 , qualityControlFlags_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP)==0 , qualityControlFlags_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP)==0 , qualityControlFlags_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP ; end
   
 
      %PowerAnalog_W lines
@@ -368,11 +370,11 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
 
 
      %Quality control flag lines
-    if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP)==0 , qualityControlFlags_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP)==0 , qualityControlFlags_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP ; end
+  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP)==0 , qualityControlFlags_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP ; end
+  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP)==0 , qualityControlFlags_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP ; end
 
-    if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP)==0 , qualityControlFlags_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP)==0 , qualityControlFlags_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP ; end
+  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP)==0 , qualityControlFlags_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP ; end
+  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP)==0 , qualityControlFlags_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP ; end
 
 
 %PowerAnalog_W lines
@@ -435,6 +437,20 @@ transmittingSpacecraft_num = SAT;
 IncidenceAngleDeg = THETA;
 %spAzimuthAngleDegOrbit = SPAzimuthARF
 
+disp(GNSSConstellation)
+whos GNSSConstellation
+
+% Initialize string array of same size as GNSSConstellation
+Constellation = strings(size(GNSSConstellation));  
+
+% Assign values based on GNSSConstellation
+Constellation(GNSSConstellation == 0) = "GPS";
+Constellation(GNSSConstellation == 2) = "Galileo";
+
+% Optional: mark unknowns
+Constellation(~(GNSSConstellation==0 | GNSSConstellation==2)) = "Unknown";
+
+
 save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'IncidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'timeUTC',...
     'transmittingSpacecraft_num', 'reflectivityLinear_L1_L', 'reflectivityLinear_L1_R', 'reflectivityLinear_E1_L',...
     'reflectivityLinear_E1_R', 'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
@@ -446,7 +462,7 @@ save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointL
     'NBRCS_L1_R','NBRCS_L1_L','NBRCS_L5_R','NBRCS_L5_L','NBRCS_E1_R','NBRCS_E1_L','NBRCS_E5_R','NBRCS_E5_L','powerRatio_L1_R','powerRatio_L1_L','powerRatio_L5_R','powerRatio_L5_L','powerRatio_E1_R','powerRatio_E1_L','powerRatio_E5_R','powerRatio_E5_L', ...
     'kurtosisDDM_L1_R','kurtosisDDM_L1_L','kurtosisDDM_L5_R','kurtosisDDM_L5_L','kurtosisDDM_E1_R','kurtosisDDM_E1_L','kurtosisDDM_E5_R','kurtosisDDM_E5_L',...
     'kurtosisDopp0_L1_R','kurtosisDopp0_L1_L','kurtosisDopp0_L5_R','kurtosisDopp0_L5_L','kurtosisDopp0_E1_R','kurtosisDopp0_E1_L','kurtosisDopp0_E5_R','kurtosisDopp0_E5_L',...
-    'pseudoRandomNoise', 'Year', 'teWidth', 'constellation', ...
+    'pseudoRandomNoise', 'GNSSConstellation','Year', 'teWidth', 'Constellation', ...
     'noiseFloorCounts_L1_R','noiseFloorCounts_L1_L','noiseFloorCounts_L5_R','noiseFloorCounts_L5_L','noiseFloorCounts_E1_R','noiseFloorCounts_E1_L','noiseFloorCounts_E5_R','noiseFloorCounts_E5_L') ; 
 
 
