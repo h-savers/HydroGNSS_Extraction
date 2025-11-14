@@ -189,7 +189,7 @@ reflectivityLinear_E1_L=NaN(numOfSP,1) ; reflectivityLinear_E1_R=NaN(numOfSP,1) 
 reflectivityLinear_5_L=NaN(numOfSP,1) ; reflectivityLinear_5_R=NaN(numOfSP,1) ; 
 SNR_L1_L=NaN(numOfSP,1) ; SNR_L1_R=NaN(numOfSP,1) ; SNR_5_L=NaN(numOfSP,1) ; 
 SNR_5_R=NaN(numOfSP,1) ; SNR_E1_L=NaN(numOfSP,1) ; SNR_E1_R=NaN(numOfSP,1);...
-EIRP_L1_R = NaN(numOfSP,1) ; EIRP_L1_L = NaN(numOfSP,1); EIRP_L5_R = NaN(numOfSP,1) ; EIRP_L5_L = NaN(numOfSP,1); EIRP_E1_R = NaN(numOfSP,1) ; EIRP_E1_L = NaN(numOfSP,1); EIRP_E5_R = NaN(numOfSP,1) ; EIRP_E5_L = NaN(numOfSP,1);...
+EIRP_L1 = NaN(numOfSP,1) ; EIRP_L5 = NaN(numOfSP,1) ; EIRP_E1 = NaN(numOfSP,1) ; EIRP_E5 = NaN(numOfSP,1) ; ...
 rxAntennaGain_L1_R = NaN(numOfSP,1) ; rxAntennaGain_L1_L = NaN(numOfSP,1); rxAntennaGain_L5_R = NaN(numOfSP,1) ; rxAntennaGain_L5_L = NaN(numOfSP,1); rxAntennaGain_E1_R = NaN(numOfSP,1) ; rxAntennaGain_E1_L = NaN(numOfSP,1); rxAntennaGain_E5_R = NaN(numOfSP,1) ; rxAntennaGain_E5_L = NaN(numOfSP,1);...
 qualityControlFlags_L1_R = NaN(numOfSP,1) ; qualityControlFlags_L1_L = NaN(numOfSP,1); qualityControlFlags_L5_R = NaN(numOfSP,1) ; qualityControlFlags_L5_L = NaN(numOfSP,1); qualityControlFlags_E1_R = NaN(numOfSP,1) ; qualityControlFlags_E1_L = NaN(numOfSP,1); qualityControlFlags_E5_R = NaN(numOfSP,1) ; qualityControlFlags_E5_L = NaN(numOfSP,1);
 NBRCS_L1_R = NaN(numOfSP,1) ; NBRCS_L1_L = NaN(numOfSP,1); NBRCS_L5_R = NaN(numOfSP,1) ; NBRCS_L5_L = NaN(numOfSP,1); NBRCS_E1_R = NaN(numOfSP,1) ; NBRCS_E1_L = NaN(numOfSP,1); NBRCS_E5_R = NaN(numOfSP,1) ; NBRCS_E5_L = NaN(numOfSP,1); powerRatio_L1_R = NaN(numOfSP,1) ; powerRatio_L1_L = NaN(numOfSP,1); powerRatio_L5_R = NaN(numOfSP,1) ; powerRatio_L5_L = NaN(numOfSP,1); powerRatio_E1_R = NaN(numOfSP,1) ; powerRatio_E1_L = NaN(numOfSP,1); powerRatio_E5_R = NaN(numOfSP,1) ; powerRatio_E5_L = NaN(numOfSP,1); NoiseKurtosis=NaN(numOfSP,1);PRN=NaN(numOfSP,1);GNSSConstellation = NaN(numOfSP,1);QC_pass_flag=NaN(numOfSP,1); 
@@ -274,11 +274,9 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
         SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
     
     %EIRP lines
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP)==0 , EIRP_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_RHCP)==0 , EIRP_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP)==0 , EIRP_L1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_RHCP)==0 , EIRP_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_L5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
     
      %rxAntenna Gain lines
      if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP)==0 , rxAntennaGain_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP ; end
@@ -355,11 +353,9 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
             SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
 
    %EIRP lines
-    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP)==0 , EIRP_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_RHCP)==0 , EIRP_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_RHCP ; end
+    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP)==0 , EIRP_E1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_RHCP)==0 , EIRP_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_RHCP ; end
+   if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_E5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
 
      %Rx Antenna gain lines
     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP)==0 , rxAntennaGain_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP ; end
@@ -431,10 +427,10 @@ Nameout=[char(Outfileprefix) '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),
 %
 %QualityControlFlags = QC_pass_flag;  % create the new variable
 pseudoRandomNoise = PRN;
-transmittingSpacecraft_num = SAT;
+transmittingSpacecraft = SAT;
 %Kurtosis_DDM = HighNoiseKurtosis; 
 %Kurtosis_DOPP_0 = NoiseKurtosis;
-IncidenceAngleDeg = THETA;
+incidenceAngleDeg = THETA;
 %spAzimuthAngleDegOrbit = SPAzimuthARF
 
 disp(GNSSConstellation)
@@ -451,11 +447,11 @@ Constellation(GNSSConstellation == 2) = "Galileo";
 Constellation(~(GNSSConstellation==0 | GNSSConstellation==2)) = "Unknown";
 
 
-save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'IncidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'timeUTC',...
-    'transmittingSpacecraft_num', 'reflectivityLinear_L1_L', 'reflectivityLinear_L1_R', 'reflectivityLinear_E1_L',...
+save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'timeUTC',...
+    'transmittingSpacecraft', 'reflectivityLinear_L1_L', 'reflectivityLinear_L1_R', 'reflectivityLinear_E1_L',...
     'reflectivityLinear_E1_R', 'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_L1_L', 'SNR_L1_R', 'SNR_5_L', 'SNR_5_R', 'SNR_E1_L', 'SNR_E1_R', ...
-    'EIRP_L1_R','EIRP_L1_L','EIRP_L5_R','EIRP_L5_L','EIRP_E1_R','EIRP_E1_L','EIRP_E5_R','EIRP_E5_L', ...
+    'EIRP_L1','EIRP_L5','EIRP_E1','EIRP_E5', ...
     'rxAntennaGain_L1_R','rxAntennaGain_L1_L','rxAntennaGain_L5_R','rxAntennaGain_L5_L','rxAntennaGain_E1_R','rxAntennaGain_E1_L','rxAntennaGain_E5_R','rxAntennaGain_E5_L', ...
     'qualityControlFlags_L1_R','qualityControlFlags_L1_L','qualityControlFlags_L5_R','qualityControlFlags_L5_L','qualityControlFlags_E1_R','qualityControlFlags_E1_L','qualityControlFlags_E5_R','qualityControlFlags_E5_L', ...
     'powerAnalogW_L1_R','powerAnalogW_L1_L','powerAnalogW_L5_R','powerAnalogW_L5_L','powerAnalogW_E1_R','powerAnalogW_E1_L','powerAnalogW_E5_R','powerAnalogW_E5_L',...
