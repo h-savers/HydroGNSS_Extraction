@@ -183,7 +183,7 @@ for ii=1:NumOfTracks
     numOfSP=numOfSP+length(ReflectionCoefficientAtSP(ii).SpecularPointLat) ; 
 end
 
-timeUTC=[]; time=[]; specularPointLat=[]; specularPointLon=[];  THETA=[] ;  Constellation = strings(numOfSP,1); teWidth=[] ; spAzimuthAngleDegOrbit=[] ;dayOfYear=[] ; secondOfDay=[] ;  
+timeUTC=[]; time=[]; specularPointLat=[]; specularPointLon=[];  THETA=[] ;  constellation = strings(numOfSP,1); teWidth=[] ; spAzimuthAngleDegOrbit=[] ;dayOfYear=[] ; secondOfDay=[] ;  
 reflectivityLinear_L1_L=NaN(numOfSP,1) ; reflectivityLinear_L1_R=NaN(numOfSP,1) ;
 reflectivityLinear_E1_L=NaN(numOfSP,1) ; reflectivityLinear_E1_R=NaN(numOfSP,1) ;
 reflectivityLinear_5_L=NaN(numOfSP,1) ; reflectivityLinear_5_R=NaN(numOfSP,1) ; 
@@ -438,18 +438,18 @@ incidenceAngleDeg = THETA;
 
 
 % Initialize string array of same size as GNSSConstellation
-Constellation = strings(size(GNSSConstellation));  
+constellation = strings(size(GNSSConstellation));  
 
 % Assign values based on GNSSConstellation
-Constellation(GNSSConstellation == 0) = "GPS";
-Constellation(GNSSConstellation == 2) = "Galileo";
+constellation(GNSSConstellation == 0) = "GPS";
+constellation(GNSSConstellation == 2) = "Galileo";
 
 % Optional: mark unknowns
-Constellation(~(GNSSConstellation==0 | GNSSConstellation==2)) = "Unknown";
+constellation(~(GNSSConstellation==0 | GNSSConstellation==2)) = "Unknown";
 
 
 save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay','time', 'timeUTC',...
-    'transmittingSpacecraft', 'reflectivityLinear_L1_L', 'reflectivityLinear_L1_R', 'reflectivityLinear_E1_L',...
+    'reflectivityLinear_L1_L', 'reflectivityLinear_L1_R', 'reflectivityLinear_E1_L',...
     'reflectivityLinear_E1_R', 'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_L1_L', 'SNR_L1_R', 'SNR_5_L', 'SNR_5_R', 'SNR_E1_L', 'SNR_E1_R', ...
     'EIRP_L1','EIRP_L5','EIRP_E1','EIRP_E5', ...
@@ -459,7 +459,7 @@ save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointL
     'NBRCS_L1_R','NBRCS_L1_L','NBRCS_L5_R','NBRCS_L5_L','NBRCS_E1_R','NBRCS_E1_L','NBRCS_E5_R','NBRCS_E5_L','powerRatio_L1_R','powerRatio_L1_L','powerRatio_L5_R','powerRatio_L5_L','powerRatio_E1_R','powerRatio_E1_L','powerRatio_E5_R','powerRatio_E5_L', ...
     'kurtosisDDM_L1_R','kurtosisDDM_L1_L','kurtosisDDM_L5_R','kurtosisDDM_L5_L','kurtosisDDM_E1_R','kurtosisDDM_E1_L','kurtosisDDM_E5_R','kurtosisDDM_E5_L',...
     'kurtosisDopp0_L1_R','kurtosisDopp0_L1_L','kurtosisDopp0_L5_R','kurtosisDopp0_L5_L','kurtosisDopp0_E1_R','kurtosisDopp0_E1_L','kurtosisDopp0_E5_R','kurtosisDopp0_E5_L',...
-    'pseudoRandomNoise', 'GNSSConstellation','Year', 'teWidth', 'Constellation', ...
+    'pseudoRandomNoise', 'GNSSConstellation','Year', 'teWidth', 'constellation', ...
     'noiseFloorCounts_L1_R','noiseFloorCounts_L1_L','noiseFloorCounts_L5_R','noiseFloorCounts_L5_L','noiseFloorCounts_E1_R','noiseFloorCounts_E1_L','noiseFloorCounts_E5_R','noiseFloorCounts_E5_L') ; 
 
 
