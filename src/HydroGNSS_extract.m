@@ -226,13 +226,13 @@ for kk = 1:NumOfTracks
     else
         error('Unknown time format in ReflectionCoefficientAtSP(%d).time', kk);
     end
-
+dt_full.Format = 'yyyy-MM-dd HH:mm:ss';  % keep only date and HH:MM:SS
+timeUTC = [timeUTC; dt_full(:)];
 % --- Convert to time-only duration preserving all fractional seconds
 secs_since_midnight = hour(dt_full)*3600 + minute(dt_full)*60 + second(dt_full); 
-dt_timeonly = seconds(secs_since_midnight);       
-dt_timeonly.Format = 'hh:mm:ss.SSSSSSSSS';      % display hh:mm:ss with full precision
+%dt_timeonly = seconds(secs_since_midnight);       
+%dt_timeonly.Format = 'hh:mm:ss.SSSSSSSSS';      % display hh:mm:ss with full precision
 
-timeUTC = [timeUTC; dt_timeonly(:)];
 
     % --- Additional variables
     dayOfYear = [dayOfYear; day(dt_full(:), 'dayofyear')];
