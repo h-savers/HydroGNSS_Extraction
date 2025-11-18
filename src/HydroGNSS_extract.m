@@ -1,6 +1,6 @@
 
 function ReflectionCoefficientAtSP=HydroGNSS_extract(init_SM_Day,final_SM_Day, configurationPath) ; 
-%
+%%utctimefixed
 close all
 clearvars -except  init_SM_Day final_SM_Day configurationPath
 
@@ -217,53 +217,23 @@ for kk = 1:NumOfTracks
     time = [time; t_track(:)];
 
     % --- Convert to full UTC datetime
-    if isnumeric(t_track)
-        dt_full = Dayinit + seconds(t_track);          % numeric seconds → full UTC datetime
-    elseif isdatetime(t_track)
-        dt_full = t_track;                             % already datetime
-    elseif isstring(t_track) || ischar(t_track)
-        dt_full = datetime(t_track, 'TimeZone', 'UTC'); 
-    else
-        error('Unknown time format in ReflectionCoefficientAtSP(%d).time', kk);
-    end
-dt_full.Format = 'yyyy-MM-dd HH:mm:ss';  % keep only date and HH:MM:SS
-timeUTC = [timeUTC; dt_full(:)];
-% --- Convert to time-only duration preserving all fractional seconds
-secs_since_midnight = hour(dt_full)*3600 + minute(dt_full)*60 + second(dt_full); 
-%dt_timeonly = seconds(secs_since_midnight);       
-%dt_timeonly.Format = 'hh:mm:ss.SSSSSSSSS';      % display hh:mm:ss with full precision
+% Inside your loop
+t_track = ReflectionCoefficientAtSP(kk).time;  % numeric seconds
+
+% --- Keep numeric time
+time = [time; t_track(:)];
 
 
-    % --- Additional variables
-    dayOfYear = [dayOfYear; day(dt_full(:), 'dayofyear')];
-    secondOfDay = [secondOfDay; secs_since_midnight];
-    Year = [Year; year(dt_full(:))];
+dt_full = datetime(t_track, 'ConvertFrom', 'datenum');  % full precision
+timeUTC = [timeUTC; dt_full];
 
+% Set display format for the entire timeUTC array
+timeUTC.Format = 'yyyy-MM-dd HH:mm:ss';
 
-
-%     timeUTC=[timeUTC ; ReflectionCoefficientAtSP(kk).time] ; 
-%     % --- Compute dayOfYear and secondOfDay for this track (inserted after time = ...)
-% t_track = ReflectionCoefficientAtSP(kk).time;
-% 
-% % Manually assign datetime
-% if isdatetime(t_track)
-%     dt = t_track;
-% elseif isnumeric(t_track)
-%     % If numeric, assume it’s seconds relative to start of the dataset
-%     dt = Dayinit + seconds(t_track); % Dayinit is datetime of first day
-% elseif isstring(t_track) || ischar(t_track)
-%     dt = datetime(t_track,'TimeZone','UTC');
-% else
-%     error('Unknown time format in ReflectionCoefficientAtSP(%d).time', kk);
-% end
-%  % disp('% computing  Trailing Edge')                     
-%  %           teWidth=computeTE(DDM,Power_threshold);  
-%  % delay_vector
-% 
-% % Append Day-of-Year and Seconds-of-Day
-% dayOfYear = [dayOfYear; day(dt,'dayofyear')];
-% secondOfDay = [secondOfDay; hour(dt)*3600 + minute(dt)*60 + second(dt)];
-% Year = [Year; year(dt)];
+% Additional variables
+dayOfYear = [dayOfYear; day(dt_full,'dayofyear')];
+secondOfDay = [secondOfDay; hour(dt_full)*3600 + minute(dt_full)*60 + second(dt_full)];
+Year = [Year; year(dt_full)];
 
 
     specularPointLat=[specularPointLat ; ReflectionCoefficientAtSP(kk).SpecularPointLat] ; 
