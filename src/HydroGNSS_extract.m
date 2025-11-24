@@ -183,29 +183,29 @@ for ii=1:NumOfTracks
     numOfSP=numOfSP+length(ReflectionCoefficientAtSP(ii).SpecularPointLat) ; 
 end
 
-timeUTC=[]; time=[]; specularPointLat=[]; specularPointLon=[];  THETA=[] ;  constellation = strings(numOfSP,1); teWidth=[] ; spAzimuthAngleDegOrbit=[] ;dayOfYear=[] ; secondOfDay=[] ;  
-reflectivityLinear_L1_L=NaN(numOfSP,1) ; reflectivityLinear_L1_R=NaN(numOfSP,1) ;
-reflectivityLinear_E1_L=NaN(numOfSP,1) ; reflectivityLinear_E1_R=NaN(numOfSP,1) ;
-reflectivityLinear_5_L=NaN(numOfSP,1) ; reflectivityLinear_5_R=NaN(numOfSP,1) ; 
-SNR_L1_L=NaN(numOfSP,1) ; SNR_L1_R=NaN(numOfSP,1) ; SNR_5_L=NaN(numOfSP,1) ; 
-SNR_5_R=NaN(numOfSP,1) ; SNR_E1_L=NaN(numOfSP,1) ; SNR_E1_R=NaN(numOfSP,1);...
-EIRP_L1 = NaN(numOfSP,1) ; EIRP_L5 = NaN(numOfSP,1) ; EIRP_E1 = NaN(numOfSP,1) ; EIRP_E5 = NaN(numOfSP,1) ; ...
-rxAntennaGain_L1_R = NaN(numOfSP,1) ; rxAntennaGain_L1_L = NaN(numOfSP,1); rxAntennaGain_L5_R = NaN(numOfSP,1) ; rxAntennaGain_L5_L = NaN(numOfSP,1); rxAntennaGain_E1_R = NaN(numOfSP,1) ; rxAntennaGain_E1_L = NaN(numOfSP,1); rxAntennaGain_E5_R = NaN(numOfSP,1) ; rxAntennaGain_E5_L = NaN(numOfSP,1);...
-qualityControlFlags_L1_R = NaN(numOfSP,1) ; qualityControlFlags_L1_L = NaN(numOfSP,1); qualityControlFlags_L5_R = NaN(numOfSP,1) ; qualityControlFlags_L5_L = NaN(numOfSP,1); qualityControlFlags_E1_R = NaN(numOfSP,1) ; qualityControlFlags_E1_L = NaN(numOfSP,1); qualityControlFlags_E5_R = NaN(numOfSP,1) ; qualityControlFlags_E5_L = NaN(numOfSP,1);
-NBRCS_L1_R = NaN(numOfSP,1) ; NBRCS_L1_L = NaN(numOfSP,1); NBRCS_L5_R = NaN(numOfSP,1) ; NBRCS_L5_L = NaN(numOfSP,1); NBRCS_E1_R = NaN(numOfSP,1) ; NBRCS_E1_L = NaN(numOfSP,1); NBRCS_E5_R = NaN(numOfSP,1) ; NBRCS_E5_L = NaN(numOfSP,1); powerRatio_L1_R = NaN(numOfSP,1) ; powerRatio_L1_L = NaN(numOfSP,1); powerRatio_L5_R = NaN(numOfSP,1) ; powerRatio_L5_L = NaN(numOfSP,1); powerRatio_E1_R = NaN(numOfSP,1) ; powerRatio_E1_L = NaN(numOfSP,1); powerRatio_E5_R = NaN(numOfSP,1) ; powerRatio_E5_L = NaN(numOfSP,1); NoiseKurtosis=NaN(numOfSP,1);PRN=NaN(numOfSP,1);GNSSConstellation = NaN(numOfSP,1);QC_pass_flag=NaN(numOfSP,1); 
-kurtosisDDM_L1_R = NaN(numOfSP,1) ; kurtosisDDM_L1_L = NaN(numOfSP,1); kurtosisDDM_L5_R = NaN(numOfSP,1) ; kurtosisDDM_L5_L = NaN(numOfSP,1); kurtosisDDM_E1_R = NaN(numOfSP,1) ; kurtosisDDM_E1_L = NaN(numOfSP,1); kurtosisDDM_E5_R = NaN(numOfSP,1) ; kurtosisDDM_E5_L = NaN(numOfSP,1);
-kurtosisDopp0_L1_R = NaN(numOfSP,1) ; kurtosisDopp0_L1_L = NaN(numOfSP,1); kurtosisDopp0_L5_R = NaN(numOfSP,1) ; kurtosisDopp0_L5_L = NaN(numOfSP,1); kurtosisDopp0_E1_R = NaN(numOfSP,1) ; kurtosisDopp0_E1_L = NaN(numOfSP,1); kurtosisDopp0_E5_R = NaN(numOfSP,1) ; kurtosisDopp0_E5_L = NaN(numOfSP,1);
-noiseFloorCounts_L1_R = NaN(numOfSP,1) ; noiseFloorCounts_L1_L = NaN(numOfSP,1); noiseFloorCounts_L5_R = NaN(numOfSP,1) ; noiseFloorCounts_L5_L = NaN(numOfSP,1); noiseFloorCounts_E1_R = NaN(numOfSP,1) ; noiseFloorCounts_E1_L = NaN(numOfSP,1); noiseFloorCounts_E5_R = NaN(numOfSP,1) ; noiseFloorCounts_E5_L = NaN(numOfSP,1);
-powerAnalogW_L1_R = NaN(numOfSP,1); powerAnalogW_L1_L = NaN(numOfSP,1); powerAnalogW_L5_R = NaN(numOfSP,1); powerAnalogW_L5_L = NaN(numOfSP,1); powerAnalogW_E1_R = NaN(numOfSP,1); powerAnalogW_E1_L = NaN(numOfSP,1); powerAnalogW_E5_R = NaN(numOfSP,1); powerAnalogW_E5_L = NaN(numOfSP,1);
+timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[];  THETA=[] ;  constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
+reflectivityLinear_L1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_L1_R=single(NaN(numOfSP,1)) ;
+reflectivityLinear_E1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_E1_R=single(NaN(numOfSP,1)) ;
+reflectivityLinear_5_L=single(NaN(numOfSP,1)) ; reflectivityLinear_5_R=single(NaN(numOfSP,1)) ; 
+SNR_L1_L=single(NaN(numOfSP,1)) ; SNR_L1_R=single(NaN(numOfSP,1)) ; SNR_5_L=single(NaN(numOfSP,1)) ; 
+SNR_5_R=single(NaN(numOfSP,1)) ; SNR_E1_L=single(NaN(numOfSP,1)) ; SNR_E1_R=single(NaN(numOfSP,1));...
+EIRP_L1 = single(NaN(numOfSP,1)) ; EIRP_L5 = single(NaN(numOfSP,1)) ; EIRP_E1 = single(NaN(numOfSP,1)) ; EIRP_E5 = single(NaN(numOfSP,1)) ; ...
+rxAntennaGain_L1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L1_L = single(NaN(numOfSP,1)); rxAntennaGain_L5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L5_L = single(NaN(numOfSP,1)); rxAntennaGain_E1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_E1_L = single(NaN(numOfSP,1)); rxAntennaGain_E5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_E5_L = single(NaN(numOfSP,1));...
+qualityControlFlags_L1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_L1_L = single(NaN(numOfSP,1)); qualityControlFlags_L5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_L5_L = single(NaN(numOfSP,1)); qualityControlFlags_E1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E1_L = single(NaN(numOfSP,1)); qualityControlFlags_E5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E5_L = single(NaN(numOfSP,1));
+NBRCS_L1_R = single(NaN(numOfSP,1)) ; NBRCS_L1_L = single(NaN(numOfSP,1)); NBRCS_L5_R = single(NaN(numOfSP,1)) ; NBRCS_L5_L = single(NaN(numOfSP,1)); NBRCS_E1_R = single(NaN(numOfSP,1)) ; NBRCS_E1_L = single(NaN(numOfSP,1)); NBRCS_E5_R = single(NaN(numOfSP,1)) ; NBRCS_E5_L = single(NaN(numOfSP,1)); powerRatio_L1_R = single(NaN(numOfSP,1)) ; powerRatio_L1_L = single(NaN(numOfSP,1)); powerRatio_L5_R = single(NaN(numOfSP,1)) ; powerRatio_L5_L = single(NaN(numOfSP,1)); powerRatio_E1_R = single(NaN(numOfSP,1)) ; powerRatio_E1_L = single(NaN(numOfSP,1)); powerRatio_E5_R = single(NaN(numOfSP,1)) ; powerRatio_E5_L = single(NaN(numOfSP,1)); NoiseKurtosis=single(NaN(numOfSP,1));PRN=single(NaN(numOfSP,1));GNSSConstellation = single(NaN(numOfSP,1));QC_pass_flag=single(NaN(numOfSP,1)); 
+kurtosisDDM_L1_R = single(NaN(numOfSP,1)) ; kurtosisDDM_L1_L = single(NaN(numOfSP,1)); kurtosisDDM_L5_R = single(NaN(numOfSP,1)) ; kurtosisDDM_L5_L = single(NaN(numOfSP,1)); kurtosisDDM_E1_R = single(NaN(numOfSP,1)) ; kurtosisDDM_E1_L = single(NaN(numOfSP,1)); kurtosisDDM_E5_R = single(NaN(numOfSP,1)) ; kurtosisDDM_E5_L = single(NaN(numOfSP,1));
+kurtosisDopp0_L1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_L1_L = single(NaN(numOfSP,1)); kurtosisDopp0_L5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_L5_L = single(NaN(numOfSP,1)); kurtosisDopp0_E1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E1_L = single(NaN(numOfSP,1)); kurtosisDopp0_E5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E5_L = single(NaN(numOfSP,1));
+noiseFloorCounts_L1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_L1_L = single(NaN(numOfSP,1)); noiseFloorCounts_L5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_L5_L = single(NaN(numOfSP,1)); noiseFloorCounts_E1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E1_L = single(NaN(numOfSP,1)); noiseFloorCounts_E5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E5_L = single(NaN(numOfSP,1));
+powerAnalogW_L1_R = single(NaN(numOfSP,1)); powerAnalogW_L1_L = single(NaN(numOfSP,1)); powerAnalogW_L5_R = single(NaN(numOfSP,1)); powerAnalogW_L5_L = single(NaN(numOfSP,1)); powerAnalogW_E1_R = single(NaN(numOfSP,1)); powerAnalogW_E1_L = single(NaN(numOfSP,1)); powerAnalogW_E5_R = single(NaN(numOfSP,1)); powerAnalogW_E5_L = single(NaN(numOfSP,1));
 
 
 GPSindex=find(SAT=="GPS") ;
 Galileoindex=find(SAT=="Galileo") ; 
 
 fintrack=0 ; 
-dayOfYear = [];
-secondOfDay = [];
-Year = [];
+%dayOfYear = [];
+%secondOfDay = [];
+Year = single([]);
 
 
 format long g   % <-- ADD this at the top of your script
