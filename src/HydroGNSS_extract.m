@@ -189,14 +189,14 @@ reflectivityLinear_E1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_E1_R=single(
 reflectivityLinear_5_L=single(NaN(numOfSP,1)) ; reflectivityLinear_5_R=single(NaN(numOfSP,1)) ; 
 SNR_L1_L=single(NaN(numOfSP,1)) ; SNR_L1_R=single(NaN(numOfSP,1)) ; SNR_5_L=single(NaN(numOfSP,1)) ; 
 SNR_5_R=single(NaN(numOfSP,1)) ; SNR_E1_L=single(NaN(numOfSP,1)) ; SNR_E1_R=single(NaN(numOfSP,1));...
-EIRP_L1 = single(NaN(numOfSP,1)) ; EIRP_L5 = single(NaN(numOfSP,1)) ; EIRP_E1 = single(NaN(numOfSP,1)) ; EIRP_E5 = single(NaN(numOfSP,1)) ; ...
-rxAntennaGain_L1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L1_L = single(NaN(numOfSP,1)); rxAntennaGain_L5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L5_L = single(NaN(numOfSP,1)); rxAntennaGain_E1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_E1_L = single(NaN(numOfSP,1)); rxAntennaGain_E5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_E5_L = single(NaN(numOfSP,1));...
-qualityControlFlags_L1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_L1_L = single(NaN(numOfSP,1)); qualityControlFlags_L5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_L5_L = single(NaN(numOfSP,1)); qualityControlFlags_E1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E1_L = single(NaN(numOfSP,1)); qualityControlFlags_E5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E5_L = single(NaN(numOfSP,1));
-NBRCS_L1_R = single(NaN(numOfSP,1)) ; NBRCS_L1_L = single(NaN(numOfSP,1)); NBRCS_L5_R = single(NaN(numOfSP,1)) ; NBRCS_L5_L = single(NaN(numOfSP,1)); NBRCS_E1_R = single(NaN(numOfSP,1)) ; NBRCS_E1_L = single(NaN(numOfSP,1)); NBRCS_E5_R = single(NaN(numOfSP,1)) ; NBRCS_E5_L = single(NaN(numOfSP,1)); powerRatio_L1_R = single(NaN(numOfSP,1)) ; powerRatio_L1_L = single(NaN(numOfSP,1)); powerRatio_L5_R = single(NaN(numOfSP,1)) ; powerRatio_L5_L = single(NaN(numOfSP,1)); powerRatio_E1_R = single(NaN(numOfSP,1)) ; powerRatio_E1_L = single(NaN(numOfSP,1)); powerRatio_E5_R = single(NaN(numOfSP,1)) ; powerRatio_E5_L = single(NaN(numOfSP,1)); NoiseKurtosis=single(NaN(numOfSP,1));PRN=single(NaN(numOfSP,1));GNSSConstellation = single(NaN(numOfSP,1));QC_pass_flag=single(NaN(numOfSP,1)); 
-kurtosisDDM_L1_R = single(NaN(numOfSP,1)) ; kurtosisDDM_L1_L = single(NaN(numOfSP,1)); kurtosisDDM_L5_R = single(NaN(numOfSP,1)) ; kurtosisDDM_L5_L = single(NaN(numOfSP,1)); kurtosisDDM_E1_R = single(NaN(numOfSP,1)) ; kurtosisDDM_E1_L = single(NaN(numOfSP,1)); kurtosisDDM_E5_R = single(NaN(numOfSP,1)) ; kurtosisDDM_E5_L = single(NaN(numOfSP,1));
-kurtosisDopp0_L1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_L1_L = single(NaN(numOfSP,1)); kurtosisDopp0_L5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_L5_L = single(NaN(numOfSP,1)); kurtosisDopp0_E1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E1_L = single(NaN(numOfSP,1)); kurtosisDopp0_E5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E5_L = single(NaN(numOfSP,1));
-noiseFloorCounts_L1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_L1_L = single(NaN(numOfSP,1)); noiseFloorCounts_L5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_L5_L = single(NaN(numOfSP,1)); noiseFloorCounts_E1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E1_L = single(NaN(numOfSP,1)); noiseFloorCounts_E5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E5_L = single(NaN(numOfSP,1));
-powerAnalogW_L1_R = single(NaN(numOfSP,1)); powerAnalogW_L1_L = single(NaN(numOfSP,1)); powerAnalogW_L5_R = single(NaN(numOfSP,1)); powerAnalogW_L5_L = single(NaN(numOfSP,1)); powerAnalogW_E1_R = single(NaN(numOfSP,1)); powerAnalogW_E1_L = single(NaN(numOfSP,1)); powerAnalogW_E5_R = single(NaN(numOfSP,1)); powerAnalogW_E5_L = single(NaN(numOfSP,1));
+EIRP_L1 = single(NaN(numOfSP,1)) ; EIRP_L5 = single(NaN(numOfSP,1)) ; EIRP_E1 = single(NaN(numOfSP,1)) ; EIRP_5 = single(NaN(numOfSP,1)) ; ...
+rxAntennaGain_L1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L1_L = single(NaN(numOfSP,1)); rxAntennaGain_L5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L5_L = single(NaN(numOfSP,1)); rxAntennaGain_E1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_E1_L = single(NaN(numOfSP,1)); rxAntennaGain_5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_5_L = single(NaN(numOfSP,1));...
+qualityControlFlags_L1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_L1_L = single(NaN(numOfSP,1)); qualityControlFlags_5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_5_L = single(NaN(numOfSP,1)); qualityControlFlags_E1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E1_L = single(NaN(numOfSP,1)); qualityControlFlags_E5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E5_L = single(NaN(numOfSP,1));
+NBRCS_L1_R = single(NaN(numOfSP,1)) ; NBRCS_L1_L = single(NaN(numOfSP,1)); NBRCS_5_R = single(NaN(numOfSP,1)) ; NBRCS_5_L = single(NaN(numOfSP,1)); NBRCS_E1_R = single(NaN(numOfSP,1)) ; NBRCS_E1_L = single(NaN(numOfSP,1)); NBRCS_E5_R = single(NaN(numOfSP,1)) ; NBRCS_E5_L = single(NaN(numOfSP,1)); powerRatio_L1_R = single(NaN(numOfSP,1)) ; powerRatio_L1_L = single(NaN(numOfSP,1)); powerRatio_5_R = single(NaN(numOfSP,1)) ; powerRatio_5_L = single(NaN(numOfSP,1)); powerRatio_E1_R = single(NaN(numOfSP,1)) ; powerRatio_E1_L = single(NaN(numOfSP,1)); powerRatio_E5_R = single(NaN(numOfSP,1)) ; powerRatio_E5_L = single(NaN(numOfSP,1)); NoiseKurtosis=single(NaN(numOfSP,1));PRN=single(NaN(numOfSP,1));GNSSConstellation = single(NaN(numOfSP,1));QC_pass_flag=single(NaN(numOfSP,1)); 
+kurtosisDDM_L1_R = single(NaN(numOfSP,1)) ; kurtosisDDM_L1_L = single(NaN(numOfSP,1)); kurtosisDDM_5_R = single(NaN(numOfSP,1)) ; kurtosisDDM_5_L = single(NaN(numOfSP,1)); kurtosisDDM_E1_R = single(NaN(numOfSP,1)) ; kurtosisDDM_E1_L = single(NaN(numOfSP,1)); kurtosisDDM_E5_R = single(NaN(numOfSP,1)) ; kurtosisDDM_E5_L = single(NaN(numOfSP,1));
+kurtosisDopp0_L1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_L1_L = single(NaN(numOfSP,1)); kurtosisDopp0_5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_5_L = single(NaN(numOfSP,1)); kurtosisDopp0_E1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E1_L = single(NaN(numOfSP,1)); kurtosisDopp0_E5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E5_L = single(NaN(numOfSP,1));
+noiseFloorCounts_L1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_L1_L = single(NaN(numOfSP,1)); noiseFloorCounts_5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_5_L = single(NaN(numOfSP,1)); noiseFloorCounts_E1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E1_L = single(NaN(numOfSP,1)); noiseFloorCounts_E5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E5_L = single(NaN(numOfSP,1));
+powerAnalogW_L1_R = single(NaN(numOfSP,1)); powerAnalogW_L1_L = single(NaN(numOfSP,1)); powerAnalogW_5_R = single(NaN(numOfSP,1)); powerAnalogW_5_L = single(NaN(numOfSP,1)); powerAnalogW_E1_R = single(NaN(numOfSP,1)); powerAnalogW_E1_L = single(NaN(numOfSP,1)); powerAnalogW_E5_R = single(NaN(numOfSP,1)); powerAnalogW_E5_L = single(NaN(numOfSP,1));
 
 
 GPSindex=find(SAT=="GPS") ;
@@ -278,66 +278,67 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
     %EIRP lines
      if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP)==0 , EIRP_L1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_L5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
-    
+ %    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_L5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
+         if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
+
      %rxAntenna Gain lines
      if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP)==0 , rxAntennaGain_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP)==0 , rxAntennaGain_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP)==0 , rxAntennaGain_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP)==0 , rxAntennaGain_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP)==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP)==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP ; end
   
 
     %QualityControlFlag lines
 %     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP)==0 , qualityControlFlags_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP ; end
 %     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP)==0 , qualityControlFlags_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP ; end
 
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP)==0 , qualityControlFlags_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP ; end
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP)==0 , qualityControlFlags_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP)==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP)==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP ; end
   
 
      %PowerAnalog_W lines
 if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP)==0 , powerAnalogW_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP ; end
 if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP)==0 , powerAnalogW_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP ; end
 
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP)==0 , powerAnalogW_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnalogW_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP)==0 , powerAnalogW_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnalogW_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP ; end
 
 
      %MeanNoise lines
      if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP)==0 , noiseFloorCounts_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP)==0 , noiseFloorCounts_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP)==0 , noiseFloorCounts_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP)==0 , noiseFloorCounts_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP)==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP)==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP ; end
    
      %powerRatio lines
      if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP)==0 , powerRatio_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP)==0 , powerRatio_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP)==0 , powerRatio_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP)==0 , powerRatio_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP)==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP)==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP ; end
 
      %Sigma0 lines
     if ismissing(Sigma0(kk).NBRCS_L1_LHCP)==0 , NBRCS_L1_L(intrack:fintrack)=Sigma0(kk).NBRCS_L1_LHCP ; end
     if ismissing(Sigma0(kk).NBRCS_L1_RHCP)==0 , NBRCS_L1_R(intrack:fintrack)=Sigma0(kk).NBRCS_L1_RHCP ; end
 
-    if ismissing(Sigma0(kk).NBRCS_L5_LHCP)==0 , NBRCS_L5_L(intrack:fintrack)=Sigma0(kk).NBRCS_L5_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_L5_RHCP)==0 , NBRCS_L5_R(intrack:fintrack)=Sigma0(kk).NBRCS_L5_RHCP ; end
+    if ismissing(Sigma0(kk).NBRCS_L5_LHCP)==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_L5_LHCP ; end
+     if ismissing(Sigma0(kk).NBRCS_L5_RHCP)==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_L5_RHCP ; end
 
       %HighNoiseKurtosis lines
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP)==0 , kurtosisDDM_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP)==0 , kurtosisDDM_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP)==0 , kurtosisDDM_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP)==0 , kurtosisDDM_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP)==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP)==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP ; end
 
            %NoiseKurtosis lines
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP)==0 , kurtosisDopp0_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP)==0 , kurtosisDopp0_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP)==0 , kurtosisDopp0_L5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP)==0 , kurtosisDopp0_L5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP)==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP)==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP ; end
 
 
      case "Galileo"
@@ -356,31 +357,31 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
 
    %EIRP lines
     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP)==0 , EIRP_E1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP ; end
-
-   if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_E5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
+ %   if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_E5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
+    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
 
      %Rx Antenna gain lines
     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP)==0 , rxAntennaGain_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP ; end
     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP)==0 , rxAntennaGain_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP)==0 , rxAntennaGain_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP)==0 , rxAntennaGain_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP)==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP)==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP ; end
 
 
      %Quality control flag lines
   %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP)==0 , qualityControlFlags_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP ; end
   %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP)==0 , qualityControlFlags_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP ; end
 
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP)==0 , qualityControlFlags_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP ; end
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP)==0 , qualityControlFlags_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP ; end
+  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP)==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP ; end
+  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP)==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP ; end
 
 
 %PowerAnalog_W lines
 if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP)==0 , powerAnalogW_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP ; end
 if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP)==0 , powerAnalogW_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP ; end
 
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP)==0 , powerAnalogW_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnalogW_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP)==0 , powerAnalogW_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnalogW_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP ; end
 
 
    
@@ -388,37 +389,37 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnal
     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP)==0 , noiseFloorCounts_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP ; end
     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP)==0 , noiseFloorCounts_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP)==0 , noiseFloorCounts_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP)==0 , noiseFloorCounts_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP)==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP)==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP ; end
 
 
           %PowerSpreadRatio lines
      if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP)==0 , powerRatio_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP)==0 , powerRatio_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP)==0 , powerRatio_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP)==0 , powerRatio_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP)==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP)==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP ; end
 
      %HighNoiseKurtosis lines
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP)==0 , kurtosisDDM_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP)==0 , kurtosisDDM_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP)==0 , kurtosisDDM_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP)==0 , kurtosisDDM_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP)==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP)==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP ; end
 
      %NoiseKurtosis lines
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP)==0 , kurtosisDopp0_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP)==0 , kurtosisDopp0_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP)==0 , kurtosisDopp0_E5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP)==0 , kurtosisDopp0_E5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP)==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP)==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP ; end
 
      %Sigma0 lines
      if ismissing(Sigma0(kk).NBRCS_E1_LHCP)==0 , NBRCS_E1_L(intrack:fintrack)=Sigma0(kk).NBRCS_E1_LHCP ; end
      if ismissing(Sigma0(kk).NBRCS_E1_RHCP)==0 , NBRCS_E1_R(intrack:fintrack)=Sigma0(kk).NBRCS_E1_RHCP ; end
 
-     if ismissing(Sigma0(kk).NBRCS_E5_LHCP)==0 , NBRCS_E5_L(intrack:fintrack)=Sigma0(kk).NBRCS_E5_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_E5_RHCP)==0 , NBRCS_E5_R(intrack:fintrack)=Sigma0(kk).NBRCS_E5_RHCP ; end
+     if ismissing(Sigma0(kk).NBRCS_E5_LHCP)==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_E5_LHCP ; end
+     if ismissing(Sigma0(kk).NBRCS_E5_RHCP)==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_E5_RHCP ; end
 
 
   end % end case over the satgellite
@@ -452,18 +453,17 @@ save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointL
     'reflectivityLinear_L1_L', 'reflectivityLinear_L1_R', 'reflectivityLinear_E1_L',...
     'reflectivityLinear_E1_R', 'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_L1_L', 'SNR_L1_R', 'SNR_5_L', 'SNR_5_R', 'SNR_E1_L', 'SNR_E1_R', ...
-    'EIRP_L1','EIRP_L5','EIRP_E1','EIRP_E5', ...
-    'rxAntennaGain_L1_R','rxAntennaGain_L1_L','rxAntennaGain_L5_R','rxAntennaGain_L5_L','rxAntennaGain_E1_R','rxAntennaGain_E1_L','rxAntennaGain_E5_R','rxAntennaGain_E5_L', ...
-    'qualityControlFlags_L1_R','qualityControlFlags_L1_L','qualityControlFlags_L5_R','qualityControlFlags_L5_L','qualityControlFlags_E1_R','qualityControlFlags_E1_L','qualityControlFlags_E5_R','qualityControlFlags_E5_L', ...
-    'powerAnalogW_L1_R','powerAnalogW_L1_L','powerAnalogW_L5_R','powerAnalogW_L5_L','powerAnalogW_E1_R','powerAnalogW_E1_L','powerAnalogW_E5_R','powerAnalogW_E5_L',...
-    'NBRCS_L1_R','NBRCS_L1_L','NBRCS_L5_R','NBRCS_L5_L','NBRCS_E1_R','NBRCS_E1_L','NBRCS_E5_R','NBRCS_E5_L','powerRatio_L1_R','powerRatio_L1_L','powerRatio_L5_R','powerRatio_L5_L','powerRatio_E1_R','powerRatio_E1_L','powerRatio_E5_R','powerRatio_E5_L', ...
-    'kurtosisDDM_L1_R','kurtosisDDM_L1_L','kurtosisDDM_L5_R','kurtosisDDM_L5_L','kurtosisDDM_E1_R','kurtosisDDM_E1_L','kurtosisDDM_E5_R','kurtosisDDM_E5_L',...
-    'kurtosisDopp0_L1_R','kurtosisDopp0_L1_L','kurtosisDopp0_L5_R','kurtosisDopp0_L5_L','kurtosisDopp0_E1_R','kurtosisDopp0_E1_L','kurtosisDopp0_E5_R','kurtosisDopp0_E5_L',...
+    'EIRP_L1','EIRP_5','EIRP_E1', ...
+    'rxAntennaGain_L1_R','rxAntennaGain_L1_L','rxAntennaGain_E1_R','rxAntennaGain_E1_L','rxAntennaGain_5_R','rxAntennaGain_5_L', ...
+    'qualityControlFlags_L1_R','qualityControlFlags_L1_L','qualityControlFlags_5_R','qualityControlFlags_5_L','qualityControlFlags_E1_R','qualityControlFlags_E1_L', ...
+    'powerAnalogW_L1_R','powerAnalogW_L1_L','powerAnalogW_E1_R','powerAnalogW_E1_L','powerAnalogW_5_R','powerAnalogW_5_L',...
+    'NBRCS_L1_R','NBRCS_L1_L','NBRCS_5_R','NBRCS_5_L','NBRCS_E1_R','NBRCS_E1_L','powerRatio_L1_R','powerRatio_L1_L','powerRatio_E1_R','powerRatio_E1_L','powerRatio_5_R','powerRatio_5_L', ...
+    'kurtosisDDM_L1_R','kurtosisDDM_L1_L','kurtosisDDM_5_R','kurtosisDDM_5_L','kurtosisDDM_E1_R','kurtosisDDM_E1_L',...
+    'kurtosisDopp0_L1_R','kurtosisDopp0_L1_L','kurtosisDopp0_E1_R','kurtosisDopp0_E1_L','kurtosisDopp0_5_R','kurtosisDopp0_5_L',...
     'pseudoRandomNoise','Year', 'teWidth', 'constellation', ...
-    'noiseFloorCounts_L1_R','noiseFloorCounts_L1_L','noiseFloorCounts_L5_R','noiseFloorCounts_L5_L','noiseFloorCounts_E1_R','noiseFloorCounts_E1_L','noiseFloorCounts_E5_R','noiseFloorCounts_E5_L') ; 
+    'noiseFloorCounts_L1_R','noiseFloorCounts_L1_L','noiseFloorCounts_E1_R','noiseFloorCounts_E1_L','noiseFloorCounts_5_R','noiseFloorCounts_5_L') ; 
 
 
  disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: End of program']) ; 
- % fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: End of program']) ; 
- % fprintf(logfileID,'\n') ; 
- 
+ %fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: End of program']) ; 
+ %fprintf(logfileID,'\n') ; 
