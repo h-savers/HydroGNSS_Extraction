@@ -182,13 +182,14 @@ for ii=1:NumOfTracks
     SAT=[SAT , string(ReflectionCoefficientAtSP(ii).Satellite)] ;
     numOfSP=numOfSP+length(ReflectionCoefficientAtSP(ii).SpecularPointLat) ; 
 end
-
+reflectivityLinear_5_Ldb=single(NaN(numOfSP,1)) ; reflectivityLinear_5_Rdb=single(NaN(numOfSP,1)) ;
 timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[];  THETA=[] ;  constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
 reflectivityLinear_L1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_L1_R=single(NaN(numOfSP,1)) ;
 reflectivityLinear_E1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_E1_R=single(NaN(numOfSP,1)) ;
 reflectivityLinear_5_L=single(NaN(numOfSP,1)) ; reflectivityLinear_5_R=single(NaN(numOfSP,1)) ; 
 SNR_L1_L=single(NaN(numOfSP,1)) ; SNR_L1_R=single(NaN(numOfSP,1)) ; SNR_5_L=single(NaN(numOfSP,1)) ; 
 SNR_5_R=single(NaN(numOfSP,1)) ; SNR_E1_L=single(NaN(numOfSP,1)) ; SNR_E1_R=single(NaN(numOfSP,1));...
+DirectSignalInDDM_L1_R = single(NaN(numOfSP,1)) ; DirectSignalInDDM_L1_L = single(NaN(numOfSP,1)); DirectSignalInDDM_5_R = single(NaN(numOfSP,1)) ; DirectSignalInDDM_5_L = single(NaN(numOfSP,1)); DirectSignalInDDM_E1_R = single(NaN(numOfSP,1)) ; DirectSignalInDDM_E1_L = single(NaN(numOfSP,1)); DirectSignalInDDM_E5_R = single(NaN(numOfSP,1)) ; DirectSignalInDDM_E5_L = single(NaN(numOfSP,1));
 EIRP_L1 = single(NaN(numOfSP,1)) ; EIRP_L5 = single(NaN(numOfSP,1)) ; EIRP_E1 = single(NaN(numOfSP,1)) ; EIRP_5 = single(NaN(numOfSP,1)) ; ...
 rxAntennaGain_L1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L1_L = single(NaN(numOfSP,1)); rxAntennaGain_L5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_L5_L = single(NaN(numOfSP,1)); rxAntennaGain_E1_R = single(NaN(numOfSP,1)) ; rxAntennaGain_E1_L = single(NaN(numOfSP,1)); rxAntennaGain_5_R = single(NaN(numOfSP,1)) ; rxAntennaGain_5_L = single(NaN(numOfSP,1));...
 qualityControlFlags_L1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_L1_L = single(NaN(numOfSP,1)); qualityControlFlags_5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_5_L = single(NaN(numOfSP,1)); qualityControlFlags_E1_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E1_L = single(NaN(numOfSP,1)); qualityControlFlags_E5_R = single(NaN(numOfSP,1)) ; qualityControlFlags_E5_L = single(NaN(numOfSP,1));
@@ -197,6 +198,10 @@ kurtosisDDM_L1_R = single(NaN(numOfSP,1)) ; kurtosisDDM_L1_L = single(NaN(numOfS
 kurtosisDopp0_L1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_L1_L = single(NaN(numOfSP,1)); kurtosisDopp0_5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_5_L = single(NaN(numOfSP,1)); kurtosisDopp0_E1_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E1_L = single(NaN(numOfSP,1)); kurtosisDopp0_E5_R = single(NaN(numOfSP,1)) ; kurtosisDopp0_E5_L = single(NaN(numOfSP,1));
 noiseFloorCounts_L1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_L1_L = single(NaN(numOfSP,1)); noiseFloorCounts_5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_5_L = single(NaN(numOfSP,1)); noiseFloorCounts_E1_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E1_L = single(NaN(numOfSP,1)); noiseFloorCounts_E5_R = single(NaN(numOfSP,1)) ; noiseFloorCounts_E5_L = single(NaN(numOfSP,1));
 powerAnalogW_L1_R = single(NaN(numOfSP,1)); powerAnalogW_L1_L = single(NaN(numOfSP,1)); powerAnalogW_5_R = single(NaN(numOfSP,1)); powerAnalogW_5_L = single(NaN(numOfSP,1)); powerAnalogW_E1_R = single(NaN(numOfSP,1)); powerAnalogW_E1_L = single(NaN(numOfSP,1)); powerAnalogW_E5_R = single(NaN(numOfSP,1)); powerAnalogW_E5_L = single(NaN(numOfSP,1));
+powerAnalogWdbw_L1_R = single(NaN(numOfSP,1)); powerAnalogWdbw_L1_L = single(NaN(numOfSP,1)); powerAnalogWdbw_5_R = single(NaN(numOfSP,1)); powerAnalogWdbw_5_L = single(NaN(numOfSP,1)); powerAnalogWdbw_E1_R = single(NaN(numOfSP,1)); powerAnalogWdbw_E1_L = single(NaN(numOfSP,1)); powerAnalogWdbw_E5_R = single(NaN(numOfSP,1)); powerAnalogWdbw_E5_L = single(NaN(numOfSP,1)); 
+notToBeUsed_5_L= single(NaN(numOfSP,1)); notToBeUsed_5_R= single(NaN(numOfSP,1)); 
+notToBeUsed_E1_L= single(NaN(numOfSP,1)); notToBeUsed_E1_R= single(NaN(numOfSP,1)); 
+notToBeUsed_L1_L= single(NaN(numOfSP,1));notToBeUsed_L1_R= single(NaN(numOfSP,1));
 
 
 GPSindex=find(SAT=="GPS") ;
@@ -274,12 +279,26 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
         SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; end
     if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_RHCP/10) ;...
         SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
+    %testlines
+       if ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_LHCP ;...
+        SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; end
+    if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_RHCP ;...
+        SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
     
+
     %EIRP lines
      if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP)==0 , EIRP_L1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP ; end
 
  %    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_L5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
          if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
+
+     %DirectSignalInDDM lines
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP)==0 , DirectSignalInDDM_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP)==0 , DirectSignalInDDM_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP ; end
+
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP)==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP)==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP ; end
+
 
      %rxAntenna Gain lines
      if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP)==0 , rxAntennaGain_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP ; end
@@ -298,11 +317,11 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
   
 
      %PowerAnalog_W lines
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP)==0 , powerAnalogW_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP)==0 , powerAnalogW_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP)==0 , powerAnalogWdbw_L1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP)==0 , powerAnalogWdbw_L1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP ; end
 
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP)==0 , powerAnalogW_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnalogW_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP)==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP ; end
 
 
      %MeanNoise lines
@@ -354,11 +373,25 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
             SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; end
     if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_RHCP/10) ;...
             SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
+ %testlins
+    if ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_LHCP ;...
+            SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; end
+    if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_RHCP ;...
+            SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
 
    %EIRP lines
     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP)==0 , EIRP_E1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP ; end
  %   if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_E5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
+
+
+      %DirectSignalInDDM lines
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP)==0 , DirectSignalInDDM_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP)==0 , DirectSignalInDDM_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP ; end
+
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP)==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP ; end
+     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP)==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP ; end
+
 
      %Rx Antenna gain lines
     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP)==0 , rxAntennaGain_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP ; end
@@ -377,11 +410,11 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
 
 
 %PowerAnalog_W lines
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP)==0 , powerAnalogW_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP)==0 , powerAnalogW_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP)==0 , powerAnalogWdbw_E1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP)==0 , powerAnalogWdbw_E1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP ; end
 
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP)==0 , powerAnalogW_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnalogW_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP)==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP ; end
+if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP ; end
 
 
    
@@ -448,12 +481,29 @@ constellation(GNSSConstellation == 2) = "Galileo";
 % Optional: mark unknowns
 constellation(~(GNSSConstellation==0 | GNSSConstellation==2)) = "Unknown";
 
+powerAnalogW_L1_R = 10.^(powerAnalogWdbw_L1_R / 10);
+powerAnalogW_L1_L = 10.^(powerAnalogWdbw_L1_L / 10);
+powerAnalogW_E1_R = 10.^(powerAnalogWdbw_E1_R / 10);
+powerAnalogW_E1_L = 10.^(powerAnalogWdbw_E1_L / 10);
+powerAnalogW_5_R  = 10.^(powerAnalogWdbw_5_R  / 10);
+powerAnalogW_5_L  = 10.^(powerAnalogWdbw_5_L  / 10);
 
-save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay','time', 'timeUTC',...
+notToBeUsed_5_L  = single( any(kurtosisDopp0_5_L  == 1) || any(DirectSignalInDDM_5_L  == 1) );
+notToBeUsed_5_R  = single( any(kurtosisDopp0_5_R  == 1) || any(DirectSignalInDDM_5_R  == 1) );
+
+notToBeUsed_E1_L = single( any(kurtosisDopp0_E1_L == 1) || any(DirectSignalInDDM_E1_L == 1) );
+notToBeUsed_E1_R = single( any(kurtosisDopp0_E1_R == 1) || any(DirectSignalInDDM_E1_R == 1) );
+
+notToBeUsed_L1_L = single( any(kurtosisDopp0_L1_L == 1) || any(DirectSignalInDDM_L1_L == 1) );
+notToBeUsed_L1_R = single( any(kurtosisDopp0_L1_R == 1) || any(DirectSignalInDDM_L1_R == 1) );
+
+
+save([char(DataOutputRootPath) '\' Nameout], 'reflectivityLinear_5_Ldb','reflectivityLinear_5_Rdb','specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay','time', 'timeUTC',...
     'reflectivityLinear_L1_L', 'reflectivityLinear_L1_R', 'reflectivityLinear_E1_L',...
     'reflectivityLinear_E1_R', 'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_L1_L', 'SNR_L1_R', 'SNR_5_L', 'SNR_5_R', 'SNR_E1_L', 'SNR_E1_R', ...
     'EIRP_L1','EIRP_5','EIRP_E1', ...
+    'DirectSignalInDDM_L1_R','DirectSignalInDDM_L1_L','DirectSignalInDDM_5_R','DirectSignalInDDM_5_L','DirectSignalInDDM_E1_R','DirectSignalInDDM_E1_L',...
     'rxAntennaGain_L1_R','rxAntennaGain_L1_L','rxAntennaGain_E1_R','rxAntennaGain_E1_L','rxAntennaGain_5_R','rxAntennaGain_5_L', ...
     'qualityControlFlags_L1_R','qualityControlFlags_L1_L','qualityControlFlags_5_R','qualityControlFlags_5_L','qualityControlFlags_E1_R','qualityControlFlags_E1_L', ...
     'powerAnalogW_L1_R','powerAnalogW_L1_L','powerAnalogW_E1_R','powerAnalogW_E1_L','powerAnalogW_5_R','powerAnalogW_5_L',...
@@ -461,7 +511,7 @@ save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointL
     'kurtosisDDM_L1_R','kurtosisDDM_L1_L','kurtosisDDM_5_R','kurtosisDDM_5_L','kurtosisDDM_E1_R','kurtosisDDM_E1_L',...
     'kurtosisDopp0_L1_R','kurtosisDopp0_L1_L','kurtosisDopp0_E1_R','kurtosisDopp0_E1_L','kurtosisDopp0_5_R','kurtosisDopp0_5_L',...
     'pseudoRandomNoise','Year', 'teWidth', 'constellation', ...
-    'noiseFloorCounts_L1_R','noiseFloorCounts_L1_L','noiseFloorCounts_E1_R','noiseFloorCounts_E1_L','noiseFloorCounts_5_R','noiseFloorCounts_5_L') ; 
+    'noiseFloorCounts_L1_R','noiseFloorCounts_L1_L','noiseFloorCounts_E1_R','noiseFloorCounts_E1_L','noiseFloorCounts_5_R','noiseFloorCounts_5_L','notToBeUsed_5_L','notToBeUsed_5_R','notToBeUsed_E1_L','notToBeUsed_E1_R','notToBeUsed_L1_L','notToBeUsed_L1_R') ; 
 
 
  disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: End of program']) ; 

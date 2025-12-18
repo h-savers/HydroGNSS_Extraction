@@ -341,6 +341,10 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L1_LHCP=read ; 
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_L1_LHCP=read ; 
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L1_LHCP=read ; 
@@ -349,7 +353,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L1_LHCP=read ;
 %read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 %ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_L1_LHCP=read ; 
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L1_LHCP = read;
 
@@ -419,6 +423,12 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L1_RHCP=read ;   
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_L1_RHCP=read ;
+
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L1_RHCP=read ;   
@@ -429,7 +439,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L1_RHCP=read ;
 % ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_L1_RHCP=read ; 
 
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L1_RHCP = read;
 
@@ -507,6 +517,10 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L5_LHCP=read ;
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_L5_LHCP=read ;
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L5_LHCP=read ;
@@ -515,7 +529,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L5_LHCP=read ;
 % read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 % ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_L5_LHCP=read ; 
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L5_LHCP = read;
 
@@ -593,6 +607,11 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_L5_RHCP=read ;
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_L5_RHCP=read ;
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L5_RHCP=read ;
@@ -602,7 +621,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_L5_RHCP=read ;
 % read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 % ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_L5_RHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_L5_RHCP = read;
 
@@ -691,6 +710,10 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E1_LHCP=read ;
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_E1_LHCP=read ;
+
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
@@ -700,7 +723,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E1_LHCP=read ;
 % read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 % ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_E1_LHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E1_LHCP = read;
 
@@ -776,6 +799,11 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E1_RHCP=read ;
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_E1_RHCP=read ;
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E1_RHCP=read ;
@@ -784,7 +812,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E1_RHCP=read ;
 % read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 % ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_E1_RHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E1_RHCP = read;
 
@@ -858,6 +886,11 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E5_LHCP=read ;
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_E5_LHCP=read ;
+
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E5_LHCP=read ;
@@ -866,7 +899,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E5_LHCP=read ;
 % read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 % ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_E5_LHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E5_LHCP = read;
 
@@ -940,6 +973,10 @@ varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).EIRP_E5_RHCP=read ;
 
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
+read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).DirectSignalInDDM_E5_RHCP=read ;
+
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'AntennaGainTowardsSpecularPoint');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E5_RHCP=read ;
@@ -948,7 +985,7 @@ ReflectionCoefficientAtSP(Track_ID).rxAntennaGain_E5_RHCP=read ;
 % read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 % ReflectionCoefficientAtSP(Track_ID).QualityControlFlags_E5_RHCP=read ;
 
-varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
+varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'MeasuredReflectedSignalPower');
 read = netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).PowerAnalog_W_E5_RHCP = read;
 
