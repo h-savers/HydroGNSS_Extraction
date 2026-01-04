@@ -163,7 +163,10 @@ Track_ID=Track_ID+1 ;
 % ReflectionCoefficientAtSP(Track_ID).Name= groupname ; 
 ReflectionCoefficientAtSP(Track_ID).Name=['Track n. ', num2str(Track_ID)] ; 
 ReflectionCoefficientAtSP(Track_ID).PRN=infometa.Groups(kk).Attributes(7).Value  ; 
-ReflectionCoefficientAtSP(Track_ID).GNSSConstellation_units=infometa.Groups(kk).Attributes(5).Value  ; 
+% correction by Mauro but can be removes as there is "Signal" 
+% %ReflectionCoefficientAtSP(Track_ID).GNSSConstellation=infometa.Groups(kk).Attributes(5).Value  ; 
+ReflectionCoefficientAtSP(Track_ID).GNSSConstellation=infometa.Groups(kk).Attributes(7).Value  ; 
+
 ReflectionCoefficientAtSP(Track_ID).TrackIDOrbit=infometa.Groups(kk).Attributes(2).Value  ; 
 varIdTime = netcdf.inqVarID(trackNcids(kk), 'IntegrationMidPointTime');
 read=netcdf.getVar(trackNcids(kk), varIdTime);

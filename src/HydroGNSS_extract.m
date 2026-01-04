@@ -262,7 +262,7 @@ Year = [Year; year(dt_full)];
 %         if isfield(ReflectionCoefficientAtSP(kk),'EIRP_CM2')&&~ismissing(ReflectionCoefficientAtSP(kk).EIRP_CM2),EIRP_CM2(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_CM2;end;if isfield(ReflectionCoefficientAtSP(kk),'EIRP_CM3')&&~ismissing(ReflectionCoefficientAtSP(kk).EIRP_CM3),EIRP_CM3(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_CM3;end;if isfield(ReflectionCoefficientAtSP(kk),'NoiseKurtosis')&&~ismissing(ReflectionCoefficientAtSP(kk).NoiseKurtosis),NoiseKurtosis(intrack:fintrack)=ReflectionCoefficientAtSP(kk).NoiseKurtosis;end;if isfield(ReflectionCoefficientAtSP(kk),'HighNoiseKurtosis')&&~ismissing(ReflectionCoefficientAtSP(kk).HighNoiseKurtosis),HighNoiseKurtosis(intrack:fintrack)=ReflectionCoefficientAtSP(kk).HighNoiseKurtosis;end;
 if isfield(ReflectionCoefficientAtSP(kk),'PRN')&&~ismissing(ReflectionCoefficientAtSP(kk).PRN),PRN(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PRN;end;
 if isfield(ReflectionCoefficientAtSP(kk),'QC_pass_flag')&&~ismissing(ReflectionCoefficientAtSP(kk).QC_pass_flag),QC_pass_flag(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QC_pass_flag;end;
-if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(ReflectionCoefficientAtSP(kk).GNSSConstellation_units),GNSSConstellation(intrack:fintrack)=ReflectionCoefficientAtSP(kk).GNSSConstellation_units;end;
+if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation')&&~ismissing(ReflectionCoefficientAtSP(kk).GNSSConstellation),GNSSConstellation(intrack:fintrack)=ReflectionCoefficientAtSP(kk).GNSSConstellation;end;
 
 
   switch SAT(kk) ; 
