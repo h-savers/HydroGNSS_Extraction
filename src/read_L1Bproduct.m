@@ -162,10 +162,15 @@ Track_ID=Track_ID+1 ;
 % groupname='000000'; groupname(6-d+1:end)=num2str(Track_ID) ;
 % ReflectionCoefficientAtSP(Track_ID).Name= groupname ; 
 ReflectionCoefficientAtSP(Track_ID).Name=['Track n. ', num2str(Track_ID)] ; 
-ReflectionCoefficientAtSP(Track_ID).PRN=infometa.Groups(kk).Attributes(7).Value  ; 
-ReflectionCoefficientAtSP(Track_ID).GNSSConstellation_units=infometa.Groups(kk).Attributes(5).Value  ; 
-ReflectionCoefficientAtSP(Track_ID).SVN=infometa.Groups(kk).Attributes(8).Value  ; 
-ReflectionCoefficientAtSP(Track_ID).TrackIDOrbit=infometa.Groups(kk).Attributes(2).Value  ; 
+% ReflectionCoefficientAtSP(Track_ID).PRN=infometa.Groups(kk).Attributes(7).Value  ; 
+ReflectionCoefficientAtSP(Track_ID).PRN=netcdf.getAtt(trackNcids(kk),netcdf.getConstant("NC_GLOBAL"),'PRN') ;
+% ReflectionCoefficientAtSP(Track_ID).GNSSConstellation_units=infometa.Groups(kk).Attributes(5).Value  ; 
+ReflectionCoefficientAtSP(Track_ID).GNSSConstellation_units=netcdf.getAtt(trackNcids(kk),netcdf.getConstant("NC_GLOBAL"),'GNSSConstellation') ;
+% ReflectionCoefficientAtSP(Track_ID).SVN=infometa.Groups(kk).Attributes(8).Value  ; 
+ReflectionCoefficientAtSP(Track_ID).SVN=netcdf.getAtt(trackNcids(kk),netcdf.getConstant("NC_GLOBAL"),'SVN') ;
+% ReflectionCoefficientAtSP(Track_ID).TrackIDOrbit=infometa.Groups(kk).Attributes(2).Value  ; 
+ReflectionCoefficientAtSP(Track_ID).TrackIDOrbit=netcdf.getAtt(trackNcids(kk),netcdf.getConstant("NC_GLOBAL"),'TrackIDOrbit') ;
+%
 varIdTime = netcdf.inqVarID(trackNcids(kk), 'IntegrationMidPointTime');
 read=netcdf.getVar(trackNcids(kk), varIdTime);
 [sizeGroup b]=size(read) ; % get the size of the group (or track) 
