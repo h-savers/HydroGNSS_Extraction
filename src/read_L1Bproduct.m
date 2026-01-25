@@ -169,7 +169,7 @@ ReflectionCoefficientAtSP(Track_ID).GNSSConstellation_units=netcdf.getAtt(trackN
 % ReflectionCoefficientAtSP(Track_ID).SVN=infometa.Groups(kk).Attributes(8).Value  ; 
 ReflectionCoefficientAtSP(Track_ID).SVN=netcdf.getAtt(trackNcids(kk),netcdf.getConstant("NC_GLOBAL"),'SVN') ;
 % ReflectionCoefficientAtSP(Track_ID).TrackIDOrbit=infometa.Groups(kk).Attributes(2).Value  ; 
-ReflectionCoefficientAtSP(Track_ID).TrackIDOrbit=netcdf.getAtt(trackNcids(kk),netcdf.getConstant("NC_GLOBAL"),'TrackIDOrbit') ;
+%%%%%% ReflectionCoefficientAtSP(Track_ID).TrackIDOrbit=netcdf.getAtt(trackNcids(kk),netcdf.getConstant("NC_GLOBAL"),'TrackIDOrbit') ;
 %
 varIdTime = netcdf.inqVarID(trackNcids(kk), 'IntegrationMidPointTime');
 read=netcdf.getVar(trackNcids(kk), varIdTime);
