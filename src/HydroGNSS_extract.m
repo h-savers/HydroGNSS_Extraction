@@ -243,6 +243,7 @@ powerAnalogW_1_R = single(NaN(numOfSP,1)); powerAnalogW_1_L = single(NaN(numOfSP
 powerAnalogW_L1_R = single(NaN(numOfSP,1)); powerAnalogW_L1_L = single(NaN(numOfSP,1)); powerAnalogW_5_R = single(NaN(numOfSP,1)); powerAnalogW_5_L = single(NaN(numOfSP,1)); powerAnalogW_E1_R = single(NaN(numOfSP,1)); powerAnalogW_E1_L = single(NaN(numOfSP,1)); powerAnalogW_E5_R = single(NaN(numOfSP,1)); powerAnalogW_E5_L = single(NaN(numOfSP,1));
 
 powerAnalogWdbw_L1_R = single(NaN(numOfSP,1)); powerAnalogWdbw_L1_L = single(NaN(numOfSP,1)); powerAnalogWdbw_5_R = single(NaN(numOfSP,1)); powerAnalogWdbw_5_L = single(NaN(numOfSP,1)); powerAnalogWdbw_E1_R = single(NaN(numOfSP,1)); powerAnalogWdbw_E1_L = single(NaN(numOfSP,1)); powerAnalogWdbw_E5_R = single(NaN(numOfSP,1)); powerAnalogWdbw_E5_L = single(NaN(numOfSP,1)); 
+powerAnalogWdbw_1_R = single(NaN(numOfSP,1)); powerAnalogWdbw_1_L = single(NaN(numOfSP,1));
 
 notToBeUsed_1_L= single(NaN(numOfSP,1)); notToBeUsed_1_R= single(NaN(numOfSP,1)); 
 notToBeUsed_5_L= single(NaN(numOfSP,1)); notToBeUsed_5_R= single(NaN(numOfSP,1)); 
@@ -599,12 +600,14 @@ constellation(GNSSConstellation == 2) = "Galileo";
 % Optional: mark unknowns
 constellation(~(GNSSConstellation==0 | GNSSConstellation==2)) = "Unknown";
 
-powerAnalogW_L1_R = 10.^(powerAnalogWdbw_L1_R / 10);
-powerAnalogW_L1_L = 10.^(powerAnalogWdbw_L1_L / 10);
-powerAnalogW_E1_R = 10.^(powerAnalogWdbw_E1_R / 10);
-powerAnalogW_E1_L = 10.^(powerAnalogWdbw_E1_L / 10);
+%powerAnalogW_L1_R = 10.^(powerAnalogWdbw_L1_R / 10);
+%powerAnalogW_L1_L = 10.^(powerAnalogWdbw_L1_L / 10);
+%powerAnalogW_E1_R = 10.^(powerAnalogWdbw_E1_R / 10);
+%powerAnalogW_E1_L = 10.^(powerAnalogWdbw_E1_L / 10);
 powerAnalogW_5_R  = 10.^(powerAnalogWdbw_5_R  / 10);
 powerAnalogW_5_L  = 10.^(powerAnalogWdbw_5_L  / 10);
+powerAnalogW_1_L  = 10.^(powerAnalogWdbw_1_L  / 10);
+powerAnalogW_1_R  = 10.^(powerAnalogWdbw_1_R  / 10);
 
 notToBeUsed_5_L  = single( (kurtosisDopp0_5_L  == 1) | (DirectSignalInDDM_5_L  == 1) );
 notToBeUsed_5_R  = single( (kurtosisDopp0_5_R  == 1) | (DirectSignalInDDM_5_R  == 1) );
