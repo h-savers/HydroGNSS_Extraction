@@ -1,7 +1,8 @@
 
 function ReflectionCoefficientAtSP=HydroGNSS_extract(init_SM_Day,final_SM_Day, configurationPath) ; 
 %%utctimefixed
-close all
+close all        % optional (use close all hidden if you want to be safer)
+fclose('all')
 clearvars -except  init_SM_Day final_SM_Day configurationPath
 
 global namelogfile logfileID  ; 
@@ -314,263 +315,468 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
 
 
   switch SAT(kk) ; 
-    case "GPS"
-   % Add constellation label for GPS
+case "GPS"
+    % Add constellation label for GPS (optional)
     %constellation = [constellation; repmat({'GPS'}, length(refl_coeff.Latitude), 1)];
 
-  % 
-    if ismissing(ReflectionCoefficientAtSP(kk).L1_LHCP)==0 , reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_LHCP/10) ;...
-            SNR_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_L1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).L1_RHCP)==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_RHCP/10) ;...
-            SNR_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_L1_RHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_LHCP/10) ;...
-        SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_RHCP/10) ;...
-        SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
-    %testlines
-       if ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_LHCP ;...
-        SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_RHCP ;...
-        SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
+    % Number of elements expected for this track segment
+    idxLen = fintrack - intrack + 1;
 
-    %EIRP lines
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP)==0 , EIRP_1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP ; end
+    %--- L1_LHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'L1_LHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).L1_LHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).L1_LHCP) == idxLen
 
- %    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_L5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
-      if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
+        reflectivityLinear_1_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L1_LHCP/10);
+        SNR_1_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L1_LHCP;
+    else
+        reflectivityLinear_1_L(intrack:fintrack) = NaN;
+        SNR_1_L(intrack:fintrack) = NaN;
+    end
 
-     %DirectSignalInDDM lines
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP)==0 , DirectSignalInDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP)==0 , DirectSignalInDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP ; end
+    %--- L1_RHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'L1_RHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).L1_RHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).L1_RHCP) == idxLen
 
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP)==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP)==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP ; end
+        reflectivityLinear_1_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L1_RHCP/10);
+        SNR_1_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L1_RHCP;
+    else
+        reflectivityLinear_1_R(intrack:fintrack) = NaN;
+        SNR_1_R(intrack:fintrack) = NaN;
+    end
 
+    %--- L5_LHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'L5_LHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).L5_LHCP) == idxLen
 
-     %rxAntenna Gain lines
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP)==0 , rxAntennaGain_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP)==0 , rxAntennaGain_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP ; end
+        reflectivityLinear_5_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L5_LHCP/10);
+        SNR_5_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L5_LHCP;
+    else
+        reflectivityLinear_5_L(intrack:fintrack) = NaN;
+        SNR_5_L(intrack:fintrack) = NaN;
+    end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP)==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP)==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP ; end
-  
-        %coherency Gain lines
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L1_LHCP)==0 , coherencyRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L1_RHCP)==0 , coherencyRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L1_RHCP ; end
+    %--- L5_RHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'L5_RHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).L5_RHCP) == idxLen
 
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L5_LHCP)==0 , coherencyRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L5_RHCP)==0 , coherencyRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L5_RHCP ; end
-   
-     % ReflectionCoefficientUnbounded lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_LHCP)==0 , ReflectionCoefficientUnbounded_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_RHCP)==0 , ReflectionCoefficientUnbounded_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_LHCP)==0 , ReflectionCoefficientUnbounded_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_RHCP)==0 , ReflectionCoefficientUnbounded_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_RHCP ; end
-
-     % ReflectionCoefficientAtSP_CM1 lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_LHCP)==0 , ReflectionCoefficientAtSP_CM1_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_RHCP)==0 , ReflectionCoefficientAtSP_CM1_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_LHCP)==0 , ReflectionCoefficientAtSP_CM1_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_RHCP)==0 , ReflectionCoefficientAtSP_CM1_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_RHCP ; end
-
-          % ReflectionCoefficientAtSP_CM2 lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_LHCP)==0 , ReflectionCoefficientAtSP_CM2_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_RHCP)==0 , ReflectionCoefficientAtSP_CM2_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_LHCP)==0 , ReflectionCoefficientAtSP_CM2_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_RHCP)==0 , ReflectionCoefficientAtSP_CM2_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_RHCP ; end
-
-          % ReflectionCoefficientAtSP_CM3 lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_LHCP)==0 , ReflectionCoefficientAtSP_CM3_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_RHCP)==0 , ReflectionCoefficientAtSP_CM3_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_LHCP)==0 , ReflectionCoefficientAtSP_CM3_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_RHCP)==0 , ReflectionCoefficientAtSP_CM3_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_RHCP ; end
+        reflectivityLinear_5_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L5_RHCP/10);
+        SNR_5_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L5_RHCP;
+    else
+        reflectivityLinear_5_R(intrack:fintrack) = NaN;
+        SNR_5_R(intrack:fintrack) = NaN;
+    end
 
 
-    %QualityControlFlag lines
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP)==0 , qualityControlFlags_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP ; end
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP)==0 , qualityControlFlags_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP ; end
+%     case "GPS"
+%    % Add constellation label for GPS
+%     %constellation = [constellation; repmat({'GPS'}, length(refl_coeff.Latitude), 1)];
+% 
+%    %--- ADD CHECK HERE ---
+%     idxLen  = fintrack - intrack + 1;
+%     dataLen = numel(ReflectionCoefficientAtSP(kk).L5_LHCP);
+%     if idxLen ~= dataLen
+%         fprintf('Size mismatch at kk = %d\n', kk);
+%         fprintf('intrack = %d, fintrack = %d → idxLen = %d\n', intrack, fintrack, idxLen);
+%         fprintf('numel(L5_LHCP) = %d\n', dataLen);
+%         error('Size mismatch detected');
+%     end
+%     % --- END CHECK ---
+%     % L1_LHCP
+% if isfield(ReflectionCoefficientAtSP(kk),'L1_LHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).L1_LHCP) ...
+%         && numel(ReflectionCoefficientAtSP(kk).L1_LHCP) == (fintrack-intrack+1)
+%     reflectivityLinear_1_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L1_LHCP/10);
+%     SNR_1_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L1_LHCP;
+% else
+%     reflectivityLinear_1_L(intrack:fintrack) = NaN;
+%     SNR_1_L(intrack:fintrack) = NaN;
+% end
+% 
+% % L1_RHCP
+% if isfield(ReflectionCoefficientAtSP(kk),'L1_RHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).L1_RHCP) ...
+%         && numel(ReflectionCoefficientAtSP(kk).L1_RHCP) == (fintrack-intrack+1)
+%     reflectivityLinear_1_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L1_RHCP/10);
+%     SNR_1_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L1_RHCP;
+% else
+%     reflectivityLinear_1_R(intrack:fintrack) = NaN;
+%     SNR_1_R(intrack:fintrack) = NaN;
+% end
+% 
+% % L5_LHCP
+% if isfield(ReflectionCoefficientAtSP(kk),'L5_LHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP) ...
+%         && numel(ReflectionCoefficientAtSP(kk).L5_LHCP) == (fintrack-intrack+1)
+%     reflectivityLinear_5_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L5_LHCP/10);
+%     SNR_5_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L5_LHCP;
+% else
+%     reflectivityLinear_5_L(intrack:fintrack) = NaN;
+%     SNR_5_L(intrack:fintrack) = NaN;
+% end
+% 
+% % L5_RHCP
+% if isfield(ReflectionCoefficientAtSP(kk),'L5_RHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP) ...
+%         && numel(ReflectionCoefficientAtSP(kk).L5_RHCP) == (fintrack-intrack+1)
+%     reflectivityLinear_5_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).L5_RHCP/10);
+%     SNR_5_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_L5_RHCP;
+% else
+%     reflectivityLinear_5_R(intrack:fintrack) = NaN;
+%     SNR_5_R(intrack:fintrack) = NaN;
+% end
 
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP)==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP ; end
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP)==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP ; end
-  
+%     if ismissing(ReflectionCoefficientAtSP(kk).L1_LHCP)==0 , reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_LHCP/10) ;...
+%             SNR_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_L1_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).L1_RHCP)==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_RHCP/10) ;...
+%             SNR_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_L1_RHCP ; end
+%        if ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_LHCP/10) ;...
+%         SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_RHCP/10) ;...
+%         SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
+%     %testlines
+%        if ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_LHCP ;...
+%         SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_RHCP ;...
+%         SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
 
-     %PowerAnalog_W lines
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP)==0 , powerAnalogWdbw_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP)==0 , powerAnalogWdbw_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP ; end
+% Number of elements expected
+%% ================= EIRP =================
+if isfield(ReflectionCoefficientAtSP(kk),'EIRP_L1_LHCP') && ...
+   all(~ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP)) && ...
+   numel(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP) == idxLen
+    EIRP_1(intrack:fintrack) = ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP;
+else
+    EIRP_1(intrack:fintrack) = NaN;
+end
 
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP)==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP ; end
+if isfield(ReflectionCoefficientAtSP(kk),'EIRP_L5_LHCP') && ...
+   all(~ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)) && ...
+   numel(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP) == idxLen
+    EIRP_5(intrack:fintrack) = ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP;
+else
+    EIRP_5(intrack:fintrack) = NaN;
+end
 
+%% ============ DirectSignalInDDM ============
+fields = { ...
+    'DirectSignalInDDM_L1_LHCP','DirectSignalInDDM_1_L'; ...
+    'DirectSignalInDDM_L1_RHCP','DirectSignalInDDM_1_R'; ...
+    'DirectSignalInDDM_L5_LHCP','DirectSignalInDDM_5_L'; ...
+    'DirectSignalInDDM_L5_RHCP','DirectSignalInDDM_5_R'};
 
-     %MeanNoise lines
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP)==0 , noiseFloorCounts_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP)==0 , noiseFloorCounts_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP ; end
+for i = 1:size(fields,1)
+    f = fields{i,1}; v = fields{i,2};
+    if isfield(ReflectionCoefficientAtSP(kk),f) && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).(f))) && ...
+       numel(ReflectionCoefficientAtSP(kk).(f)) == idxLen
+        eval([v '(intrack:fintrack) = ReflectionCoefficientAtSP(kk).(f);']);
+    else
+        eval([v '(intrack:fintrack) = NaN;']);
+    end
+end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP)==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP)==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP ; end
-   
-     %powerRatio lines
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP)==0 , powerRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP)==0 , powerRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP ; end
+%% ============ rxAntennaGain ============
+fields = { ...
+    'rxAntennaGain_L1_LHCP','rxAntennaGain_1_L'; ...
+    'rxAntennaGain_L1_RHCP','rxAntennaGain_1_R'; ...
+    'rxAntennaGain_L5_LHCP','rxAntennaGain_5_L'; ...
+    'rxAntennaGain_L5_RHCP','rxAntennaGain_5_R'};
 
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP)==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP)==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP ; end
+for i = 1:size(fields,1)
+    f = fields{i,1}; v = fields{i,2};
+    if isfield(ReflectionCoefficientAtSP(kk),f) && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).(f))) && ...
+       numel(ReflectionCoefficientAtSP(kk).(f)) == idxLen
+        eval([v '(intrack:fintrack) = ReflectionCoefficientAtSP(kk).(f);']);
+    else
+        eval([v '(intrack:fintrack) = NaN;']);
+    end
+end
 
-     %Sigma0 lines
-    if ismissing(Sigma0(kk).NBRCS_L1_LHCP)==0 , NBRCS_1_L(intrack:fintrack)=Sigma0(kk).NBRCS_L1_LHCP ; end
-    if ismissing(Sigma0(kk).NBRCS_L1_RHCP)==0 , NBRCS_1_R(intrack:fintrack)=Sigma0(kk).NBRCS_L1_RHCP ; end
+%% ============ Coherency Ratio ============
+fields = { ...
+    'coherencyRatio_L1_LHCP','coherencyRatio_1_L'; ...
+    'coherencyRatio_L1_RHCP','coherencyRatio_1_R'; ...
+    'coherencyRatio_L5_LHCP','coherencyRatio_5_L'; ...
+    'coherencyRatio_L5_RHCP','coherencyRatio_5_R'};
 
-    if ismissing(Sigma0(kk).NBRCS_L5_LHCP)==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_L5_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_L5_RHCP)==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_L5_RHCP ; end
+for i = 1:size(fields,1)
+    f = fields{i,1}; v = fields{i,2};
+    if isfield(ReflectionCoefficientAtSP(kk),f) && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).(f))) && ...
+       numel(ReflectionCoefficientAtSP(kk).(f)) == idxLen
+        eval([v '(intrack:fintrack) = ReflectionCoefficientAtSP(kk).(f);']);
+    else
+        eval([v '(intrack:fintrack) = NaN;']);
+    end
+end
 
-      %HighNoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP)==0 , kurtosisDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP)==0 , kurtosisDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP ; end
+%% ============ Sigma0 ============
+fields = { ...
+    'NBRCS_L1_LHCP','NBRCS_1_L'; ...
+    'NBRCS_L1_RHCP','NBRCS_1_R'; ...
+    'NBRCS_L5_LHCP','NBRCS_5_L'; ...
+    'NBRCS_L5_RHCP','NBRCS_5_R'};
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP)==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP)==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP ; end
+for i = 1:size(fields,1)
+    f = fields{i,1}; v = fields{i,2};
+    if isfield(Sigma0(kk),f) && ...
+       all(~ismissing(Sigma0(kk).(f))) && ...
+       numel(Sigma0(kk).(f)) == idxLen
+        eval([v '(intrack:fintrack) = Sigma0(kk).(f);']);
+    else
+        eval([v '(intrack:fintrack) = NaN;']);
+    end
+end
 
-           %NoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP)==0 , kurtosisDopp0_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP)==0 , kurtosisDopp0_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP)==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP)==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP ; end
-
-
-     case "Galileo"
-    
     % Add constellation label for Galileo
     %constellation = [constellation; repmat({'Galileo'}, length(refl_coeff.Latitude), 1)];
+case "Galileo"
+    % Add constellation label for Galileo (optional)
+    %constellation = [constellation; repmat({'Galileo'}, length(refl_coeff.Latitude), 1)];
 
-    if ismissing(ReflectionCoefficientAtSP(kk).E1_LHCP)==0, reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_LHCP/10) ;...
-        SNR_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).E1_RHCP)==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_RHCP/10) ;...
-            SNR_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_E1_RHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_LHCP/10) ;...
-            SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_RHCP/10) ;...
-            SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
- %testlins
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_LHCP ;...
-            SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_RHCP ;...
-            SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
+    % Number of elements expected for this track segment
+    idxLen = fintrack - intrack + 1;
 
-   %EIRP lines
-    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP)==0 , EIRP_1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP ; end
- %   if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_E5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
+    %--- E1_LHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'E1_LHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).E1_LHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).E1_LHCP) == idxLen
+
+        reflectivityLinear_1_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E1_LHCP/10);
+        SNR_1_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E1_LHCP;
+    else
+        reflectivityLinear_1_L(intrack:fintrack) = NaN;
+        SNR_1_L(intrack:fintrack) = NaN;
+    end
+
+    %--- E1_RHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'E1_RHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).E1_RHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).E1_RHCP) == idxLen
+
+        reflectivityLinear_1_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E1_RHCP/10);
+        SNR_1_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E1_RHCP;
+    else
+        reflectivityLinear_1_R(intrack:fintrack) = NaN;
+        SNR_1_R(intrack:fintrack) = NaN;
+    end
+
+    %--- E5_LHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'E5_LHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).E5_LHCP) == idxLen
+
+        reflectivityLinear_5_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E5_LHCP/10);
+        SNR_5_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E5_LHCP;
+    else
+        reflectivityLinear_5_L(intrack:fintrack) = NaN;
+        SNR_5_L(intrack:fintrack) = NaN;
+    end
+
+    %--- E5_RHCP ---
+    if isfield(ReflectionCoefficientAtSP(kk), 'E5_RHCP') && ...
+       all(~ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)) && ...
+       numel(ReflectionCoefficientAtSP(kk).E5_RHCP) == idxLen
+
+        reflectivityLinear_5_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E5_RHCP/10);
+        SNR_5_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E5_RHCP;
+    else
+        reflectivityLinear_5_R(intrack:fintrack) = NaN;
+        SNR_5_R(intrack:fintrack) = NaN;
+    end
+
+% case "Galileo"
+%     % Add constellation label for Galileo (optional)
+%     %constellation = [constellation; repmat({'Galileo'}, length(refl_coeff.Latitude), 1)];
+% 
+%     % E1_LHCP
+%     if isfield(ReflectionCoefficientAtSP(kk),'E1_LHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).E1_LHCP)
+%         len = numel(ReflectionCoefficientAtSP(kk).E1_LHCP);
+%         idxLen = fintrack - intrack + 1;
+%         if len == idxLen
+%             reflectivityLinear_1_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E1_LHCP/10);
+%             SNR_1_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E1_LHCP;
+%         else
+%             reflectivityLinear_1_L(intrack:fintrack) = NaN;
+%             SNR_1_L(intrack:fintrack) = NaN;
+%         end
+%     else
+%         reflectivityLinear_1_L(intrack:fintrack) = NaN;
+%         SNR_1_L(intrack:fintrack) = NaN;
+%     end
+% 
+%     % E1_RHCP
+%     if isfield(ReflectionCoefficientAtSP(kk),'E1_RHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).E1_RHCP)
+%         len = numel(ReflectionCoefficientAtSP(kk).E1_RHCP);
+%         idxLen = fintrack - intrack + 1;
+%         if len == idxLen
+%             reflectivityLinear_1_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E1_RHCP/10);
+%             SNR_1_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E1_RHCP;
+%         else
+%             reflectivityLinear_1_R(intrack:fintrack) = NaN;
+%             SNR_1_R(intrack:fintrack) = NaN;
+%         end
+%     else
+%         reflectivityLinear_1_R(intrack:fintrack) = NaN;
+%         SNR_1_R(intrack:fintrack) = NaN;
+%     end
+% 
+%     % E5_LHCP
+%     if isfield(ReflectionCoefficientAtSP(kk),'E5_LHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)
+%         len = numel(ReflectionCoefficientAtSP(kk).E5_LHCP);
+%         idxLen = fintrack - intrack + 1;
+%         if len == idxLen
+%             reflectivityLinear_5_L(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E5_LHCP/10);
+%             SNR_5_L(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E5_LHCP;
+%         else
+%             reflectivityLinear_5_L(intrack:fintrack) = NaN;
+%             SNR_5_L(intrack:fintrack) = NaN;
+%         end
+%     else
+%         reflectivityLinear_5_L(intrack:fintrack) = NaN;
+%         SNR_5_L(intrack:fintrack) = NaN;
+%     end
+% 
+%     % E5_RHCP
+%     if isfield(ReflectionCoefficientAtSP(kk),'E5_RHCP') && ~ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)
+%         len = numel(ReflectionCoefficientAtSP(kk).E5_RHCP);
+%         idxLen = fintrack - intrack + 1;
+%         if len == idxLen
+%             reflectivityLinear_5_R(intrack:fintrack) = 10.^(ReflectionCoefficientAtSP(kk).E5_RHCP/10);
+%             SNR_5_R(intrack:fintrack) = ReflectionCoefficientAtSP(kk).SNR_E5_RHCP;
+%         else
+%             reflectivityLinear_5_R(intrack:fintrack) = NaN;
+%             SNR_5_R(intrack:fintrack) = NaN;
+%         end
+%     else
+%         reflectivityLinear_5_R(intrack:fintrack) = NaN;
+%         SNR_5_R(intrack:fintrack) = NaN;
+%     end
 
 
-      %DirectSignalInDDM lines
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP)==0 , DirectSignalInDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP)==0 , DirectSignalInDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP ; end
+    
+%     if ismissing(ReflectionCoefficientAtSP(kk).E1_LHCP)==0, reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_LHCP/10) ;...
+%         SNR_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_E1_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).E1_RHCP)==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_RHCP/10) ;...
+%             SNR_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_E1_RHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_LHCP/10) ;...
+%             SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_RHCP/10) ;...
+%             SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
+%  %testlins
+%     if ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_LHCP ;...
+%             SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; end
+%     if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_RHCP ;...
+%             SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP)==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP)==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP ; end
+% ---------- Galileo variables (ReflectionCoefficientAtSP) ----------
+galFields = {
+    % EIRP
+    'EIRP_E1_LHCP',                    'EIRP_1';
+    'EIRP_E5_LHCP',                    'EIRP_5';
+
+    % Direct signal in DDM
+    'DirectSignalInDDM_E1_LHCP',        'DirectSignalInDDM_1_L';
+    'DirectSignalInDDM_E1_RHCP',        'DirectSignalInDDM_1_R';
+    'DirectSignalInDDM_E5_LHCP',        'DirectSignalInDDM_5_L';
+    'DirectSignalInDDM_E5_RHCP',        'DirectSignalInDDM_5_R';
+
+    % Rx antenna gain
+    'rxAntennaGain_E1_LHCP',            'rxAntennaGain_1_L';
+    'rxAntennaGain_E1_RHCP',            'rxAntennaGain_1_R';
+    'rxAntennaGain_E5_LHCP',            'rxAntennaGain_5_L';
+    'rxAntennaGain_E5_RHCP',            'rxAntennaGain_5_R';
+
+    % Coherency ratio
+    'coherencyRatio_E1_LHCP',           'coherencyRatio_1_L';
+    'coherencyRatio_E1_RHCP',           'coherencyRatio_1_R';
+    'coherencyRatio_E5_LHCP',           'coherencyRatio_5_L';
+    'coherencyRatio_E5_RHCP',           'coherencyRatio_5_R';
+
+    % Reflection coefficient (unbounded)
+    'ReflectionCoefficientUnbounded_E1_LHCP', 'ReflectionCoefficientUnbounded_1_L';
+    'ReflectionCoefficientUnbounded_E1_RHCP', 'ReflectionCoefficientUnbounded_1_R';
+    'ReflectionCoefficientUnbounded_E5_LHCP', 'ReflectionCoefficientUnbounded_5_L';
+    'ReflectionCoefficientUnbounded_E5_RHCP', 'ReflectionCoefficientUnbounded_5_R';
+
+    % CM1
+    'ReflectionCoefficientAtSP_CM1_E1_LHCP', 'ReflectionCoefficientAtSP_CM1_1_L';
+    'ReflectionCoefficientAtSP_CM1_E1_RHCP', 'ReflectionCoefficientAtSP_CM1_1_R';
+    'ReflectionCoefficientAtSP_CM1_E5_LHCP', 'ReflectionCoefficientAtSP_CM1_5_L';
+    'ReflectionCoefficientAtSP_CM1_E5_RHCP', 'ReflectionCoefficientAtSP_CM1_5_R';
+
+    % CM2
+    'ReflectionCoefficientAtSP_CM2_E1_LHCP', 'ReflectionCoefficientAtSP_CM2_1_L';
+    'ReflectionCoefficientAtSP_CM2_E1_RHCP', 'ReflectionCoefficientAtSP_CM2_1_R';
+    'ReflectionCoefficientAtSP_CM2_E5_LHCP', 'ReflectionCoefficientAtSP_CM2_5_L';
+    'ReflectionCoefficientAtSP_CM2_E5_RHCP', 'ReflectionCoefficientAtSP_CM2_5_R';
+
+    % CM3
+    'ReflectionCoefficientAtSP_CM3_E1_LHCP', 'ReflectionCoefficientAtSP_CM3_1_L';
+    'ReflectionCoefficientAtSP_CM3_E1_RHCP', 'ReflectionCoefficientAtSP_CM3_1_R';
+    'ReflectionCoefficientAtSP_CM3_E5_LHCP', 'ReflectionCoefficientAtSP_CM3_5_L';
+    'ReflectionCoefficientAtSP_CM3_E5_RHCP', 'ReflectionCoefficientAtSP_CM3_5_R';
+
+    % Power / noise / statistics
+    'PowerAnalog_W_E1_LHCP',             'powerAnalogWdbw_1_L';
+    'PowerAnalog_W_E1_RHCP',             'powerAnalogWdbw_1_R';
+    'PowerAnalog_W_E5_LHCP',             'powerAnalogWdbw_5_L';
+    'PowerAnalog_W_E5_RHCP',             'powerAnalogWdbw_5_R';
+
+    'noise_floor_Counts_E1_LHCP',        'noiseFloorCounts_1_L';
+    'noise_floor_Counts_E1_RHCP',        'noiseFloorCounts_1_R';
+    'noise_floor_Counts_E5_LHCP',        'noiseFloorCounts_5_L';
+    'noise_floor_Counts_E5_RHCP',        'noiseFloorCounts_5_R';
+
+    'PowerSpreadRatio_E1_LHCP',           'powerRatio_1_L';
+    'PowerSpreadRatio_E1_RHCP',           'powerRatio_1_R';
+    'PowerSpreadRatio_E5_LHCP',           'powerRatio_5_L';
+    'PowerSpreadRatio_E5_RHCP',           'powerRatio_5_R';
+
+    'Kurtosis_DDM_E1_LHCP',               'kurtosisDDM_1_L';
+    'Kurtosis_DDM_E1_RHCP',               'kurtosisDDM_1_R';
+    'Kurtosis_DDM_E5_LHCP',               'kurtosisDDM_5_L';
+    'Kurtosis_DDM_E5_RHCP',               'kurtosisDDM_5_R';
+
+    'Kurtosis_DOPP_0_E1_LHCP',            'kurtosisDopp0_1_L';
+    'Kurtosis_DOPP_0_E1_RHCP',            'kurtosisDopp0_1_R';
+    'Kurtosis_DOPP_0_E5_LHCP',            'kurtosisDopp0_5_L';
+    'Kurtosis_DOPP_0_E5_RHCP',            'kurtosisDopp0_5_R';
+};
+
+for ii = 1:size(galFields,1)
+    inField  = galFields{ii,1};
+    outField = galFields{ii,2};
+
+    if isfield(ReflectionCoefficientAtSP(kk), inField)
+        val = ReflectionCoefficientAtSP(kk).(inField);
+        if all(~ismissing(val(:))) && numel(val) == idxLen
+            eval([outField '(intrack:fintrack) = val;']);
+        end
+    end
+end
 
 
-     %Rx Antenna gain lines
-    if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP)==0 , rxAntennaGain_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP)==0 , rxAntennaGain_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP ; end
+% ---------- Galileo Sigma0 ----------
+galSigmaFields = {
+    'NBRCS_E1_LHCP', 'NBRCS_1_L';
+    'NBRCS_E1_RHCP', 'NBRCS_1_R';
+    'NBRCS_E5_LHCP', 'NBRCS_5_L';
+    'NBRCS_E5_RHCP', 'NBRCS_5_R';
+};
 
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP)==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP)==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP ; end
+for ii = 1:size(galSigmaFields,1)
+    inField  = galSigmaFields{ii,1};
+    outField = galSigmaFields{ii,2};
 
-        %Coherency gain lines
-    if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E1_LHCP)==0 , coherencyRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E1_RHCP)==0 , coherencyRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E5_LHCP)==0 , coherencyRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E5_RHCP)==0 , coherencyRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E5_RHCP ; end
-
-       %ReflectionCoefficientUnbounded lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_LHCP)==0 , ReflectionCoefficientUnbounded_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_RHCP)==0 , ReflectionCoefficientUnbounded_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_LHCP)==0 , ReflectionCoefficientUnbounded_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_RHCP)==0 , ReflectionCoefficientUnbounded_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_RHCP ; end
-
-
-     %ReflectionCoefficientAtSP_CM1 lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_LHCP)==0 , ReflectionCoefficientAtSP_CM1_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_RHCP)==0 , ReflectionCoefficientAtSP_CM1_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_LHCP)==0 , ReflectionCoefficientAtSP_CM1_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_RHCP)==0 , ReflectionCoefficientAtSP_CM1_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_RHCP ; end
-
-      %ReflectionCoefficientAtSP_CM2 lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_LHCP)==0 , ReflectionCoefficientAtSP_CM2_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_RHCP)==0 , ReflectionCoefficientAtSP_CM2_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_LHCP)==0 , ReflectionCoefficientAtSP_CM2_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_RHCP)==0 , ReflectionCoefficientAtSP_CM2_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_RHCP ; end
-
-      %ReflectionCoefficientAtSP_CM3 lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_LHCP)==0 , ReflectionCoefficientAtSP_CM3_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_RHCP)==0 , ReflectionCoefficientAtSP_CM3_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_LHCP)==0 , ReflectionCoefficientAtSP_CM3_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_RHCP)==0 , ReflectionCoefficientAtSP_CM3_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_RHCP ; end
-
-
-     %Quality control flag lines
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP)==0 , qualityControlFlags_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP ; end
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP)==0 , qualityControlFlags_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP ; end
-
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP)==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP ; end
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP)==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP ; end
-
-
-%PowerAnalog_W lines
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP)==0 , powerAnalogWdbw_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP)==0 , powerAnalogWdbw_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP ; end
-
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP)==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP ; end
-
-
-   
-     %MeanNoise lines
-    if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP)==0 , noiseFloorCounts_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP)==0 , noiseFloorCounts_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP)==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP)==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP ; end
-
-
-          %PowerSpreadRatio lines
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP)==0 , powerRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP)==0 , powerRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP)==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP)==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP ; end
-
-     %HighNoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP)==0 , kurtosisDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP)==0 , kurtosisDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP)==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP)==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP ; end
-
-     %NoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP)==0 , kurtosisDopp0_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP)==0 , kurtosisDopp0_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP ; end
-
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP)==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP)==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP ; end
-
-     %Sigma0 lines
-     if ismissing(Sigma0(kk).NBRCS_E1_LHCP)==0 , NBRCS_1_L(intrack:fintrack)=Sigma0(kk).NBRCS_E1_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_E1_RHCP)==0 , NBRCS_1_R(intrack:fintrack)=Sigma0(kk).NBRCS_E1_RHCP ; end
-
-     if ismissing(Sigma0(kk).NBRCS_E5_LHCP)==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_E5_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_E5_RHCP)==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_E5_RHCP ; end
+    if isfield(Sigma0(kk), inField)
+        val = Sigma0(kk).(inField);
+        if all(~ismissing(val(:))) && numel(val) == idxLen
+            eval([outField '(intrack:fintrack) = val;']);
+        end
+    end
+end
 
 
   end % end case over the satgellite
