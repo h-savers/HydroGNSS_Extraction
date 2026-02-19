@@ -64,11 +64,17 @@ for jj=1:Num_sixhours  ;
 %
 disp(['Initiate reading loop of 6-hours: ' char(Dir_Day(jj))]) ;
 %
+% if exist([Path_L1B_day,'\',char(Dir_Day(jj)),'\',metadata_name])==0
+%     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file does not exist. Program exiting']) ;
+%     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file does not exist. Program exiting']) ; 
+%     fprintf(logfileID,'\n') ;    
+%     return
+% end
 if exist([Path_L1B_day,'\',char(Dir_Day(jj)),'\',metadata_name])==0
-    disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file does not exist. Program exiting']) ;
-    fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file does not exist. Program exiting']) ; 
+    disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: metadata file does not exist. Skipping this 6-hour block']) ;
+    fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: metadata file does not exist. Skipping this 6-hour block']) ; 
     fprintf(logfileID,'\n') ;    
-    return
+    continue  % <-- now it skips instead of exiting
 end
 %
 

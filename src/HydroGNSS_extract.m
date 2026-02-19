@@ -251,8 +251,10 @@ notToBeUsed_E1_L= single(NaN(numOfSP,1)); notToBeUsed_E1_R= single(NaN(numOfSP,1
 notToBeUsed_L1_L= single(NaN(numOfSP,1));notToBeUsed_L1_R= single(NaN(numOfSP,1));
 
 
-GPSindex=find(SAT=="GPS") ;
-Galileoindex=find(SAT=="Galileo") ; 
+GPSindex = find(strcmp(SAT, 'GPS')); 
+Galileoindex = find(strcmp(SAT, 'Galileo'));
+%GPSindex=find(SAT=="GPS") ;
+%Galileoindex=find(SAT=="Galileo") ; 
 
 fintrack=0 ; 
 %dayOfYear = [];
