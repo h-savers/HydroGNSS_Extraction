@@ -93,7 +93,8 @@ trackNcids = netcdf.inqGrps(ncid);
     end
  end
 
-% Init reading time and RX position for all the entire data vector
+% Init reading time and RX position for all the entire data vector MP: this
+% may be shifted before for 
 L1b_ProcessorVersion = netcdf.getAtt(ncid,netcdf.getConstant("NC_GLOBAL"),'L1b_ProcessorVersion');
 L1a_ProcessorVersion = netcdf.getAtt(ncid,netcdf.getConstant("NC_GLOBAL"),'L1a_ProcessorVersion');
 
