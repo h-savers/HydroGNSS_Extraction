@@ -332,7 +332,7 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
         SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; 
            if length(ReflectionCoefficientAtSP(kk).L5_LHCP) ~= sizetrack ; 
            disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: GPS L5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ;
-           fprintf(logfileID,[[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: GPS L5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ; 
+           fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: GPS L5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ; 
            fprintf(logfileID,'\n') ;    
            end
        end
@@ -461,7 +461,7 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
             SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; 
            if length(ReflectionCoefficientAtSP(kk).E5_LHCP) ~= sizetrack ; 
            disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: Galile E5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ;
-           fprintf(logfileID,[[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: Galile E5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ; 
+           fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: Galile E5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ; 
            fprintf(logfileID,'\n') ;    
            end
     end
