@@ -396,9 +396,9 @@ ReflectionCoefficientAtSP(Track_ID).EIRP_L1_LHCP=read ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Coherency');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=read ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L1_LHCP=read ;
 catch
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=nan ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L1_LHCP=nan ;
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
@@ -510,9 +510,9 @@ ReflectionCoefficientAtSP(Track_ID).SNR_L1_RHCP=read  ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_RHCP=read  ; 
 catch
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=nan ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_RHCP=nan ; 
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'EIRP');
@@ -522,9 +522,9 @@ ReflectionCoefficientAtSP(Track_ID).EIRP_L1_RHCP=read ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Coherency');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=read ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L1_RHCP=read ;
 catch
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=nan ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L1_RHCP=nan ;
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
@@ -644,9 +644,9 @@ end
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L5_LHCP=read  ; 
 catch
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=nan ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L5_LHCP=nan ; 
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
@@ -660,9 +660,9 @@ ReflectionCoefficientAtSP(Track_ID).EIRP_L5_LHCP=read ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Coherency');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=read ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L5_LHCP=read ;
 catch
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=nan ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L5_LHCP=nan ;
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
@@ -778,9 +778,9 @@ end
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L5_RHCP=read  ; 
 catch
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=nan ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L5_RHCP=nan ; 
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
@@ -794,9 +794,9 @@ ReflectionCoefficientAtSP(Track_ID).EIRP_L5_RHCP=read ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Coherency');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=read ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L5_RHCP=read ;
 catch
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=nan ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_L5_RHCP=nan ;
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
@@ -925,9 +925,9 @@ end
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E1_LHCP=read  ; 
 catch
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=nan ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E1_LHCP=nan ; 
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
@@ -941,9 +941,9 @@ ReflectionCoefficientAtSP(Track_ID).EIRP_E1_LHCP=read ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Coherency');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=read ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_LHCP=read ;
 catch
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=nan ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_LHCP=nan ;
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
@@ -1058,9 +1058,9 @@ end
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E1_RHCP=read  ; 
 catch
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=nan ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E1_RHCP=nan ; 
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
@@ -1186,9 +1186,9 @@ end
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E5_LHCP=read  ; 
 catch
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=nan ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E5_LHCP=nan ; 
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
@@ -1202,9 +1202,9 @@ ReflectionCoefficientAtSP(Track_ID).EIRP_E5_LHCP=read ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Coherency');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=read ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E5_LHCP=read ;
 catch
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=nan ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E5_LHCP=nan ;
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
@@ -1317,9 +1317,9 @@ end
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'PowerSpreadRatio');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=read  ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E5_RHCP=read  ; 
 catch
-ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_L1_LHCP=nan ; 
+ReflectionCoefficientAtSP(Track_ID).PowerSpreadRatio_E5_RHCP=nan ; 
 end 
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DDMSNRAtPeakSingleDDM');
@@ -1333,9 +1333,9 @@ ReflectionCoefficientAtSP(Track_ID).EIRP_E5_RHCP=read ;
 try
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'Coherency');
 read=netcdf.getVar(coinNcids{kk}(ii,1), varId, 'double');
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=read ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E5_RHCP=read ;
 catch
-ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E1_RHCP=nan ;
+ReflectionCoefficientAtSP(Track_ID).coherencyRatio_E5_RHCP=nan ;
 end
 
 varId = netcdf.inqVarID(coinNcids{kk}(ii,1), 'DirectSignalInDDM');
