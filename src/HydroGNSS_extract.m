@@ -185,7 +185,7 @@ end
 %_1_L
 %_1_R
 reflectivityLinear_5_Ldb=single(NaN(numOfSP,1)) ; reflectivityLinear_5_Rdb=single(NaN(numOfSP,1)) ;
-timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[];  THETA=[] ;  constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
+timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[];  Landtypesub=[]; THETA=[] ;  constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
 reflectivityLinear_1_L=single(NaN(numOfSP,1)) ;reflectivityLinear_1_R=single(NaN(numOfSP,1)) ; 
 reflectivityLinear_L1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_L1_R=single(NaN(numOfSP,1)) ;
 reflectivityLinear_E1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_E1_R=single(NaN(numOfSP,1)) ;
@@ -291,6 +291,7 @@ Year = [Year; year(dt_full)];
     specularPointLat=[specularPointLat ; ReflectionCoefficientAtSP(kk).SpecularPointLat] ; 
     specularPointLon=[specularPointLon ; ReflectionCoefficientAtSP(kk).SpecularPointLon] ; 
     THETA=[THETA ; ReflectionCoefficientAtSP(kk).SPIncidenceAngle] ;
+    Landtypesub=[Landtypesub ; ReflectionCoefficientAtSP(kk).LandType] ;
     spAzimuthAngleDegOrbit=[spAzimuthAngleDegOrbit ; ReflectionCoefficientAtSP(kk).SPAzimuthORF] ;
     sizetrack=length(ReflectionCoefficientAtSP(kk).time) ; 
     intrack=fintrack+1 ; 
@@ -631,7 +632,7 @@ notToBeUsed_1_R = single( (kurtosisDopp0_1_R == 1) | (DirectSignalInDDM_1_R == 1
 %notToBeUsed_L1_R = single( (kurtosisDopp0_L1_R == 1) | (DirectSignalInDDM_L1_R == 1) );
 
 
-save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'timeUTC',...
+save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'Landtypesub','incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'timeUTC',...
     'reflectivityLinear_1_L', 'reflectivityLinear_1_R', ...
     'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_5_L', 'SNR_5_R', 'SNR_1_L', 'SNR_1_R', ...
