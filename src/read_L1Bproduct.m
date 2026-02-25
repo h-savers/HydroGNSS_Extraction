@@ -40,7 +40,8 @@ if length(D)==0 % , disp(['No L1B data found in directory of day ' char(SM_Day)]
     return 
 end; 
 for jj=3:length(D)  ; % 
-if D(jj).isdir==1 & exist([Path_L1B_day,'\',char(D(jj).name),'\',metadata_name])>0, Num_sixhours=Num_sixhours+1 ;  end  ;  ; 
+% if D(jj).isdir==1 & exist([Path_L1B_day,'\',char(D(jj).name),'\',metadata_name])>0, Num_sixhours=Num_sixhours+1 ;  end  ;  ; 
+if D(jj).isdir==1, Num_sixhours=Num_sixhours+1 ;  end  ;  ; 
 end   
 
 if Num_sixhours < 4
