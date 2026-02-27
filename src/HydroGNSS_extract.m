@@ -51,18 +51,21 @@ prompt={ 'ProcessingSatellite [HydroGNSS-1 | HydeoGNSS-2 | both]: ',...
          'Easternmost longitude:', ...
          'First day to extract: ', ...
          'Last day to extract: ', ...
-         'DDM [Yes/No]:' }  ; 
+         'DDM [Yes/No]:'   , ... 
+        'DataFilter [Land/All]:' }; % <-- NEW
+
 opts.Resize='on';
 opts.WindowStyle='normal';
 opts.Interpreter='tex';
 name='HydroGNSS L1B data extraction';
-numlines=[1 90; 1 90; 1 90; 1 90; 1 30; 1 30 ; 1 30; 1 30; 1 30; 1 30; 1 30; 1 30] ; 
+numlines=[1 90; 1 90; 1 90; 1 90; 1 30; 1 30 ; 1 30; 1 30; 1 30; 1 30; 1 30; 1 30; 1 30] ; 
 defaultanswer={Answer{1},Answer{2},...
                  Answer{3},Answer{4},Answer{5},Answer{6},Answer{7},...
                  Answer{8},Answer{9},Answer{10},...
-                 Answer{11},Answer{12}};
+                 Answer{11},Answer{12}, 'All'};
 Answer=inputdlg(prompt,name,numlines,defaultanswer,opts);
 
+DataFilter = Answer{13};  % NEW variable
 ProcessingSatellite= Answer{1};
 DataInputRootPath= Answer{2};
 DataOutputRootPath= Answer{3};
@@ -293,11 +296,21 @@ Year = [Year; year(dt_full)];
     specularPointLat=[specularPointLat ; ReflectionCoefficientAtSP(kk).SpecularPointLat] ; 
     specularPointLon=[specularPointLon ; ReflectionCoefficientAtSP(kk).SpecularPointLon] ; 
     THETA=[THETA ; ReflectionCoefficientAtSP(kk).SPIncidenceAngle] ;
-    Landtypesub=[Landtypesub ; ReflectionCoefficientAtSP(kk).LandType] ;
+
     spAzimuthAngleDegOrbit=[spAzimuthAngleDegOrbit ; ReflectionCoefficientAtSP(kk).SPAzimuthORF] ;
     sizetrack=length(ReflectionCoefficientAtSP(kk).time) ; 
     intrack=fintrack+1 ; 
     fintrack=intrack+sizetrack-1 ; 
+
+    % --- Always save LandType
+Landtypesub = [Landtypesub ; ReflectionCoefficientAtSP(kk).LandType];
+
+% --- Decide whether to extract other variables based on GUI selection ---
+if strcmpi(DataFilter, 'Land')
+    keepPoint = ReflectionCoefficientAtSP(kk).LandType < 210;
+else
+    keepPoint = true;  % 'All' -> keep everything
+end
 
 
 
@@ -318,6 +331,7 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
 
   switch SAT(kk) ; 
     case "GPS"
+        if keepPoint
    % Add constellation label for GPS
     %constellation = [constellation; repmat({'GPS'}, length(refl_coeff.Latitude), 1)];
 
@@ -450,8 +464,9 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP)==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP ; end
      if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP)==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP ; end
 
-
+        end
      case "Galileo"
+         if keepPoint
     
     % Add constellation label for Galileo
     %constellation = [constellation; repmat({'Galileo'}, length(refl_coeff.Latitude), 1)];
@@ -586,7 +601,7 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnal
 
      if ismissing(Sigma0(kk).NBRCS_E5_LHCP)==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_E5_LHCP ; end
      if ismissing(Sigma0(kk).NBRCS_E5_RHCP)==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_E5_RHCP ; end
-
+         end
 
   end % end case over the satgellite
 end % end fir over the tracks
