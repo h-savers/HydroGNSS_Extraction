@@ -1,4 +1,4 @@
-function [ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM] = ReadConfFile(configurationPath)
+function [ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM, DataFilter] = ReadConfFile(configurationPath)
 %%%%%%%  Read configuration file
 %
             lines = string(splitlines(fileread(configurationPath)));
@@ -72,5 +72,10 @@ function [ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfilepre
             ConfigRightLine= find(ConfigRightLine==1)  ;   
             startIndex= regexp(lines(ConfigRightLine),'=') ; 
             DDM= extractAfter(lines(ConfigRightLine),startIndex) ; % 
+                        %%                  
+            ConfigRightLine= contains(lines,'DataFilter')  ;  
+            ConfigRightLine= find(ConfigRightLine==1)  ;   
+            startIndex= regexp(lines(ConfigRightLine),'=') ; 
+            DataFilter= extractAfter(lines(ConfigRightLine),startIndex) ; % 
             %%
 end
