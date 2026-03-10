@@ -297,7 +297,7 @@ Year = [Year; year(dt_full)];
     specularPointLat=[specularPointLat ; ReflectionCoefficientAtSP(kk).SpecularPointLat] ; 
     specularPointLon=[specularPointLon ; ReflectionCoefficientAtSP(kk).SpecularPointLon] ; 
     THETA=[THETA ; ReflectionCoefficientAtSP(kk).SPIncidenceAngle] ;
-    Landtypesub=[Landtypesub ; ReflectionCoefficientAtSP(kk).LandType] ;
+%     Landtypesub=[Landtypesub ; ReflectionCoefficientAtSP(kk).LandType] ;
     spAzimuthAngleDegOrbit=[spAzimuthAngleDegOrbit ; ReflectionCoefficientAtSP(kk).SPAzimuthORF] ;
     % --- Always save LandType
     Landtypesub = [Landtypesub ; ReflectionCoefficientAtSP(kk).LandType];
