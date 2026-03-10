@@ -74,7 +74,6 @@ for jj=1:Num_sixhours  ;
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: initiate reading loop of 6-hours: ' char(Dir_Day(jj))]) ; 
     fprintf(logfileID,'\n') ;    
 %
-disp(Dir_Day)
 if exist([Path_L1B_day,'\',char(Dir_Day(jj)),'\',metadata_name])==0
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file on ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj)) ' does not exist. Program continuing']) ;
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file on ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj)) ' does not exist. Program continuing']) ; 
