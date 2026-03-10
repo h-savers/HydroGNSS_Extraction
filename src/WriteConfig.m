@@ -1,4 +1,4 @@
-function WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM)
+function WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM, DataFilter)
 conffileID = fopen(configurationPath, 'W') ; 
 % conffileID = fopen(configurationPath) ; 
 fprintf(conffileID,'%s',['ProcessingSatellite=' ProcessingSatellite] ); fprintf(conffileID,'\n') ; 
@@ -13,5 +13,6 @@ fprintf(conffileID,['LonEast=' char(string(LonEast))] ); fprintf(conffileID,'\n'
 fprintf(conffileID,'%s',['Dayinit=' Dayinit] ); fprintf(conffileID,'\n') ; 
 fprintf(conffileID,'%s',['Dayfinal=' Dayfinal] ); fprintf(conffileID,'\n') ; 
 fprintf(conffileID,'%s',['DDM=' DDM] ); fprintf(conffileID,'\n') ; 
+fprintf(conffileID,'%s',['DataFilter=' DataFilter] ); fprintf(conffileID,'\n') ; 
 fclose(conffileID) ;
 end
