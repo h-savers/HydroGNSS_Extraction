@@ -137,9 +137,9 @@ elseif exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) >0 & read
 ncid2 = netcdf.open(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name), 'NC_NOWRITE');
 trackNcids2 = netcdf.inqGrps(ncid2);
 for track = 1:length(trackNcids2)
-    channelNcids2(track,:) = netcdf.inqGrps(trackNcids2(track));
-    for chan = 1:length(channelNcids2(track,:))
-        coinNcids2{track}(chan,:) = netcdf.inqGrps(channelNcids2(chan));
+    channelNcids2{track} = netcdf.inqGrps(trackNcids2(track));
+    for chan = 1:length(channelNcids2{track})
+        coinNcids2{track}(chan) = netcdf.inqNcid(channelNcids2{track}(1),'Incoherent');
     end
  end
 
