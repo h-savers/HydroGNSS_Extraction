@@ -640,7 +640,7 @@ notToBeUsed_1_R = single( (kurtosisDopp0_1_R == 1) | (DirectSignalInDDM_1_R == 1
 %notToBeUsed_L1_R = single( (kurtosisDopp0_L1_R == 1) | (DirectSignalInDDM_L1_R == 1) );
 %%%%%%%%%%%%%%%%%%% select Land data is require
 
-if DataFilter=='Land'
+if DataFilter==string('Land') 
 LandSPindx=find(Landtypesub<210) ; 
 %
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selecting land data with LandType < 210']) ;
