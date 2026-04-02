@@ -457,7 +457,22 @@ if readDDM=="Yes" | readDDM=="Y"
     
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
-
+if length(coinNcids2{kk}{ii}) ==2 
+varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'CoherentIntegrationMidPointTime'); 
+read=netcdf.getVar(coinNcids2{kk}{ii}(2), varId, 'double');
+ReflectionCoefficientAtSP(Track_ID).CoherentIntegrationMidPointTime=read ; 
+varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'IValues'); 
+read=netcdf.getVar(coinNcids2{kk}{ii}(2), varId);
+varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'QValues'); 
+read2=netcdf.getVar(coinNcids2{kk}{ii}(2), varId);
+ReflectionCoefficientAtSP(Track_ID).Complex=complex(read, read2) ; 
+varId = netcdf.inqVarID(coinNcids{kk}{ii}(2), 'Latitudes_CoherentInt'); 
+read=netcdf.getVar(coinNcids{kk}{ii}(2), varId);
+ReflectionCoefficientAtSP(Track_ID).Latitudes_CoherentInt=read ; 
+varId = netcdf.inqVarID(coinNcids{kk}{ii}(2), 'Longitudes_CoherentInt'); 
+read=netcdf.getVar(coinNcids{kk}{ii}(2), varId);
+ReflectionCoefficientAtSP(Track_ID).Longitudes_CoherentInt=read ; 
+end
 % read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', DDMs_name],...
 %     [infometa.Groups(kk).Name,'/', infometa.Groups(kk).Groups(ii).Name,...
 %     '/Incoherent/DDM']) ;
