@@ -191,7 +191,8 @@ end
 %_1_L
 %_1_R
 reflectivityLinear_5_Ldb=single(NaN(numOfSP,1)) ; reflectivityLinear_5_Rdb=single(NaN(numOfSP,1)) ;
-timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[]; Landtypesub=[] ; THETA=[] ;  constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
+timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[]; Landtypesub=[] ; 
+ReceiverSubSatLatitude_all = []; ReceiverSubSatLongitude_all= []; ReceiverPositionX_all = []; THETA=[] ; Onboardspeclat=[] ;Onboardspeclon=[] ; constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
 reflectivityLinear_1_L=single(NaN(numOfSP,1)) ;reflectivityLinear_1_R=single(NaN(numOfSP,1)) ; 
 reflectivityLinear_L1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_L1_R=single(NaN(numOfSP,1)) ;
 reflectivityLinear_E1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_E1_R=single(NaN(numOfSP,1)) ;
@@ -293,10 +294,15 @@ dayOfYear = [dayOfYear; day(dt_full,'dayofyear')];
 secondOfDay = [secondOfDay; hour(dt_full)*3600 + minute(dt_full)*60 + second(dt_full)];
 Year = [Year; year(dt_full)];
 
+    ReceiverSubSatLatitude_all = [ReceiverSubSatLatitude_all ; ReflectionCoefficientAtSP(kk).ReceiverSubSatLatitude];
+    ReceiverSubSatLongitude_all = [ReceiverSubSatLongitude_all ; ReflectionCoefficientAtSP(kk).ReceiverSubSatLongitude];
 
+    ReceiverPositionX_all = [ReceiverPositionX_all ; ReflectionCoefficientAtSP(kk).ReceiverPositionX];
     specularPointLat=[specularPointLat ; ReflectionCoefficientAtSP(kk).SpecularPointLat] ; 
     specularPointLon=[specularPointLon ; ReflectionCoefficientAtSP(kk).SpecularPointLon] ; 
     THETA=[THETA ; ReflectionCoefficientAtSP(kk).SPIncidenceAngle] ;
+    Onboardspeclat=[Onboardspeclat ; ReflectionCoefficientAtSP(kk).OnBoardSpecularPointLat] ;
+    Onboardspeclon=[Onboardspeclon ; ReflectionCoefficientAtSP(kk).OnBoardSpecularPointLon] ;
     spAzimuthAngleDegOrbit=[spAzimuthAngleDegOrbit ; ReflectionCoefficientAtSP(kk).SPAzimuthORF] ;
     % --- Always save LandType
     Landtypesub = [Landtypesub ; ReflectionCoefficientAtSP(kk).LandType];
@@ -646,7 +652,12 @@ LandSPindx=find(Landtypesub<210) ;
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selecting land data with LandType < 210']) ;
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selectin land data with LandType < 210']) ; 
     fprintf(logfileID,'\n') ;    
-%
+%Onboardspeclat','Onboardspeclon
+ReceiverSubSatLatitude_all = ReceiverSubSatLatitude_all(LandSPindx);
+ReceiverSubSatLongitude_all = ReceiverSubSatLongitude_all(LandSPindx);
+ReceiverPositionX_all = ReceiverPositionX_all(LandSPindx);
+Onboardspeclat=Onboardspeclat(LandSPindx) ;
+Onboardspeclon=Onboardspeclon(LandSPindx) ;
 specularPointLat=specularPointLat(LandSPindx) ;
 specularPointLon=specularPointLon(LandSPindx) ;
 Landtypesub=Landtypesub(LandSPindx) ;
@@ -734,7 +745,7 @@ end
 %
 %%%%%%%%%%%%%%%%%% end select land data
 
-save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'Landtypesub', 'timeUTC',...
+save([char(DataOutputRootPath) '\' Nameout], 'ReceiverSubSatLatitude_all','ReceiverSubSatLongitude_all','ReceiverPositionX_all','Onboardspeclat','Onboardspeclon','specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'Landtypesub', 'timeUTC',...
     'reflectivityLinear_1_L', 'reflectivityLinear_1_R', ...
     'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_5_L', 'SNR_5_R', 'SNR_1_L', 'SNR_1_R', ...

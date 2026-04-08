@@ -130,6 +130,14 @@ varID=netcdf.inqVarID(ncid, 'ReceiverPositionX')  ;
 read=netcdf.getVar(ncid,varID)  ;
 ReceiverPositionXtot=read ; 
 
+varID=netcdf.inqVarID(ncid, 'ReceiverSubSatLatitude')  ;
+read=netcdf.getVar(ncid,varID)  ;
+ReceiverSubSatLatitudetot=read ; 
+
+varID=netcdf.inqVarID(ncid, 'ReceiverSubSatLongitude')  ;
+read=netcdf.getVar(ncid,varID)  ;
+ReceiverSubSatLongitudetot=read ; 
+
 varID=netcdf.inqVarID(ncid, 'ReceiverPositionY')  ;
 read=netcdf.getVar(ncid,varID)  ;
 ReceiverPositionYtot=read ; 
@@ -265,15 +273,56 @@ ReflectionCoefficientAtSP(Track_ID).TransmitterPositionZ=read ;
 ReceiverPositionX=zeros(sizeGroup,1)  ; 
 ReceiverPositionY=zeros(sizeGroup,1)  ; 
 ReceiverPositionZ=zeros(sizeGroup,1)  ; 
+
+ReceiverSubSatLatitude=zeros(sizeGroup,1)  ;
+ReceiverSubSatLongitude=zeros(sizeGroup,1)  ;
 %
-for ii=1: sizeGroup   %%%% ???? This look could be removed by reading variable into groups
-indicesTime=find(IntegrationMidPointTimetot==ReflectionCoefficientAtSP(Track_ID).time(ii) ) ; 
-%
-ReceiverPositionX(ii)= ReceiverPositionXtot(indicesTime(1)) ; 
-ReceiverPositionY(ii)= ReceiverPositionYtot(indicesTime(1)) ; 
-ReceiverPositionZ(ii)= ReceiverPositionZtot(indicesTime(1)) ;
-%
-end 
+% for ii=1: sizeGroup   %%%% ???? This look could be removed by reading variable into groups
+% indicesTime=find(IntegrationMidPointTimetot==ReflectionCoefficientAtSP(Track_ID).time(ii) ) ; 
+% %
+% ReceiverPositionX(ii)= ReceiverPositionXtot(indicesTime(1)) ; 
+% ReceiverPositionY(ii)= ReceiverPositionYtot(indicesTime(1)) ; 
+% ReceiverPositionZ(ii)= ReceiverPositionZtot(indicesTime(1)) ;
+% 
+% ReceiverSubSatLatitude(ii)= ReceiverSubSatLatitudetot(indicesTime(1)) ; 
+% ReceiverSubSatLongitude(ii)= ReceiverSubSatLongitudetot(indicesTime(1)) ; 
+% %
+% end 
+% idx = firstsampleInGroup:(firstsampleInGroup + sizeGroup - 1);
+% 
+% ReceiverPositionX = ReceiverPositionXtot(idx);
+% ReceiverPositionY = ReceiverPositionYtot(idx);
+% ReceiverPositionZ = ReceiverPositionZtot(idx);
+% 
+% ReceiverSubSatLatitude  = ReceiverSubSatLatitudetot(idx);
+% ReceiverSubSatLongitude = ReceiverSubSatLongitudetot(idx);
+% Reset index for each 6-hour block (IMPORTANT)
+lastIdx = 1;
+
+for ii = 1:sizeGroup
+
+    % restrict search to forward direction only
+    searchRange = lastIdx:length(IntegrationMidPointTimetot);
+
+    % find closest time match
+    [~, localIdx] = min(abs(IntegrationMidPointTimetot(searchRange) - ...
+        ReflectionCoefficientAtSP(Track_ID).time(ii)));
+
+    % convert back to global index
+    idxTime = searchRange(localIdx);
+
+    % assign receiver positions
+    ReceiverPositionX(ii) = ReceiverPositionXtot(idxTime);
+    ReceiverPositionY(ii) = ReceiverPositionYtot(idxTime);
+    ReceiverPositionZ(ii) = ReceiverPositionZtot(idxTime);
+
+    ReceiverSubSatLatitude(ii)  = ReceiverSubSatLatitudetot(idxTime);
+    ReceiverSubSatLongitude(ii) = ReceiverSubSatLongitudetot(idxTime);
+
+    % move pointer forward
+    lastIdx = idxTime;
+
+end
 %
 ReflectionCoefficientAtSP(Track_ID).ReceiverPositionX=...
       ReceiverPositionX; 
@@ -281,6 +330,12 @@ ReflectionCoefficientAtSP(Track_ID).ReceiverPositionY=...
       ReceiverPositionY ;  
 ReflectionCoefficientAtSP(Track_ID).ReceiverPositionZ=...
       ReceiverPositionZ ;  
+
+ReflectionCoefficientAtSP(Track_ID).ReceiverSubSatLatitude=...
+      ReceiverSubSatLatitude; 
+ReflectionCoefficientAtSP(Track_ID).ReceiverSubSatLongitude=...
+      ReceiverSubSatLongitude; 
+firstsampleInGroup = firstsampleInGroup + sizeGroup;
 %
 % ReflectionCoefficientAtSP(Track_ID).ReceiverPositionX=...
 %     ReceiverPositionXtot(firstsampleInGroup: firstsampleInGroup+sizeGroup-1) ;  
@@ -297,9 +352,15 @@ ReflectionCoefficientAtSP(Track_ID).ReceiverPositionZ=...
 %
 varId = netcdf.inqVarID(trackNcids(kk), 'SPIncidenceAngle');
 read=netcdf.getVar(trackNcids(kk), varId);
-% read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', metadata_name],...
-%     [infometa.Groups(kk).Name,'/SPIncidenceAngle']) ;
 ReflectionCoefficientAtSP(Track_ID).SPIncidenceAngle= read ; 
+
+varId = netcdf.inqVarID(trackNcids(kk), 'OnBoardSpecularPointLat');
+read=netcdf.getVar(trackNcids(kk), varId);
+ReflectionCoefficientAtSP(Track_ID).OnBoardSpecularPointLat= read ; 
+
+varId = netcdf.inqVarID(trackNcids(kk), 'OnBoardSpecularPointLon');
+read=netcdf.getVar(trackNcids(kk), varId);
+ReflectionCoefficientAtSP(Track_ID).OnBoardSpecularPointLon= read ; 
 
 varId = netcdf.inqVarID(trackNcids(kk), 'SPAzimuthORF');
 read=netcdf.getVar(trackNcids(kk), varId);
@@ -1454,6 +1515,15 @@ SpecularPointLon=[SpecularPointLon, read'] ;
 read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', metadata_name], ['/',...
     infometa.Groups(kk).Name,'/SPIncidenceAngle']) ;
 SPIncidenceAngle=[SPIncidenceAngle read'] ; 
+
+read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', metadata_name], ['/',...
+    infometa.Groups(kk).Name,'/OnBoardSpecularPointLat']) ;
+OnBoardSpecularPointLat=[OnBoardSpecularPointLat read'] ; 
+
+read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', metadata_name], ['/',...
+    infometa.Groups(kk).Name,'/OnBoardSpecularPointLon']) ;
+OnBoardSpecularPointLon=[OnBoardSpecularPointLon read'] ; 
+
 
 read=ncread([Path_L1B_day,'\',char(Dir_Day(jj)),'\', metadata_name], ['/',...
     infometa.Groups(kk).Name,'/PAzimuthARF']) ;
