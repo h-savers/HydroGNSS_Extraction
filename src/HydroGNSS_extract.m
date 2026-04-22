@@ -256,7 +256,7 @@ notToBeUsed_1_L= single(NaN(numOfSP,1)); notToBeUsed_1_R= single(NaN(numOfSP,1))
 notToBeUsed_5_L= single(NaN(numOfSP,1)); notToBeUsed_5_R= single(NaN(numOfSP,1)); 
 notToBeUsed_E1_L= single(NaN(numOfSP,1)); notToBeUsed_E1_R= single(NaN(numOfSP,1)); 
 notToBeUsed_L1_L= single(NaN(numOfSP,1));notToBeUsed_L1_R= single(NaN(numOfSP,1));
-
+SixHourDir=string([]) ; 
 
 GPSindex=find(SAT=="GPS") ;
 Galileoindex=find(SAT=="Galileo") ; 
@@ -306,7 +306,8 @@ Year = [Year; year(dt_full)];
     spAzimuthAngleDegOrbit=[spAzimuthAngleDegOrbit ; ReflectionCoefficientAtSP(kk).SPAzimuthORF] ;
     % --- Always save LandType
     Landtypesub = [Landtypesub ; ReflectionCoefficientAtSP(kk).LandType];
-
+    sizetrack= length(t_track) ; 
+    SixHourDir=[SixHourDir ; repmat(ReflectionCoefficientAtSP(kk).SixHourDir, sizetrack,1)] ; 
     sizetrack=length(ReflectionCoefficientAtSP(kk).time) ; 
     intrack=fintrack+1 ; 
     fintrack=intrack+sizetrack-1 ; 
@@ -661,6 +662,7 @@ Onboardspeclon=Onboardspeclon(LandSPindx) ;
 specularPointLat=specularPointLat(LandSPindx) ;
 specularPointLon=specularPointLon(LandSPindx) ;
 Landtypesub=Landtypesub(LandSPindx) ;
+SixHourDir=SixHourDir(LandSPindx) ;
 incidenceAngleDeg=incidenceAngleDeg(LandSPindx) ;
 spAzimuthAngleDegOrbit=spAzimuthAngleDegOrbit(LandSPindx) ;
 dayOfYear=dayOfYear(LandSPindx) ;
@@ -745,7 +747,10 @@ end
 %
 %%%%%%%%%%%%%%%%%% end select land data
 
-save([char(DataOutputRootPath) '\' Nameout], 'ReceiverSubSatLatitude_all','ReceiverSubSatLongitude_all','ReceiverPositionX_all','Onboardspeclat','Onboardspeclon','specularPointLat', 'specularPointLon', 'incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'Landtypesub', 'timeUTC',...
+save([char(DataOutputRootPath) '\' Nameout], 'ReceiverSubSatLatitude_all',...
+    'ReceiverSubSatLongitude_all','ReceiverPositionX_all','Onboardspeclat',...
+    'Onboardspeclon','specularPointLat', 'specularPointLon', 'incidenceAngleDeg',...
+    'spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'Landtypesub', 'SixHourDir', 'timeUTC',...
     'reflectivityLinear_1_L', 'reflectivityLinear_1_R', ...
     'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_5_L', 'SNR_5_R', 'SNR_1_L', 'SNR_1_R', ...

@@ -147,13 +147,15 @@ read=netcdf.getVar(ncid,varID)  ;
 ReceiverPositionZtot=read ; 
 % End reading RX position for all the entire data vector
 %%%%% to here ?????
-
-if exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) ==0 ; 
+%%  if to open DDM file if exists and readDDM is Yes
+if readDDM=="No" | readDDM=="N" , readDDMsinglefile="No" ; 
+elseif exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) ==0 & readDDM=="Yes" | exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) ==0 & readDDM=="Y"; 
 disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: DDM file does not exist in group ' char(string(Year)) '-' char(string(Month)) '-' char(string(Day)) '/' char(Dir_Day(jj)) '. Set DDM to "No"']) ;
 fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' WARNING: DDM file does not exist in group ' char(string(Year)) '-' char(string(Month)) '-' char(string(Day)) '/' char(Dir_Day(jj)) '. Set DDM to "No"']) ;
 fprintf(logfileID,'\n') ;
-readDDM="No" ; 
+readDDMsinglefile="No" ; 
 elseif exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) >0 & readDDM=="Yes" |  exist(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name)) >0 & readDDM=="Y" 
+readDDMsinglefile="Yes" ;
 ncid2 = netcdf.open(fullfile([Path_L1B_day,'\',char(Dir_Day(jj))],DDMs_name), 'NC_NOWRITE');
 % trackNcids2 = netcdf.inqGrps(ncid2);
 % for track = 1:length(trackNcids2)
@@ -181,6 +183,8 @@ end
 disp(size(coinNcids2))
 disp(length(coinNcids2{1}))
 disp(coinNcids2{1}{1})
+end 
+%%  end if to open DDM file if exists and readDDM is Yes
 % toc
 % disp('Initiate reading loop over groups') ; 
 disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: Initiate reading tracks of group ' char(string(Year)) '-' char(string(Month)) '-' char(string(Day)) '/' char(Dir_Day(jj))]) ;
@@ -513,7 +517,7 @@ ReflectionCoefficientAtSP(Track_ID).noise_floor_Counts_L1_LHCP=read ;
 varId = netcdf.inqVarID(coinNcids{kk}{ii}(1), 'NoiseKurtosis');
 read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 ReflectionCoefficientAtSP(Track_ID).Kurtosis_DOPP_0_L1_LHCP=read ; 
-if readDDM=="Yes" || readDDM=="Y"
+if readDDMsinglefile=="Yes" || readDDMsinglefile=="Y"
     
     varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
     read = netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -694,7 +698,7 @@ read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 Sigma0(Track_ID).NBRCS_L1_RHCP=read ;   
 
 
-if readDDM=="Yes" | readDDM=="Y"
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y"
 
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -828,7 +832,7 @@ varId = netcdf.inqVarID(coinNcids{kk}{ii}(1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 Sigma0(Track_ID).NBRCS_L5_LHCP= read ; 
 
-if readDDM=="Yes" | readDDM=="Y"
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y"
 
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -967,7 +971,7 @@ read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 %     '/Incoherent/Sigma0']) ;
 Sigma0(Track_ID).NBRCS_L5_RHCP=read ; 
 
-if readDDM=="Yes" | readDDM=="Y"
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y"
 
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -1111,7 +1115,7 @@ varId = netcdf.inqVarID(coinNcids{kk}{ii}(1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 Sigma0(Track_ID).NBRCS_E1_LHCP=read ; 
 
-if readDDM=="Yes" | readDDM=="Y"
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y"
 
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -1242,7 +1246,7 @@ varId = netcdf.inqVarID(coinNcids{kk}{ii}(1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 Sigma0(Track_ID).NBRCS_E1_RHCP=read ;       
 
-if readDDM=="Yes" | readDDM=="Y"
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y"
 
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -1371,7 +1375,7 @@ varId = netcdf.inqVarID(coinNcids{kk}{ii}(1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 Sigma0(Track_ID).NBRCS_E5_LHCP=read ; 
 
-if readDDM=="Yes" | readDDM=="Y"
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y"
 
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -1501,7 +1505,7 @@ varId = netcdf.inqVarID(coinNcids{kk}{ii}(1), 'Sigma0');
 read=netcdf.getVar(coinNcids{kk}{ii}(1), varId, 'double');
 Sigma0(Track_ID).NBRCS_E5_RHCP=read ; 
 
-if readDDM=="Yes" | readDDM=="Y"
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y"
     
 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
 read=netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
@@ -1577,7 +1581,7 @@ DDM=cat(3, DDM, read) ;
     end
 end % end loop on number of groups/tracks
 netcdf.close(ncid) ; 
-if readDDM=="Yes" | readDDM=="Y" , netcdf.close(ncid2) , end ; 
+if readDDMsinglefile=="Yes" | readDDMsinglefile=="Y" , netcdf.close(ncid2) , end ; 
 end % end loop on number of six-hour blocks 
 end % end loop on number of days
 
