@@ -522,53 +522,53 @@ if readDDMsinglefile=="Yes" || readDDMsinglefile=="Y"
     varId = netcdf.inqVarID(coinNcids2{kk}{ii}(1), 'DDM');  
     read = netcdf.getVar(coinNcids2{kk}{ii}(1), varId, 'uint16');
 
-    if length(coinNcids2{kk}{ii}) == 2 
-        
-        varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'CoherentIntegrationMidPointTime'); 
-        read = netcdf.getVar(coinNcids2{kk}{ii}(2), varId, 'double');
-        ReflectionCoefficientAtSP(Track_ID).CoherentIntegrationMidPointTime = read; 
-        
-        varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'IValues'); 
-        read = netcdf.getVar(coinNcids2{kk}{ii}(2), varId);
-        
-        varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'QValues'); 
-        read2 = netcdf.getVar(coinNcids2{kk}{ii}(2), varId);
-        
-        ReflectionCoefficientAtSP(Track_ID).Complex = complex(read, read2); 
-
-        % --- Latitudes ---
-        found = false;
-        for sub = 1:length(coinNcids2{kk}{ii})
-            try
-                varId = netcdf.inqVarID(coinNcids2{kk}{ii}(sub), 'Latitudes_CoherentInt');
-                read = netcdf.getVar(coinNcids2{kk}{ii}(sub), varId);
-                ReflectionCoefficientAtSP(Track_ID).Latitudes_CoherentInt = read;
-                found = true;
-                break
-            catch
-            end
-        end
-        if ~found
-            ReflectionCoefficientAtSP(Track_ID).Latitudes_CoherentInt = [];
-        end
-
-        % --- Longitudes ---
-        found = false;
-        for sub = 1:length(coinNcids2{kk}{ii})
-            try
-                varId = netcdf.inqVarID(coinNcids2{kk}{ii}(sub), 'Longitudes_CoherentInt');
-                read = netcdf.getVar(coinNcids2{kk}{ii}(sub), varId);
-                ReflectionCoefficientAtSP(Track_ID).Longitudes_CoherentInt = read;
-                found = true;
-                break
-            catch
-            end
-        end
-        if ~found
-            ReflectionCoefficientAtSP(Track_ID).Longitudes_CoherentInt = [];
-        end
-
-    end
+%     if length(coinNcids2{kk}{ii}) == 2 
+%         
+%         varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'CoherentIntegrationMidPointTime'); 
+%         read = netcdf.getVar(coinNcids2{kk}{ii}(2), varId, 'double');
+%         ReflectionCoefficientAtSP(Track_ID).CoherentIntegrationMidPointTime = read; 
+%         
+%         varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'IValues'); 
+%         read = netcdf.getVar(coinNcids2{kk}{ii}(2), varId);
+%         
+%         varId = netcdf.inqVarID(coinNcids2{kk}{ii}(2), 'QValues'); 
+%         read2 = netcdf.getVar(coinNcids2{kk}{ii}(2), varId);
+%         
+%         ReflectionCoefficientAtSP(Track_ID).Complex = complex(read, read2); 
+% 
+%         % --- Latitudes ---
+%         found = false;
+%         for sub = 1:length(coinNcids2{kk}{ii})
+%             try
+%                 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(sub), 'Latitudes_CoherentInt');
+%                 read = netcdf.getVar(coinNcids2{kk}{ii}(sub), varId);
+%                 ReflectionCoefficientAtSP(Track_ID).Latitudes_CoherentInt = read;
+%                 found = true;
+%                 break
+%             catch
+%             end
+%         end
+%         if ~found
+%             ReflectionCoefficientAtSP(Track_ID).Latitudes_CoherentInt = [];
+%         end
+% 
+%         % --- Longitudes ---
+%         found = false;
+%         for sub = 1:length(coinNcids2{kk}{ii})
+%             try
+%                 varId = netcdf.inqVarID(coinNcids2{kk}{ii}(sub), 'Longitudes_CoherentInt');
+%                 read = netcdf.getVar(coinNcids2{kk}{ii}(sub), varId);
+%                 ReflectionCoefficientAtSP(Track_ID).Longitudes_CoherentInt = read;
+%                 found = true;
+%                 break
+%             catch
+%             end
+%         end
+%         if ~found
+%             ReflectionCoefficientAtSP(Track_ID).Longitudes_CoherentInt = [];
+%         end
+% 
+%     end
 
     Sigma0(Track_ID).DDMs = read; 
 
