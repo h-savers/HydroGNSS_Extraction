@@ -3,6 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function TE_width=computeTE(pa,delay_vector,Power_threshold)
+    
      SPnumbers=size(pa,3);
      Bins_With_Peak=zeros(1,SPnumbers);
      c=zeros(1,SPnumbers);  
