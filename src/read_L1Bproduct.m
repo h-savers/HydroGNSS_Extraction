@@ -56,13 +56,13 @@ disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: Reading Year=
 fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: Reading Year=', num2str(Year), ' Month=', num2str(Month), ' Day=', num2str(Day), ' Num_sixhours=', num2str(Num_sixhours)]) ; 
 fprintf(logfileID,'\n') ;
 %
-% % create string array with all 6-hours segments within one day 
-% Dir_Day=[] ; 
-% % DataTag=[] ; % end
-% Dir_Day=string(Dir_Day) ; 
-% Line 63 and 64 added to make sure all the 4 folders are being read
-Dir_Day = ["H00","H06","H12","H18"];
-Num_sixhours = length(Dir_Day);
+% create string array with all 6-hours segments within one day 
+Dir_Day=[] ; 
+% DataTag=[] ; 
+for jj=3:Num_sixhours+2 ; 
+        Dir_Day= [Dir_Day ; D(jj).name];
+end
+Dir_Day=string(Dir_Day) ; 
 
 % toc
 % disp('Initiate reading loop of 6-hours') ; 
@@ -74,7 +74,6 @@ for jj=1:Num_sixhours  ;
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: initiate reading loop of 6-hours: ' char(Dir_Day(jj))]) ; 
     fprintf(logfileID,'\n') ;    
 %
-disp(Dir_Day)
 if exist([Path_L1B_day,'\',char(Dir_Day(jj)),'\',metadata_name])==0
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file on ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj)) ' does not exist. Program continuing']) ;
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: metadata file on ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj)) ' does not exist. Program continuing']) ; 

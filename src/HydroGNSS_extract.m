@@ -24,7 +24,7 @@ end
 
 %    
 
-[ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM] = ReadConfFile(configurationPath);
+[ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM, DataFilter] = ReadConfFile(configurationPath);
 
 switch mode
     case "GUI" 
@@ -39,6 +39,7 @@ Answer{3}=char(DataOutputRootPath)  ;     Answer{9}= char(string(LonEast)) ;
 Answer{5}=char(Outfileprefix)  ;          Answer{10}= char(Dayinit) ;
 Answer{4}=char(LogsOutputRootPath)  ;     Answer{11}=char(Dayfinal) ;
 Answer{6}=char(string(LatSouth))  ;       Answer{12}= char(DDM) ;
+Answer{13}= char(DataFilter) ;
 % ****** get inputs from GUI
 prompt={ 'ProcessingSatellite [HydroGNSS-1 | HydeoGNSS-2 | both]: ',...
          'DataInputRootPath: ',...
@@ -51,16 +52,17 @@ prompt={ 'ProcessingSatellite [HydroGNSS-1 | HydeoGNSS-2 | both]: ',...
          'Easternmost longitude:', ...
          'First day to extract: ', ...
          'Last day to extract: ', ...
-         'DDM [Yes/No]:' }  ; 
+         'DDM [Yes/No]:', ...
+         'Data geographical filter [Land | All]'}  ; 
 opts.Resize='on';
 opts.WindowStyle='normal';
 opts.Interpreter='tex';
 name='HydroGNSS L1B data extraction';
-numlines=[1 90; 1 90; 1 90; 1 90; 1 30; 1 30 ; 1 30; 1 30; 1 30; 1 30; 1 30; 1 30] ; 
+numlines=[1 90; 1 90; 1 90; 1 90; 1 40; 1 40 ; 1 40; 1 40; 1 40; 1 40; 1 40; 1 40; 1 40] ; 
 defaultanswer={Answer{1},Answer{2},...
                  Answer{3},Answer{4},Answer{5},Answer{6},Answer{7},...
                  Answer{8},Answer{9},Answer{10},...
-                 Answer{11},Answer{12}};
+                 Answer{11},Answer{12}, Answer{13} };
 Answer=inputdlg(prompt,name,numlines,defaultanswer,opts);
 
 ProcessingSatellite= Answer{1};
@@ -75,18 +77,20 @@ LonEast=   str2num(Answer{9}) ;
 Dayinit=Answer{10} ;
 Dayfinal=Answer{11} ;
 DDM=Answer{12} ;
+DataFilter=Answer{13} ;
+
 %
 % ****** Save GUI input into Input Configuration File 
 % save('../conf/Configuration.mat', 'Answer', '-append') ;
 
-WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM);
+WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM, DataFilter);
 
 
 % switch mode
     case "input" 
     disp('input mode')
 
-[ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, dummy1, dummy2, DDM] = ReadConfFile(configurationPath);
+[ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, dummy1, dummy2, DDM, DataFilter] = ReadConfFile(configurationPath);
 
 %scrivere il configuration
 % WriteConfig(configurationPath, ProcessingSatellite, DataInputRootPath, DataOutputRootPath, LogsOutputRootPath, Outfileprefix, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM);
@@ -293,8 +297,11 @@ Year = [Year; year(dt_full)];
     specularPointLat=[specularPointLat ; ReflectionCoefficientAtSP(kk).SpecularPointLat] ; 
     specularPointLon=[specularPointLon ; ReflectionCoefficientAtSP(kk).SpecularPointLon] ; 
     THETA=[THETA ; ReflectionCoefficientAtSP(kk).SPIncidenceAngle] ;
-    Landtypesub=[Landtypesub ; ReflectionCoefficientAtSP(kk).LandType] ;
+%     Landtypesub=[Landtypesub ; ReflectionCoefficientAtSP(kk).LandType] ;
     spAzimuthAngleDegOrbit=[spAzimuthAngleDegOrbit ; ReflectionCoefficientAtSP(kk).SPAzimuthORF] ;
+    % --- Always save LandType
+    Landtypesub = [Landtypesub ; ReflectionCoefficientAtSP(kk).LandType];
+
     sizetrack=length(ReflectionCoefficientAtSP(kk).time) ; 
     intrack=fintrack+1 ; 
     fintrack=intrack+sizetrack-1 ; 
@@ -632,7 +639,101 @@ notToBeUsed_1_R = single( (kurtosisDopp0_1_R == 1) | (DirectSignalInDDM_1_R == 1
 
 %notToBeUsed_L1_L = single( (kurtosisDopp0_L1_L == 1) | (DirectSignalInDDM_L1_L == 1) );
 %notToBeUsed_L1_R = single( (kurtosisDopp0_L1_R == 1) | (DirectSignalInDDM_L1_R == 1) );
+%%%%%%%%%%%%%%%%%%% select Land data is require
 
+if DataFilter=='Land'
+LandSPindx=find(Landtypesub<210) ; 
+%
+    disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selecting land data with LandType < 210']) ;
+    fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selectin land data with LandType < 210']) ; 
+    fprintf(logfileID,'\n') ;    
+%
+specularPointLat=specularPointLat(LandSPindx) ;
+specularPointLon=specularPointLon(LandSPindx) ;
+Landtypesub=Landtypesub(LandSPindx) ;
+incidenceAngleDeg=incidenceAngleDeg(LandSPindx) ;
+spAzimuthAngleDegOrbit=spAzimuthAngleDegOrbit(LandSPindx) ;
+dayOfYear=dayOfYear(LandSPindx) ;
+secondOfDay=secondOfDay(LandSPindx) ;
+timeUTC=timeUTC(LandSPindx) ;
+reflectivityLinear_1_L=reflectivityLinear_1_L(LandSPindx) ;
+reflectivityLinear_1_R=reflectivityLinear_1_R(LandSPindx) ;
+reflectivityLinear_5_L=reflectivityLinear_5_L(LandSPindx) ;
+reflectivityLinear_5_R=reflectivityLinear_5_R(LandSPindx) ;
+SNR_5_L=SNR_5_L(LandSPindx) ;
+SNR_5_R=SNR_5_R(LandSPindx) ;
+SNR_1_L=SNR_1_L(LandSPindx) ;
+SNR_1_R=SNR_1_R(LandSPindx) ;
+EIRP_1=EIRP_1(LandSPindx) ;
+EIRP_5=EIRP_5(LandSPindx) ;
+rxAntennaGain_1_R=rxAntennaGain_1_R(LandSPindx) ;
+rxAntennaGain_1_L=rxAntennaGain_1_L(LandSPindx) ;
+rxAntennaGain_5_R=rxAntennaGain_5_R(LandSPindx) ;
+rxAntennaGain_5_L=rxAntennaGain_5_L(LandSPindx) ;
+ReflectionCoefficientAtSP_CM1_1_R=ReflectionCoefficientAtSP_CM1_1_R(LandSPindx) ;
+ReflectionCoefficientAtSP_CM1_1_L=ReflectionCoefficientAtSP_CM1_1_L(LandSPindx) ;
+ReflectionCoefficientAtSP_CM1_5_R=ReflectionCoefficientAtSP_CM1_5_R(LandSPindx) ;
+ReflectionCoefficientAtSP_CM1_5_L=ReflectionCoefficientAtSP_CM1_5_L(LandSPindx) ;
+ReflectionCoefficientAtSP_CM2_1_R=ReflectionCoefficientAtSP_CM2_1_R(LandSPindx) ;
+ReflectionCoefficientAtSP_CM2_1_L=ReflectionCoefficientAtSP_CM2_1_L(LandSPindx) ;
+ReflectionCoefficientAtSP_CM2_5_R=ReflectionCoefficientAtSP_CM2_5_R(LandSPindx) ;
+ReflectionCoefficientAtSP_CM2_5_L=ReflectionCoefficientAtSP_CM2_5_L(LandSPindx) ;
+ReflectionCoefficientAtSP_CM3_1_R=ReflectionCoefficientAtSP_CM3_1_R(LandSPindx) ;
+ReflectionCoefficientAtSP_CM3_1_L=ReflectionCoefficientAtSP_CM3_1_L(LandSPindx) ;
+ReflectionCoefficientAtSP_CM3_5_R=ReflectionCoefficientAtSP_CM3_5_R(LandSPindx) ;
+ReflectionCoefficientAtSP_CM3_5_L=ReflectionCoefficientAtSP_CM3_5_L(LandSPindx) ;
+ReflectionCoefficientUnbounded_1_R=ReflectionCoefficientUnbounded_1_R(LandSPindx) ;
+ReflectionCoefficientUnbounded_1_L=ReflectionCoefficientUnbounded_1_L(LandSPindx) ;
+ReflectionCoefficientUnbounded_5_R=ReflectionCoefficientUnbounded_5_R(LandSPindx) ;
+ReflectionCoefficientUnbounded_5_L=ReflectionCoefficientUnbounded_5_L(LandSPindx) ;
+coherencyRatio_1_R=coherencyRatio_1_R(LandSPindx) ;
+coherencyRatio_1_L=coherencyRatio_1_L(LandSPindx) ;
+coherencyRatio_5_R=coherencyRatio_5_R(LandSPindx) ;
+coherencyRatio_5_L=coherencyRatio_5_L(LandSPindx) ;
+qualityControlFlags_1_R=qualityControlFlags_1_R(LandSPindx) ;
+qualityControlFlags_1_L=qualityControlFlags_1_L(LandSPindx) ;
+qualityControlFlags_5_R=qualityControlFlags_5_R(LandSPindx) ;
+qualityControlFlags_5_L=qualityControlFlags_5_L(LandSPindx) ;
+powerAnalogW_1_R=powerAnalogW_1_R(LandSPindx) ;
+powerAnalogW_1_L=powerAnalogW_1_L(LandSPindx) ;
+powerAnalogW_5_R=powerAnalogW_5_R(LandSPindx) ;
+powerAnalogW_5_L=powerAnalogW_5_L(LandSPindx) ;
+NBRCS_1_R=NBRCS_1_R(LandSPindx) ;
+NBRCS_1_L=NBRCS_1_L(LandSPindx) ;
+NBRCS_5_R=NBRCS_5_R(LandSPindx) ;
+NBRCS_5_L=NBRCS_5_L(LandSPindx) ;
+powerRatio_1_R=powerRatio_1_R(LandSPindx) ;
+powerRatio_1_L=powerRatio_1_L(LandSPindx) ;
+powerRatio_5_R=powerRatio_5_R(LandSPindx) ;
+powerRatio_5_L=powerRatio_5_L(LandSPindx) ;
+kurtosisDDM_1_R=kurtosisDDM_1_R(LandSPindx) ;
+kurtosisDDM_1_L=kurtosisDDM_1_L(LandSPindx) ;
+kurtosisDDM_5_R=kurtosisDDM_5_R(LandSPindx) ;
+kurtosisDDM_5_L=kurtosisDDM_5_L(LandSPindx) ;
+kurtosisDopp0_1_R=kurtosisDopp0_1_R(LandSPindx) ;
+kurtosisDopp0_1_L=kurtosisDopp0_1_L(LandSPindx) ;
+kurtosisDopp0_5_R=kurtosisDopp0_5_R(LandSPindx) ;
+kurtosisDopp0_5_L=kurtosisDopp0_5_L(LandSPindx) ;
+pseudoRandomNoise=pseudoRandomNoise(LandSPindx) ;
+receivingSpacecraft=receivingSpacecraft(LandSPindx) ;
+constellation=constellation(LandSPindx) ;
+noiseFloorCounts_1_R=noiseFloorCounts_1_R(LandSPindx) ;
+noiseFloorCounts_1_L=noiseFloorCounts_1_L(LandSPindx) ;
+noiseFloorCounts_5_R=noiseFloorCounts_5_R(LandSPindx) ;
+noiseFloorCounts_5_L=noiseFloorCounts_5_L(LandSPindx) ;
+notToBeUsed_5_L=notToBeUsed_5_L(LandSPindx) ;
+notToBeUsed_5_R=notToBeUsed_5_R(LandSPindx) ;
+notToBeUsed_1_L=notToBeUsed_1_L(LandSPindx) ;
+notToBeUsed_1_R=notToBeUsed_1_R(LandSPindx) ; 
+else
+%
+    disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: keeping all data over land and ocean']) ;
+    fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: keeping all data over land and ocean']) ; 
+    fprintf(logfileID,'\n') ;    
+%
+end
+%
+%%%%%%%%%%%%%%%%%% end select land data
 
 save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'Landtypesub','incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'timeUTC',...
     'reflectivityLinear_1_L', 'reflectivityLinear_1_R', ...
