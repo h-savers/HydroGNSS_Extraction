@@ -191,7 +191,8 @@ end
 %_1_L
 %_1_R
 reflectivityLinear_5_Ldb=single(NaN(numOfSP,1)) ; reflectivityLinear_5_Rdb=single(NaN(numOfSP,1)) ;
-timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[];  Landtypesub=[]; THETA=[] ;  constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
+timeUTC=[]; time = single([]); specularPointLat=[]; specularPointLon=[]; Landtypesub=[] ; 
+ReceiverSubSatLatitude_all = []; ReceiverSubSatLongitude_all= []; ReceiverPositionX_all = []; THETA=[] ; Onboardspeclat=[] ;Onboardspeclon=[] ; constellation = strings(numOfSP,1); teWidth=single([]); spAzimuthAngleDegOrbit=[] ;dayOfYear=single([]); secondOfDay=single([]);  
 reflectivityLinear_1_L=single(NaN(numOfSP,1)) ;reflectivityLinear_1_R=single(NaN(numOfSP,1)) ; 
 reflectivityLinear_L1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_L1_R=single(NaN(numOfSP,1)) ;
 reflectivityLinear_E1_L=single(NaN(numOfSP,1)) ; reflectivityLinear_E1_R=single(NaN(numOfSP,1)) ;
@@ -255,7 +256,7 @@ notToBeUsed_1_L= single(NaN(numOfSP,1)); notToBeUsed_1_R= single(NaN(numOfSP,1))
 notToBeUsed_5_L= single(NaN(numOfSP,1)); notToBeUsed_5_R= single(NaN(numOfSP,1)); 
 notToBeUsed_E1_L= single(NaN(numOfSP,1)); notToBeUsed_E1_R= single(NaN(numOfSP,1)); 
 notToBeUsed_L1_L= single(NaN(numOfSP,1));notToBeUsed_L1_R= single(NaN(numOfSP,1));
-
+SixHourDir=string([]) ; 
 
 GPSindex=find(SAT=="GPS") ;
 Galileoindex=find(SAT=="Galileo") ; 
@@ -293,15 +294,20 @@ dayOfYear = [dayOfYear; day(dt_full,'dayofyear')];
 secondOfDay = [secondOfDay; hour(dt_full)*3600 + minute(dt_full)*60 + second(dt_full)];
 Year = [Year; year(dt_full)];
 
+    ReceiverSubSatLatitude_all = [ReceiverSubSatLatitude_all ; ReflectionCoefficientAtSP(kk).ReceiverSubSatLatitude];
+    ReceiverSubSatLongitude_all = [ReceiverSubSatLongitude_all ; ReflectionCoefficientAtSP(kk).ReceiverSubSatLongitude];
 
+    ReceiverPositionX_all = [ReceiverPositionX_all ; ReflectionCoefficientAtSP(kk).ReceiverPositionX];
     specularPointLat=[specularPointLat ; ReflectionCoefficientAtSP(kk).SpecularPointLat] ; 
     specularPointLon=[specularPointLon ; ReflectionCoefficientAtSP(kk).SpecularPointLon] ; 
     THETA=[THETA ; ReflectionCoefficientAtSP(kk).SPIncidenceAngle] ;
-%     Landtypesub=[Landtypesub ; ReflectionCoefficientAtSP(kk).LandType] ;
+    Onboardspeclat=[Onboardspeclat ; ReflectionCoefficientAtSP(kk).OnBoardSpecularPointLat] ;
+    Onboardspeclon=[Onboardspeclon ; ReflectionCoefficientAtSP(kk).OnBoardSpecularPointLon] ;
     spAzimuthAngleDegOrbit=[spAzimuthAngleDegOrbit ; ReflectionCoefficientAtSP(kk).SPAzimuthORF] ;
     % --- Always save LandType
     Landtypesub = [Landtypesub ; ReflectionCoefficientAtSP(kk).LandType];
-
+    sizetrack= length(t_track) ; 
+    SixHourDir=[SixHourDir ; repmat(ReflectionCoefficientAtSP(kk).SixHourDir, sizetrack,1)] ; 
     sizetrack=length(ReflectionCoefficientAtSP(kk).time) ; 
     intrack=fintrack+1 ; 
     fintrack=intrack+sizetrack-1 ; 
@@ -329,16 +335,16 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
     %constellation = [constellation; repmat({'GPS'}, length(refl_coeff.Latitude), 1)];
 
   % 
-    if ismissing(ReflectionCoefficientAtSP(kk).L1_LHCP)==0 , reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_LHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).L1_LHCP))==0 , reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_LHCP/10) ;...
             SNR_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_L1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).L1_RHCP)==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_RHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).L1_RHCP))==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).L1_RHCP/10) ;...
             SNR_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_L1_RHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_LHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP))==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_LHCP/10) ;...
         SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_RHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP))==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).L5_RHCP/10) ;...
         SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
     %testlines
-       if ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_LHCP ;...
+       if min(ismissing(ReflectionCoefficientAtSP(kk).L5_LHCP))==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_LHCP ;...
         SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_LHCP ; 
            if length(ReflectionCoefficientAtSP(kk).L5_LHCP) ~= sizetrack ; 
            disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: GPS L5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ;
@@ -346,116 +352,116 @@ if isfield(ReflectionCoefficientAtSP(kk),'GNSSConstellation_units')&&~ismissing(
            fprintf(logfileID,'\n') ;    
            end
        end
-    if ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_RHCP ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).L5_RHCP))==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).L5_RHCP ;...
         SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_L5_RHCP ; end
 
     %EIRP lines
-     if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP)==0 , EIRP_1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP))==0 , EIRP_1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L1_LHCP ; end
 
- %    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_L5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
-      if ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
+ %    if min(ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP))==0 , EIRP_L5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
+      if min(ismissing(ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP))==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_L5_LHCP ; end
 
      %DirectSignalInDDM lines
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP)==0 , DirectSignalInDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP)==0 , DirectSignalInDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP))==0 , DirectSignalInDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP))==0 , DirectSignalInDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP)==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP)==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP))==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP))==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_L5_RHCP ; end
 
 
      %rxAntenna Gain lines
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP)==0 , rxAntennaGain_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP)==0 , rxAntennaGain_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP))==0 , rxAntennaGain_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP))==0 , rxAntennaGain_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP)==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP)==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP))==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP))==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_L5_RHCP ; end
   
         %coherency Gain lines
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L1_LHCP)==0 , coherencyRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L1_RHCP)==0 , coherencyRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L1_LHCP))==0 , coherencyRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L1_RHCP))==0 , coherencyRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L5_LHCP)==0 , coherencyRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L5_RHCP)==0 , coherencyRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L5_LHCP))==0 , coherencyRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_L5_RHCP))==0 , coherencyRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_L5_RHCP ; end
    
      % ReflectionCoefficientUnbounded lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_LHCP)==0 , ReflectionCoefficientUnbounded_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_RHCP)==0 , ReflectionCoefficientUnbounded_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_LHCP))==0 , ReflectionCoefficientUnbounded_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_RHCP))==0 , ReflectionCoefficientUnbounded_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_LHCP)==0 , ReflectionCoefficientUnbounded_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_RHCP)==0 , ReflectionCoefficientUnbounded_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_LHCP))==0 , ReflectionCoefficientUnbounded_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_RHCP))==0 , ReflectionCoefficientUnbounded_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_L5_RHCP ; end
 
      % ReflectionCoefficientAtSP_CM1 lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_LHCP)==0 , ReflectionCoefficientAtSP_CM1_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_RHCP)==0 , ReflectionCoefficientAtSP_CM1_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_LHCP))==0 , ReflectionCoefficientAtSP_CM1_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_RHCP))==0 , ReflectionCoefficientAtSP_CM1_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_LHCP)==0 , ReflectionCoefficientAtSP_CM1_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_RHCP)==0 , ReflectionCoefficientAtSP_CM1_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_LHCP))==0 , ReflectionCoefficientAtSP_CM1_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_RHCP))==0 , ReflectionCoefficientAtSP_CM1_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_L5_RHCP ; end
 
           % ReflectionCoefficientAtSP_CM2 lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_LHCP)==0 , ReflectionCoefficientAtSP_CM2_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_RHCP)==0 , ReflectionCoefficientAtSP_CM2_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_LHCP))==0 , ReflectionCoefficientAtSP_CM2_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_RHCP))==0 , ReflectionCoefficientAtSP_CM2_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_LHCP)==0 , ReflectionCoefficientAtSP_CM2_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_RHCP)==0 , ReflectionCoefficientAtSP_CM2_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_LHCP))==0 , ReflectionCoefficientAtSP_CM2_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_RHCP))==0 , ReflectionCoefficientAtSP_CM2_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_L5_RHCP ; end
 
           % ReflectionCoefficientAtSP_CM3 lines
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_LHCP)==0 , ReflectionCoefficientAtSP_CM3_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_RHCP)==0 , ReflectionCoefficientAtSP_CM3_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_LHCP))==0 , ReflectionCoefficientAtSP_CM3_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_RHCP))==0 , ReflectionCoefficientAtSP_CM3_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_LHCP)==0 , ReflectionCoefficientAtSP_CM3_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_RHCP)==0 , ReflectionCoefficientAtSP_CM3_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_LHCP))==0 , ReflectionCoefficientAtSP_CM3_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_RHCP))==0 , ReflectionCoefficientAtSP_CM3_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_L5_RHCP ; end
 
 
     %QualityControlFlag lines
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP)==0 , qualityControlFlags_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP ; end
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP)==0 , qualityControlFlags_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP ; end
+%     if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP))==0 , qualityControlFlags_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_LHCP ; end
+%     if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP))==0 , qualityControlFlags_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L1_RHCP ; end
 
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP)==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP ; end
-%     if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP)==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP ; end
+%     if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP))==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_LHCP ; end
+%     if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP))==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_L5_RHCP ; end
   
 
      %PowerAnalog_W lines
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP)==0 , powerAnalogWdbw_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP)==0 , powerAnalogWdbw_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP))==0 , powerAnalogWdbw_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_LHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP))==0 , powerAnalogWdbw_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L1_RHCP ; end
 
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP)==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP))==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_LHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP))==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP ; end
 
 
      %MeanNoise lines
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP)==0 , noiseFloorCounts_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP)==0 , noiseFloorCounts_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP))==0 , noiseFloorCounts_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP))==0 , noiseFloorCounts_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP)==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP)==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP))==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP))==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_L5_RHCP ; end
    
      %powerRatio lines
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP)==0 , powerRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP)==0 , powerRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP))==0 , powerRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP))==0 , powerRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP)==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP)==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP))==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP))==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_L5_RHCP ; end
 
      %Sigma0 lines
-    if ismissing(Sigma0(kk).NBRCS_L1_LHCP)==0 , NBRCS_1_L(intrack:fintrack)=Sigma0(kk).NBRCS_L1_LHCP ; end
-    if ismissing(Sigma0(kk).NBRCS_L1_RHCP)==0 , NBRCS_1_R(intrack:fintrack)=Sigma0(kk).NBRCS_L1_RHCP ; end
+    if min(ismissing(Sigma0(kk).NBRCS_L1_LHCP))==0 , NBRCS_1_L(intrack:fintrack)=Sigma0(kk).NBRCS_L1_LHCP ; end
+    if min(ismissing(Sigma0(kk).NBRCS_L1_RHCP))==0 , NBRCS_1_R(intrack:fintrack)=Sigma0(kk).NBRCS_L1_RHCP ; end
 
-    if ismissing(Sigma0(kk).NBRCS_L5_LHCP)==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_L5_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_L5_RHCP)==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_L5_RHCP ; end
+    if min(ismissing(Sigma0(kk).NBRCS_L5_LHCP))==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_L5_LHCP ; end
+     if min(ismissing(Sigma0(kk).NBRCS_L5_RHCP))==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_L5_RHCP ; end
 
       %HighNoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP)==0 , kurtosisDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP)==0 , kurtosisDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP))==0 , kurtosisDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP))==0 , kurtosisDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP)==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP)==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP))==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP))==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_L5_RHCP ; end
 
            %NoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP)==0 , kurtosisDopp0_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP)==0 , kurtosisDopp0_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP))==0 , kurtosisDopp0_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP))==0 , kurtosisDopp0_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP)==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP)==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP))==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP))==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_L5_RHCP ; end
 
 
      case "Galileo"
@@ -463,11 +469,11 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
     % Add constellation label for Galileo
     %constellation = [constellation; repmat({'Galileo'}, length(refl_coeff.Latitude), 1)];
 
-    if ismissing(ReflectionCoefficientAtSP(kk).E1_LHCP)==0, reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_LHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).E1_LHCP))==0, reflectivityLinear_1_L(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_LHCP/10) ;...
         SNR_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).E1_RHCP)==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_RHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).E1_RHCP))==0, reflectivityLinear_1_R(intrack:fintrack)=10.^(ReflectionCoefficientAtSP(kk).E1_RHCP/10) ;...
             SNR_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).SNR_E1_RHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_LHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP))==0, reflectivityLinear_5_L(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_LHCP/10) ;...
             SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; 
            if length(ReflectionCoefficientAtSP(kk).E5_LHCP) ~= sizetrack ; 
            disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' ERROR: Galile E5 size inconcistency at kk=' char(string(kk)) '; day ' char(datetime(Year, Month, Day)) ' block ' char(Dir_Day(jj))]) ;
@@ -475,124 +481,124 @@ if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_L5_RHCP)==0 , powerAnal
            fprintf(logfileID,'\n') ;    
            end
     end
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_RHCP/10) ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP))==0, reflectivityLinear_5_R(intrack:fintrack)= 10.^(ReflectionCoefficientAtSP(kk).E5_RHCP/10) ;...
             SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
  %testlins
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP)==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_LHCP ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).E5_LHCP))==0, reflectivityLinear_5_Ldb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_LHCP ;...
             SNR_5_L(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP)==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_RHCP ;...
+    if min(ismissing(ReflectionCoefficientAtSP(kk).E5_RHCP))==0, reflectivityLinear_5_Rdb(intrack:fintrack)= ReflectionCoefficientAtSP(kk).E5_RHCP ;...
             SNR_5_R(intrack:fintrack)= ReflectionCoefficientAtSP(kk).SNR_E5_RHCP ; end
 
    %EIRP lines
-    if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP)==0 , EIRP_1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP ; end
- %   if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_E5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
-   if ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP)==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP))==0 , EIRP_1(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E1_LHCP ; end
+ %   if min(ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP))==0 , EIRP_E5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
+   if min(ismissing(ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP))==0 , EIRP_5(intrack:fintrack)=ReflectionCoefficientAtSP(kk).EIRP_E5_LHCP ; end
 
 
       %DirectSignalInDDM lines
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP)==0 , DirectSignalInDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP)==0 , DirectSignalInDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP))==0 , DirectSignalInDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP))==0 , DirectSignalInDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP)==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP)==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP))==0 , DirectSignalInDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP))==0 , DirectSignalInDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).DirectSignalInDDM_E5_RHCP ; end
 
 
      %Rx Antenna gain lines
-    if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP)==0 , rxAntennaGain_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP)==0 , rxAntennaGain_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP))==0 , rxAntennaGain_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP))==0 , rxAntennaGain_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP)==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP)==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP))==0 , rxAntennaGain_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP))==0 , rxAntennaGain_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).rxAntennaGain_E5_RHCP ; end
 
         %Coherency gain lines
-    if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E1_LHCP)==0 , coherencyRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E1_RHCP)==0 , coherencyRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E1_RHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E1_LHCP))==0 , coherencyRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E1_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E1_RHCP))==0 , coherencyRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E5_LHCP)==0 , coherencyRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E5_RHCP)==0 , coherencyRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E5_LHCP))==0 , coherencyRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).coherencyRatio_E5_RHCP))==0 , coherencyRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).coherencyRatio_E5_RHCP ; end
 
        %ReflectionCoefficientUnbounded lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_LHCP)==0 , ReflectionCoefficientUnbounded_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_RHCP)==0 , ReflectionCoefficientUnbounded_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_RHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_LHCP))==0 , ReflectionCoefficientUnbounded_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_RHCP))==0 , ReflectionCoefficientUnbounded_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_LHCP)==0 , ReflectionCoefficientUnbounded_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_RHCP)==0 , ReflectionCoefficientUnbounded_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_LHCP))==0 , ReflectionCoefficientUnbounded_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_RHCP))==0 , ReflectionCoefficientUnbounded_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientUnbounded_E5_RHCP ; end
 
 
      %ReflectionCoefficientAtSP_CM1 lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_LHCP)==0 , ReflectionCoefficientAtSP_CM1_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_RHCP)==0 , ReflectionCoefficientAtSP_CM1_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_RHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_LHCP))==0 , ReflectionCoefficientAtSP_CM1_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_RHCP))==0 , ReflectionCoefficientAtSP_CM1_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_LHCP)==0 , ReflectionCoefficientAtSP_CM1_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_RHCP)==0 , ReflectionCoefficientAtSP_CM1_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_LHCP))==0 , ReflectionCoefficientAtSP_CM1_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_RHCP))==0 , ReflectionCoefficientAtSP_CM1_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM1_E5_RHCP ; end
 
       %ReflectionCoefficientAtSP_CM2 lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_LHCP)==0 , ReflectionCoefficientAtSP_CM2_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_RHCP)==0 , ReflectionCoefficientAtSP_CM2_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_RHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_LHCP))==0 , ReflectionCoefficientAtSP_CM2_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_RHCP))==0 , ReflectionCoefficientAtSP_CM2_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_LHCP)==0 , ReflectionCoefficientAtSP_CM2_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_RHCP)==0 , ReflectionCoefficientAtSP_CM2_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_LHCP))==0 , ReflectionCoefficientAtSP_CM2_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_RHCP))==0 , ReflectionCoefficientAtSP_CM2_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM2_E5_RHCP ; end
 
       %ReflectionCoefficientAtSP_CM3 lines
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_LHCP)==0 , ReflectionCoefficientAtSP_CM3_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_RHCP)==0 , ReflectionCoefficientAtSP_CM3_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_RHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_LHCP))==0 , ReflectionCoefficientAtSP_CM3_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_RHCP))==0 , ReflectionCoefficientAtSP_CM3_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_LHCP)==0 , ReflectionCoefficientAtSP_CM3_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_RHCP)==0 , ReflectionCoefficientAtSP_CM3_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_LHCP))==0 , ReflectionCoefficientAtSP_CM3_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_RHCP))==0 , ReflectionCoefficientAtSP_CM3_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).ReflectionCoefficientAtSP_CM3_E5_RHCP ; end
 
 
      %Quality control flag lines
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP)==0 , qualityControlFlags_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP ; end
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP)==0 , qualityControlFlags_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP ; end
+  %  if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP))==0 , qualityControlFlags_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_LHCP ; end
+  %  if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP))==0 , qualityControlFlags_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E1_RHCP ; end
 
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP)==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP ; end
-  %  if ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP)==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP ; end
+  %  if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP))==0 , qualityControlFlags_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_LHCP ; end
+  %  if min(ismissing(ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP))==0 , qualityControlFlags_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).QualityControlFlags_E5_RHCP ; end
 
 
 %PowerAnalog_W lines
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP)==0 , powerAnalogWdbw_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP)==0 , powerAnalogWdbw_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP))==0 , powerAnalogWdbw_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_LHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP))==0 , powerAnalogWdbw_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E1_RHCP ; end
 
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP)==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP ; end
-if ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP)==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP))==0 , powerAnalogWdbw_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_LHCP ; end
+if min(ismissing(ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP))==0 , powerAnalogWdbw_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerAnalog_W_E5_RHCP ; end
 
 
    
      %MeanNoise lines
-    if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP)==0 , noiseFloorCounts_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP ; end
-    if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP)==0 , noiseFloorCounts_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP))==0 , noiseFloorCounts_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_LHCP ; end
+    if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP))==0 , noiseFloorCounts_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP)==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP)==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP))==0 , noiseFloorCounts_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP))==0 , noiseFloorCounts_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).noise_floor_Counts_E5_RHCP ; end
 
 
           %PowerSpreadRatio lines
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP)==0 , powerRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP)==0 , powerRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP))==0 , powerRatio_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP))==0 , powerRatio_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP)==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP)==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP))==0 , powerRatio_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP))==0 , powerRatio_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).PowerSpreadRatio_E5_RHCP ; end
 
      %HighNoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP)==0 , kurtosisDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP)==0 , kurtosisDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP))==0 , kurtosisDDM_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP))==0 , kurtosisDDM_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP)==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP)==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP))==0 , kurtosisDDM_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP))==0 , kurtosisDDM_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DDM_E5_RHCP ; end
 
      %NoiseKurtosis lines
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP)==0 , kurtosisDopp0_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP)==0 , kurtosisDopp0_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP))==0 , kurtosisDopp0_1_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP))==0 , kurtosisDopp0_1_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E1_RHCP ; end
 
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP)==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP ; end
-     if ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP)==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP))==0 , kurtosisDopp0_5_L(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_LHCP ; end
+     if min(ismissing(ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP))==0 , kurtosisDopp0_5_R(intrack:fintrack)=ReflectionCoefficientAtSP(kk).Kurtosis_DOPP_0_E5_RHCP ; end
 
      %Sigma0 lines
-     if ismissing(Sigma0(kk).NBRCS_E1_LHCP)==0 , NBRCS_1_L(intrack:fintrack)=Sigma0(kk).NBRCS_E1_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_E1_RHCP)==0 , NBRCS_1_R(intrack:fintrack)=Sigma0(kk).NBRCS_E1_RHCP ; end
+     if min(ismissing(Sigma0(kk).NBRCS_E1_LHCP))==0 , NBRCS_1_L(intrack:fintrack)=Sigma0(kk).NBRCS_E1_LHCP ; end
+     if min(ismissing(Sigma0(kk).NBRCS_E1_RHCP))==0 , NBRCS_1_R(intrack:fintrack)=Sigma0(kk).NBRCS_E1_RHCP ; end
 
-     if ismissing(Sigma0(kk).NBRCS_E5_LHCP)==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_E5_LHCP ; end
-     if ismissing(Sigma0(kk).NBRCS_E5_RHCP)==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_E5_RHCP ; end
+     if min(ismissing(Sigma0(kk).NBRCS_E5_LHCP))==0 , NBRCS_5_L(intrack:fintrack)=Sigma0(kk).NBRCS_E5_LHCP ; end
+     if min(ismissing(Sigma0(kk).NBRCS_E5_RHCP))==0 , NBRCS_5_R(intrack:fintrack)=Sigma0(kk).NBRCS_E5_RHCP ; end
 
 
   end % end case over the satgellite
@@ -641,16 +647,22 @@ notToBeUsed_1_R = single( (kurtosisDopp0_1_R == 1) | (DirectSignalInDDM_1_R == 1
 %notToBeUsed_L1_R = single( (kurtosisDopp0_L1_R == 1) | (DirectSignalInDDM_L1_R == 1) );
 %%%%%%%%%%%%%%%%%%% select Land data is require
 
-if DataFilter=='Land'
+if DataFilter==string('Land') 
 LandSPindx=find(Landtypesub<210) ; 
 %
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selecting land data with LandType < 210']) ;
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selectin land data with LandType < 210']) ; 
     fprintf(logfileID,'\n') ;    
-%
+%Onboardspeclat','Onboardspeclon
+ReceiverSubSatLatitude_all = ReceiverSubSatLatitude_all(LandSPindx);
+ReceiverSubSatLongitude_all = ReceiverSubSatLongitude_all(LandSPindx);
+ReceiverPositionX_all = ReceiverPositionX_all(LandSPindx);
+Onboardspeclat=Onboardspeclat(LandSPindx) ;
+Onboardspeclon=Onboardspeclon(LandSPindx) ;
 specularPointLat=specularPointLat(LandSPindx) ;
 specularPointLon=specularPointLon(LandSPindx) ;
 Landtypesub=Landtypesub(LandSPindx) ;
+SixHourDir=SixHourDir(LandSPindx) ;
 incidenceAngleDeg=incidenceAngleDeg(LandSPindx) ;
 spAzimuthAngleDegOrbit=spAzimuthAngleDegOrbit(LandSPindx) ;
 dayOfYear=dayOfYear(LandSPindx) ;
@@ -735,7 +747,10 @@ end
 %
 %%%%%%%%%%%%%%%%%% end select land data
 
-save([char(DataOutputRootPath) '\' Nameout], 'specularPointLat', 'specularPointLon', 'Landtypesub','incidenceAngleDeg','spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'timeUTC',...
+save([char(DataOutputRootPath) '\' Nameout], 'ReceiverSubSatLatitude_all',...
+    'ReceiverSubSatLongitude_all','ReceiverPositionX_all','Onboardspeclat',...
+    'Onboardspeclon','specularPointLat', 'specularPointLon', 'incidenceAngleDeg',...
+    'spAzimuthAngleDegOrbit', 'dayOfYear',  'secondOfDay', 'Landtypesub', 'SixHourDir', 'timeUTC',...
     'reflectivityLinear_1_L', 'reflectivityLinear_1_R', ...
     'reflectivityLinear_5_L', 'reflectivityLinear_5_R',...
     'SNR_5_L', 'SNR_5_R', 'SNR_1_L', 'SNR_1_R', ...
