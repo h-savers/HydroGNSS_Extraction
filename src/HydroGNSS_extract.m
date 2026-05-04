@@ -26,6 +26,47 @@ end
 
 [ProcessingSatellite, DataInputRootPath, DataOutputRootPath, Outfileprefix, LogsOutputRootPath, LatSouth, LatNorth, LonWest, LonEast, Dayinit, Dayfinal, DDM, DataFilter] = ReadConfFile(configurationPath);
 
+%% ==============================
+% Load L2OP sea mask (cmask equivalent)
+% ===============================
+
+seaMaskFile = 'SEA_MASK_20240212.mat';
+
+% --- check BEFORE loading
+if ~isfile(seaMaskFile)
+    error('SEA mask file not found: %s', seaMaskFile);
+end
+
+% --- load file
+S = load(seaMaskFile);
+
+SpatialResolution = 25;   % or 12.5 / 9 / 36 depending on dataset
+
+% --- select correct resolution mask
+switch SpatialResolution
+
+    case 9
+        seaMask = S.SEA_MASK_9km;
+
+    case 12.5
+        seaMask = S.SEA_MASK_12_5km;
+
+    case 25
+        seaMask = S.SEA_MASK_25km;
+
+    case 36
+        seaMask = S.SEA_MASK_36km;
+
+    otherwise
+        error('Unsupported SpatialResolution: %g', SpatialResolution);
+end
+
+% --- store dimensions (important for grid mapping)
+[nRows, nCols] = size(seaMask);
+
+disp('SEA mask loaded successfully');
+disp([nRows, nCols]);
+
 switch mode
     case "GUI" 
 %
@@ -645,21 +686,80 @@ notToBeUsed_1_R = single( (kurtosisDopp0_1_R == 1) | (DirectSignalInDDM_1_R == 1
 %notToBeUsed_L1_L = single( (kurtosisDopp0_L1_L == 1) | (DirectSignalInDDM_L1_L == 1) );
 %notToBeUsed_L1_R = single( (kurtosisDopp0_L1_R == 1) | (DirectSignalInDDM_L1_R == 1) );
 %%%%%%%%%%%%%%%%%%% select Land data is require
-
+%Water=210, Snow_and_ice=220
 if DataFilter==string('Land') 
 LandSPindx=find(Landtypesub<210) ; 
 %
     disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selecting land data with LandType < 210']) ;
     fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: selectin land data with LandType < 210']) ; 
     fprintf(logfileID,'\n') ;    
+
+% -------------------------------
+% NEW: Ocean mask logic (HydroGNSS_extract version)
+% -------------------------------
+
+validLL = ~(isnan(specularPointLat) | isnan(specularPointLon));
+
+if ~any(validLL)
+    return;
+end
+
+% [idxCols, idxRows] = Utilities.easeconv_grid( ...
+[idxCols, idxRows] = easeconv_grid3( ...
+    specularPointLat(validLL), ...
+    specularPointLon(validLL), ...
+    SpatialResolution);
+
+disp('seaMask size:');
+disp(size(seaMask));
+
+disp('idxRows range:');
+disp([min(idxRows), max(idxRows)]);
+
+disp('idxCols range:');
+disp([min(idxCols), max(idxCols)]);
+
+nRows = size(seaMask,1);
+nCols = size(seaMask,2);
+
+% Clip indices to mask size
+idxRows = min(max(idxRows,1), nRows);
+idxCols = min(max(idxCols,1), nCols);
+
+% ✅ ADD THIS (sanity check)
+assert(all(idxRows >= 1 & idxRows <= nRows), 'Row indices out of range');
+assert(all(idxCols >= 1 & idxCols <= nCols), 'Column indices out of range');
+
+% Safe indexing
+linearIdx = sub2ind([nRows, nCols], idxRows, idxCols);
+
+validIdx = find(validLL);
+
+isOceanValid = isnan(seaMask(linearIdx));
+
+oceanIdx = validIdx(isOceanValid);
+% safer reconstruction (recommended)
+% LandSPindx = intersect(LandSPindx, validIdx(~isOceanValid));
+LandSPindx = validIdx(~isOceanValid);
+
+fprintf('Total valid points: %d\n', length(validIdx));
+fprintf('Ocean points: %d\n', sum(isOceanValid));
+fprintf('Land points: %d\n', sum(~isOceanValid));
+origLand = Landtypesub < 210;
+
+fprintf('Original land count: %d\n', sum(origLand));
+fprintf('Mask-only land count: %d\n', sum(~isOceanValid));
+fprintf('Combined land count: %d\n', length(LandSPindx));
+
 %Onboardspeclat','Onboardspeclon
 ReceiverSubSatLatitude_all = ReceiverSubSatLatitude_all(LandSPindx);
 ReceiverSubSatLongitude_all = ReceiverSubSatLongitude_all(LandSPindx);
 ReceiverPositionX_all = ReceiverPositionX_all(LandSPindx);
 Onboardspeclat=Onboardspeclat(LandSPindx) ;
 Onboardspeclon=Onboardspeclon(LandSPindx) ;
-specularPointLat=specularPointLat(LandSPindx) ;
-specularPointLon=specularPointLon(LandSPindx) ;
+% specularPointLat=specularPointLat(LandSPindx) ;
+% specularPointLon=specularPointLon(LandSPindx) ;
+
 Landtypesub=Landtypesub(LandSPindx) ;
 incidenceAngleDeg=incidenceAngleDeg(LandSPindx) ;
 spAzimuthAngleDegOrbit=spAzimuthAngleDegOrbit(LandSPindx) ;
