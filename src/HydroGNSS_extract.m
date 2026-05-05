@@ -30,7 +30,7 @@ end
 % Load L2OP sea mask (cmask equivalent)
 % ===============================
 
-seaMaskFile = 'SEA_MASK_20240212.mat';
+seaMaskFile= [extractBefore(configurationPath, max(regexp(configurationPath, '\')-5)) '\Auxiliary\' 'SEA_MASK_20240212.mat'];
 
 % --- check BEFORE loading
 if ~isfile(seaMaskFile)
