@@ -62,7 +62,7 @@ switch SpatialResolution
 end
 
 % --- store dimensions (important for grid mapping)
-[nRows, nCols] = size(seaMask);
+[nCols,nRows] = size(seaMask);
 
 disp('SEA mask loaded successfully');
 disp([nRows, nCols]);
@@ -720,8 +720,8 @@ disp([min(idxRows), max(idxRows)]);
 disp('idxCols range:');
 disp([min(idxCols), max(idxCols)]);
 
-nRows = size(seaMask,1);
-nCols = size(seaMask,2);
+nRows = size(seaMask,2);
+nCols = size(seaMask,1);
 
 % Clip indices to mask size
 idxRows = min(max(idxRows,1), nRows);
@@ -733,7 +733,7 @@ assert(all(idxCols >= 1 & idxCols <= nCols), 'Column indices out of range');
 
 % Safe indexing
 linearIdx = sub2ind([nRows, nCols], idxRows, idxCols);
-
+linearIdx = sub2ind([nCols, nRows ], idxCols, idxRows);
 validIdx = find(validLL);
 
 isOceanValid = isnan(seaMask(linearIdx));
@@ -758,6 +758,8 @@ ReceiverSubSatLongitude_all = ReceiverSubSatLongitude_all(LandSPindx);
 ReceiverPositionX_all = ReceiverPositionX_all(LandSPindx);
 Onboardspeclat=Onboardspeclat(LandSPindx) ;
 Onboardspeclon=Onboardspeclon(LandSPindx) ;
+specularPointLat=specularPointLat(LandSPindx) ;
+specularPointLon=specularPointLon(LandSPindx) ;
 % specularPointLat=specularPointLat(LandSPindx) ;
 % specularPointLon=specularPointLon(LandSPindx) ;
 
