@@ -877,3 +877,58 @@ save([char(DataOutputRootPath) '\' Nameout], 'ReceiverSubSatLatitude_all',...
  disp([char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: End of program']) ; 
  %fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: End of program']) ; 
  %fprintf(logfileID,'\n') ; 
+
+ %outDir = 'C:\Users\syedw\Desktop\Sea6\output';
+
+ %% ================= PLOTTING (POST-SAVE) =================
+outDir = char(DataOutputRootPath);  % reuse same output folder
+
+%% ================= HEADER =================
+header1 = char(ProcessingSatellite);
+startTime = datestr(timeUTC(1),'yyyy-mm-dd HH:MM');
+endTime   = datestr(timeUTC(end),'yyyy-mm-dd HH:MM');
+
+meta = {header1;
+        ['Start: ' startTime];
+        ['End:   ' endTime]};
+
+%% ================= FIGURE 1: SPECULAR =================
+fig1 = figure;
+geoscatter(specularPointLat, specularPointLon, '.');
+
+annotation('textbox',[0.72 0.65 0.25 0.2], ...
+'String',[meta; {'specularPointLat'; 'specularPointLon'}], ...
+    'FitBoxToText','on', ...
+    'EdgeColor','none', ...
+    'FontSize',8);
+
+title('Specular Points');
+saveas(fig1, fullfile(outDir,'SpecularPoints.jpg'));
+
+%% ================= FIGURE 2: RECEIVER SUBSAT =================
+fig2 = figure;
+geoscatter(ReceiverSubSatLatitude_all, ReceiverSubSatLongitude_all, '.');
+
+annotation('textbox',[0.72 0.65 0.25 0.2], ...
+    'String',[meta; {'ReceiverSubSatLatitude_all'; 'ReceiverSubSatLongitude_all'}],...
+    'FitBoxToText','on', ...
+    'EdgeColor','none', ...
+    'FontSize',8);
+
+title('Receiver Sub-Satellite Points');
+saveas(fig2, fullfile(outDir,'ReceiverSubSatPoints.jpg'));
+
+%% ================= FIGURE 3: ONBOARD SPECULAR =================
+fig3 = figure;
+geoscatter(Onboardspeclat, Onboardspeclon, '.');
+
+annotation('textbox',[0.72 0.65 0.25 0.2], ...
+'String',[meta; {'Onboardspeclat'; 'Onboardspeclon'}], ...
+    'FitBoxToText','on', ...
+    'EdgeColor','none', ...
+    'FontSize',8);
+
+title('Onboard Specular Points');
+saveas(fig3, fullfile(outDir,'OnboardSpecularPoints.jpg'));
+ %fprintf(logfileID,[char(datetime('now','Format','yyyy-MM-dd HH:mm:ss')) ' INFO: End of program']) ; 
+ %fprintf(logfileID,'\n') ; 
