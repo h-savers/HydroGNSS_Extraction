@@ -185,7 +185,7 @@ end
 %% -----------------------------
 % SAVE OUTPUT
 %% -----------------------------
-save(fullfile(OutputFolder, NameOutFile), 'Merged', '-v7.3');
+save(fullfile(OutputFolder, NameOutFile), '-struct', 'Merged', '-v7.3');
 
 fprintf(fid, "\nDONE ✔ FULL MERGE COMPLETE\n");
 
