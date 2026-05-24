@@ -14,7 +14,7 @@ file1 = fullfile(basePath, file1);
 file2 = fullfile(basePath, file2);
 prompt = {'Output file prefix'};
 dlgtitle = 'Output'; definput = {'Merged file.mat'};
-answer = inputdlg(prompt,dlgtitle)
+answer = inputdlg(prompt,dlgtitle) ;
 NameOutFile=answer{1} ; 
 NameOutFile= [char(NameOutFile) '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),'yy-MM-dd_HH-mm') '.mat'] ; 
 startIndex= regexp(NameOutFile,'.mat') ; 
@@ -186,6 +186,7 @@ end
 % SAVE OUTPUT
 %% -----------------------------
 save(fullfile(OutputFolder, NameOutFile), '-struct', 'Merged', '-v7.3');
+save(fullfile(OutputFolder, NameOutFile), 'MergedFiles', '-append');
 
 fprintf(fid, "\nDONE ✔ FULL MERGE COMPLETE\n");
 
