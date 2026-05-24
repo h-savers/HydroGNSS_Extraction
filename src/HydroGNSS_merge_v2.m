@@ -19,7 +19,7 @@ NameOutFile=answer{1} ;
 NameOutFile= [char(NameOutFile) '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),'yy-MM-dd_HH-mm') '.mat'] ; 
 startIndex= regexp(NameOutFile,'.mat') ; 
 reportFile = fullfile(OutputFolder, [extractBefore(NameOutFile,startIndex) '_report.txt']) ;
-
+MergedFiles=[file1 ' *** ' file2] ; 
 % OutputFolder='D:\home on Dell NP (gordiani)\HydroGNSS_PhCDE\HydroGNSSCalVal\HydroGNSS_Extract\output' ;
 % basePath = 'W:\HydroGNSS_OrbitData\ExtractedData';
 % NameOutFile='pippo.mat' ; 
