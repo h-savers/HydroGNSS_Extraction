@@ -17,7 +17,7 @@ dlgtitle = 'Output'; definput = {'Merged file.mat'};
 answer = inputdlg(prompt,dlgtitle)
 NameOutFile=answer{1} ; 
 NameOutFile= [char(NameOutFile) '_' char(datetime('now','Format','yy-MM-dd_HH-mm'),'yy-MM-dd_HH-mm') '.mat'] ; 
-startIndex= regexp(NameOutFile,'.mat') 
+startIndex= regexp(NameOutFile,'.mat') ; 
 reportFile = fullfile(OutputFolder, [extractBefore(NameOutFile,startIndex) '_report.txt']) ;
 
 % OutputFolder='D:\home on Dell NP (gordiani)\HydroGNSS_PhCDE\HydroGNSSCalVal\HydroGNSS_Extract\output' ;
